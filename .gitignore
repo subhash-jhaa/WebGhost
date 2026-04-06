@@ -8,3 +8,26 @@ build
 *.log
 prisma/*.db
 prisma/*.db-journal
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Production
+build/
+
+# Typescript
+*.tsbuildinfo
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vercel
+.vercel
+
+# Env
+.env*.local
+
