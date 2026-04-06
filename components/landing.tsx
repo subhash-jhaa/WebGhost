@@ -60,14 +60,14 @@ export default function Landing({ session }: LandingProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="bg-[#18181b] text-neutral-100 min-h-screen font-mono overflow-x-hidden">
+    <div className="bg-[#18181b] text-neutral-100 min-h-screen font-mono overflow-x-hidden pt-2">
       {/* Navbar */}
       <nav className="w-full border-b border-neutral-800 sticky top-0 z-30 bg-[#18181b]/90 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 sm:px-10 flex items-center justify-between h-14">
-          <Link href="/" className="flex items-center gap-4 font-bold text-lg tracking-tight text-white hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center gap-4 font-bold text-xl tracking-tight text-white hover:opacity-80 transition-opacity">
             <span className="font-mono">WebGhost 👻</span>
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-xs font-semibold">
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold">
             <a href="#features" className="hover:text-white transition px-2">Features</a>
             <a href="#how" className="hover:text-white transition px-2">How It Works</a>
             <a href="#code" className="hover:text-white transition px-2">Code</a>
