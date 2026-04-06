@@ -26,16 +26,16 @@ const UpgradeBanner = ({
   }
 
   return (
-    <div className="bg-gradient-to-r from-lime-400/10 to-green-400/10 border border-lime-400/30 rounded-lg p-4 mb-6 relative">
+    <div className="bg-gradient-to-r from-neutral-100/10 to-white/10 border border-neutral-700 rounded-lg p-4 mb-6 relative">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
-          <div className="w-8 h-8 bg-lime-400/20 rounded-full flex items-center justify-center">
-            <SparklesIcon className="h-4 w-4 text-lime-400" />
+          <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+            <SparklesIcon className="h-4 w-4 text-white" />
           </div>
         </div>
         
         <div className="flex-1 min-w-0">
-          <h3 className="text-lime-400 font-semibold font-mono text-sm mb-1">
+          <h3 className="text-white font-semibold font-mono text-sm mb-1">
             Upgrade to Pro
           </h3>
           <p className="text-neutral-400 text-sm font-mono mb-3">
@@ -45,7 +45,7 @@ const UpgradeBanner = ({
           <div className="flex items-center gap-3">
             <button
               onClick={handleUpgrade}
-              className="bg-lime-400 text-[#18181b] px-4 py-2 rounded font-bold text-sm font-mono hover:bg-lime-300 transition flex items-center gap-2"
+              className="bg-white text-[#18181b] px-4 py-2 rounded font-bold text-sm font-mono hover:bg-neutral-200 transition flex items-center gap-2"
             >
               Upgrade Now
               <ArrowRightIcon className="h-3 w-3" />
@@ -53,7 +53,7 @@ const UpgradeBanner = ({
             
             <button
               onClick={handleUpgrade}
-              className="text-lime-400 hover:text-lime-300 text-sm font-mono transition"
+              className="text-white hover:text-neutral-200 text-sm font-mono transition"
             >
               View Plans
             </button>

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 import { Session } from 'next-auth'
 import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react'
@@ -341,17 +342,17 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         <div className="min-h-screen bg-[#18181b] text-neutral-100 flex items-center justify-center">
           <div className="text-center max-w-md mx-auto px-4">
             <div className="animate-pulse">
-              <div className="h-16 w-16 bg-lime-400/20 rounded-full mx-auto mb-6 flex items-center justify-center">
-                <UserGroupIcon className="h-8 w-8 text-lime-400" />
+              <div className="h-16 w-16 bg-white/20 rounded-full mx-auto mb-6 flex items-center justify-center">
+                <UserGroupIcon className="h-8 w-8 text-white" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-lime-400 font-mono mb-4">Welcome to WebGhost! 👻</h2>
+            <h2 className="text-2xl font-bold text-white font-mono mb-4">Welcome to WebGhost! 👻</h2>
             <p className="text-neutral-400 font-mono mb-6">
               Create your first project to start tracking visitors in real-time. It only takes a few seconds to set up.
             </p>
             <button
               onClick={() => setShowNewProjectModal(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-lime-400 text-[#18181b] rounded hover:bg-lime-300 transition font-mono font-bold mx-auto cursor-pointer"
+              className="flex items-center gap-2 px-6 py-3 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono font-bold mx-auto cursor-pointer"
             >
               <PlusIcon className="h-5 w-5" />
               Create Your First Project
@@ -363,20 +364,20 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         {showNewProjectModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800 w-96">
-              <h3 className="text-xl font-bold text-green-400 mb-4 font-mono">Create New Project</h3>
+              <h3 className="text-xl font-bold text-neutral-100 mb-4 font-mono">Create New Project</h3>
               <input
                 type="text"
                 placeholder="Project name"
                 value={newProjectName}
                 onChange={(e) => setNewProjectName(e.target.value)}
-                className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-lime-400 font-mono mb-4"
+                className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
                 onKeyPress={(e) => e.key === 'Enter' && createProject()}
               />
               <div className="flex gap-3">
                 <button
                   onClick={createProject}
                   disabled={isCreatingProject}
-                  className="flex-1 px-4 py-2 bg-lime-400 text-[#18181b] rounded hover:bg-lime-300 transition font-mono cursor-pointer disabled:bg-lime-400/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isCreatingProject ? (
                     <>
@@ -411,10 +412,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#23272e] border-r border-neutral-800 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}>
         <div className="p-6">
           <div className="flex items-center justify-between gap-2 mb-8">
-            <div className="flex items-center gap-2">
-              <UserGroupIcon className="h-6 w-6 text-lime-400" />
-              <span className="font-bold text-lg text-lime-400 font-mono">WebGhost 👻</span>
-            </div>
+            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <UserGroupIcon className="h-6 w-6 text-white" />
+              <span className="font-bold text-lg text-white font-mono">WebGhost 👻</span>
+            </Link>
             <button
               onClick={() => setIsSidebarOpen(false)}
               className="md:hidden text-neutral-400 hover:text-white cursor-pointer"
@@ -428,8 +429,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('overview')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
                 activeTab === 'overview' 
-                  ? 'bg-lime-400 text-[#18181b]' 
-                  : 'text-neutral-300 hover:text-lime-400 hover:bg-neutral-800'
+                  ? 'bg-white text-[#18181b]' 
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800'
               }`}
             >
               <ChartBarIcon className="h-5 w-5" />
@@ -439,8 +440,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('live')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
                 activeTab === 'live' 
-                  ? 'bg-lime-400 text-[#18181b]' 
-                  : 'text-neutral-300 hover:text-lime-400 hover:bg-neutral-800'
+                  ? 'bg-white text-[#18181b]' 
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800'
               }`}
             >
               <EyeIcon className="h-5 w-5" />
@@ -450,8 +451,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('setup')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
                 activeTab === 'setup' 
-                  ? 'bg-lime-400 text-[#18181b]' 
-                  : 'text-neutral-300 hover:text-lime-400 hover:bg-neutral-800'
+                  ? 'bg-white text-[#18181b]' 
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800'
               }`}
             >
               <CogIcon className="h-5 w-5" />
@@ -489,7 +490,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               <div className="relative min-w-[180px] w-56">
                 <button
                   onClick={() => setDropdownOpen((open) => !open)}
-                  className="w-full flex items-center justify-between px-4 py-2 bg-[#18181b] border border-neutral-700 rounded text-lime-400 font-mono focus:outline-none focus:ring-2 focus:ring-lime-400"
+                  className="w-full flex items-center justify-between px-4 py-2 bg-[#18181b] border border-neutral-700 rounded text-white font-mono focus:outline-none focus:ring-2 focus:ring-white"
                 >
                   {selectedProject?.name || 'Select Project'}
                   <svg className={`w-4 h-4 ml-2 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
@@ -501,11 +502,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                       <button
                         key={project.id}
                         onClick={() => handleProjectSwitch(project)}
-                        className={`w-full text-left px-4 py-2 font-mono text-sm flex items-center gap-2 transition-colors ${selectedProject?.id === project.id ? 'bg-neutral-800 text-lime-400' : 'text-neutral-200 hover:bg-neutral-700'}`}
+                        className={`w-full text-left px-4 py-2 font-mono text-sm flex items-center gap-2 transition-colors ${selectedProject?.id === project.id ? 'bg-neutral-800 text-white' : 'text-neutral-200 hover:bg-neutral-700'}`}
                       >
                         {project.name}
                         {selectedProject?.id === project.id && (
-                          <svg className="w-4 h-4 ml-auto text-lime-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                          <svg className="w-4 h-4 ml-auto text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                         )}
                       </button>
                     ))}
@@ -514,7 +515,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               </div>
               <button
                 onClick={() => setShowNewProjectModal(true)}
-                className="flex items-center gap-2 px-3 py-2 bg-lime-400 text-[#18181b] rounded hover:bg-lime-300 transition font-mono text-sm cursor-pointer"
+                className="flex items-center gap-2 px-3 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono text-sm cursor-pointer"
               >
                 <PlusIcon className="h-4 w-4" />
                 <span className="hidden sm:inline">New Project</span>
@@ -525,7 +526,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${
                 realtimeConnected 
-                  ? 'bg-green-400' 
+                  ? 'bg-neutral-100' 
                   : isConnecting 
                     ? 'bg-blue-400 animate-pulse' 
                     : reconnectionAttempts > 0 
@@ -548,7 +549,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     setReconnectionAttempts(0)
                     setupRealtimeConnection()
                   }}
-                  className="text-xs text-lime-400 hover:text-lime-300 transition cursor-pointer font-mono"
+                  className="text-xs text-white hover:text-neutral-200 transition cursor-pointer font-mono"
                 >
                   Retry
                 </button>
@@ -561,8 +562,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         <div className="flex-1 p-6 overflow-auto">
           {loading && (
             <div className="flex items-center gap-2 mb-4 p-3 bg-[#23272e] rounded-lg border border-neutral-800 w-fit mx-auto">
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-lime-400"></div>
-              <span className="text-lime-400 font-mono text-sm">Fetching project data...</span>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <span className="text-white font-mono text-sm">Fetching project data...</span>
             </div>
           )}
 
@@ -572,15 +573,15 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
                   <div className="flex items-center gap-3 mb-2">
-                    <EyeIcon className={`h-6 w-6 text-green-400 ${realtimeStats.count > 0 ? 'animate-pulse' : ''}`} />
-                    <h3 className="text-green-400 font-semibold font-mono">Live Visitors</h3>
+                    <EyeIcon className={`h-6 w-6 text-neutral-100 ${realtimeStats.count > 0 ? 'animate-pulse' : ''}`} />
+                    <h3 className="text-neutral-100 font-semibold font-mono">Live Visitors</h3>
                   </div>
                   {loading ? (
                     <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-400"></div>
+                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                     </div>
                   ) : (
-                    <p className="text-3xl font-bold text-lime-400">{realtimeStats.count}</p>
+                    <p className="text-3xl font-bold text-white">{realtimeStats.count}</p>
                   )}
                 </div>
                 <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
@@ -590,10 +591,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   </div>
                   {loading ? (
                     <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-400"></div>
+                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                     </div>
                   ) : (
-                    <p className="text-3xl font-bold text-lime-400">
+                    <p className="text-3xl font-bold text-white">
                       {dailyStats.reduce((sum, day) => sum + day.visitors, 0)}
                     </p>
                   )}
@@ -605,10 +606,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   </div>
                   {loading ? (
                     <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-400"></div>
+                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                     </div>
                   ) : (
-                    <p className="text-3xl font-bold text-lime-400">{countryStats.length}</p>
+                    <p className="text-3xl font-bold text-white">{countryStats.length}</p>
                   )}
                 </div>
                 <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
@@ -618,10 +619,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   </div>
                   {loading ? (
                     <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-400"></div>
+                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                     </div>
                   ) : (
-                    <p className="text-3xl font-bold text-lime-400">{referrerStats.length}</p>
+                    <p className="text-3xl font-bold text-white">{referrerStats.length}</p>
                   )}
                 </div>
               </div>
@@ -630,11 +631,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* 7-Day Chart */}
                 <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                  <h3 className="text-green-400 font-semibold mb-4 font-mono">7-Day Traffic</h3>
+                  <h3 className="text-neutral-100 font-semibold mb-4 font-mono">7-Day Traffic</h3>
                   <div className="space-y-2">
                     {loading ? (
                       <div className="flex items-center justify-center min-h-[200px]">
-                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-400"></div>
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                       </div>
                     ) : (
                       dailyStats.map((day) => {
@@ -648,11 +649,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                             </span>
                             <div className="flex-1 bg-neutral-800 rounded-full h-2 overflow-hidden">
                               <div 
-                                className="bg-lime-400 h-2 rounded-full transition-all"
+                                className="bg-white h-2 rounded-full transition-all"
                                 style={{ width: `${percentage}%` }}
                               />
                             </div>
-                            <span className="text-xs text-lime-400 font-mono w-8 text-right">
+                            <span className="text-xs text-white font-mono w-8 text-right">
                               {day.visitors}
                             </span>
                           </div>
@@ -664,11 +665,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
                 {/* Countries Chart */}
                 <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                  <h3 className="text-green-400 font-semibold mb-4 font-mono">Top Countries</h3>
+                  <h3 className="text-neutral-100 font-semibold mb-4 font-mono">Top Countries</h3>
                   <div className="space-y-2">
                     {loading ? (
                       <div className="flex items-center justify-center min-h-[200px]">
-                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-400"></div>
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                       </div>
                     ) : (
                       countryStats.slice(0, 5).map((country) => (
@@ -694,11 +695,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
               {/* Referrers Table */}
               <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h3 className="text-green-400 font-semibold mb-4 font-mono">Top Referrers</h3>
+                <h3 className="text-neutral-100 font-semibold mb-4 font-mono">Top Referrers</h3>
                 <div className="space-y-2">
                   {loading ? (
                     <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-400"></div>
+                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                     </div>
                   ) : (
                     referrerStats.slice(0, 10).map((referrer) => (
@@ -717,8 +718,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
             <div className="space-y-6">
               <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
                 <div className="flex items-center gap-3 mb-4">
-                  <EyeIcon className="h-6 w-6 text-green-400" />
-                  <h2 className="text-xl font-bold text-green-400 font-mono">Live Feed</h2>
+                  <EyeIcon className="h-6 w-6 text-neutral-100" />
+                  <h2 className="text-xl font-bold text-neutral-100 font-mono">Live Feed</h2>
                   <span className="text-sm text-neutral-400 font-mono">
                     {realtimeStats.count} active visitors
                   </span>
@@ -730,8 +731,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                       <div key={visitor.id} className="bg-[#18181b] p-4 rounded border border-neutral-800">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                            <span className="text-sm text-lime-400 font-mono font-semibold">
+                            <div className="w-2 h-2 bg-neutral-100 rounded-full animate-pulse"></div>
+                            <span className="text-sm text-white font-mono font-semibold">
                               {visitor.country}, {visitor.city}
                             </span>
                           </div>
@@ -748,7 +749,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-xs text-neutral-500 font-mono">📄</span>
-                            <span className="text-sm text-lime-400 font-mono font-semibold">
+                            <span className="text-sm text-white font-mono font-semibold">
                               {getPageName(visitor.pageUrl)}
                             </span>
                           </div>
@@ -784,13 +785,13 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
           {activeTab === 'setup' && selectedProject && (
             <div className="space-y-6">
               <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h2 className="text-xl font-bold text-green-400 mb-4 font-mono">Setup Instructions</h2>
+                <h2 className="text-xl font-bold text-neutral-100 mb-4 font-mono">Setup Instructions</h2>
                 <p className="text-neutral-400 mb-4 font-mono">
-                  Add this script to your website&apos;s <code className="bg-[#18181b] p-1 rounded text-lime-400">&lt;head&gt;</code> to start tracking visitors:
+                  Add this script to your website&apos;s <code className="bg-[#18181b] p-1 rounded text-white">&lt;head&gt;</code> to start tracking visitors:
                 </p>
                 
                 <div className="bg-[#18181b] p-4 rounded border border-neutral-800 mb-4">
-                  <code className="text-lime-400 font-mono text-sm select-all">
+                  <code className="text-white font-mono text-sm select-all">
                     {getTrackingScript(selectedProject.id)}
                   </code>
                 </div>
@@ -798,7 +799,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 <button
                   onClick={() => copyToClipboard(getTrackingScript(selectedProject.id))}
                   disabled={isCopyingScript}
-                  className="px-4 py-2 bg-lime-400 text-[#18181b] rounded hover:bg-lime-300 transition font-mono cursor-pointer disabled:bg-lime-400/50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-4 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   {isCopyingScript ? (
                     <>
@@ -812,15 +813,15 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               </div>
 
               <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h3 className="text-green-400 font-semibold mb-4 font-mono">Project Details</h3>
+                <h3 className="text-neutral-100 font-semibold mb-4 font-mono">Project Details</h3>
                 <div className="space-y-2 text-sm font-mono">
                   <div className="flex justify-between">
                     <span className="text-neutral-400">Project ID:</span>
-                    <span className="text-lime-400">{selectedProject.id}</span>
+                    <span className="text-white">{selectedProject.id}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-neutral-400">Created:</span>
-                    <span className="text-lime-400">
+                    <span className="text-white">
                       {new Date(selectedProject.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -850,7 +851,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
           <div className="bg-[#23272e] p-6 rounded-lg border border-red-500/50 w-full max-w-md">
             <h3 className="text-xl font-bold text-red-400 mb-2 font-mono">Delete Project</h3>
             <p className="text-neutral-400 mb-4 text-sm font-mono">
-              This action cannot be undone. This will permanently delete the <strong className="text-lime-400">{selectedProject.name}</strong> project and all of its associated data.
+              This action cannot be undone. This will permanently delete the <strong className="text-white">{selectedProject.name}</strong> project and all of its associated data.
             </p>
             <p className="text-neutral-400 mb-4 text-sm font-mono">
               Please type the project name to confirm:
@@ -860,7 +861,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               placeholder={selectedProject.name}
               value={deleteConfirmationName}
               onChange={(e) => setDeleteConfirmationName(e.target.value)}
-              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-lime-400 font-mono mb-4"
+              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && deleteProject()}
             />
             <div className="flex gap-3">
@@ -897,20 +898,20 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {showNewProjectModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800 w-96">
-            <h3 className="text-xl font-bold text-green-400 mb-4 font-mono">Create New Project</h3>
+            <h3 className="text-xl font-bold text-neutral-100 mb-4 font-mono">Create New Project</h3>
             <input
               type="text"
               placeholder="Project name"
               value={newProjectName}
               onChange={(e) => setNewProjectName(e.target.value)}
-              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-lime-400 font-mono mb-4"
+              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && createProject()}
             />
             <div className="flex gap-3">
               <button
                 onClick={createProject}
                 disabled={isCreatingProject}
-                className="flex-1 px-4 py-2 bg-lime-400 text-[#18181b] rounded hover:bg-lime-300 transition font-mono cursor-pointer disabled:bg-lime-400/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isCreatingProject ? (
                   <>
@@ -927,6 +928,55 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   setNewProjectName('')
                 }}
                 disabled={isCreatingProject}
+                className="flex-1 px-4 py-2 bg-neutral-700 text-neutral-300 rounded hover:bg-neutral-600 transition font-mono cursor-pointer disabled:bg-neutral-700/50 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Project Modal */}
+      {showDeleteModal && selectedProject && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-[#23272e] p-6 rounded-lg border border-red-500/50 w-full max-w-md">
+            <h3 className="text-xl font-bold text-red-400 mb-2 font-mono">Delete Project</h3>
+            <p className="text-neutral-400 mb-4 text-sm font-mono">
+              This action cannot be undone. This will permanently delete the <strong className="text-white">{selectedProject.name}</strong> project and all of its associated data.
+            </p>
+            <p className="text-neutral-400 mb-4 text-sm font-mono">
+              Please type the project name to confirm:
+            </p>
+            <input
+              type="text"
+              placeholder={selectedProject.name}
+              value={deleteConfirmationName}
+              onChange={(e) => setDeleteConfirmationName(e.target.value)}
+              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
+              onKeyPress={(e) => e.key === 'Enter' && deleteProject()}
+            />
+            <div className="flex gap-3">
+              <button
+                onClick={deleteProject}
+                disabled={deleteConfirmationName !== selectedProject.name || isDeletingProject}
+                className="flex-1 px-4 py-2 bg-red-500 text-white rounded transition font-mono cursor-pointer disabled:bg-red-500/30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isDeletingProject ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Deleting...
+                  </>
+                ) : (
+                  'Delete this project'
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false)
+                  setDeleteConfirmationName('')
+                }}
+                disabled={isDeletingProject}
                 className="flex-1 px-4 py-2 bg-neutral-700 text-neutral-300 rounded hover:bg-neutral-600 transition font-mono cursor-pointer disabled:bg-neutral-700/50 disabled:cursor-not-allowed"
               >
                 Cancel

@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { 
   CheckCircleIcon,
   ChartBarIcon,
@@ -21,7 +22,7 @@ interface LandingProps {
 
 const features = [
   {
-    icon: <EyeIcon className="h-7 w-7 text-green-400" />,
+    icon: <EyeIcon className="h-7 w-7 text-neutral-100" />,
     title: 'Live User Feed',
     desc: 'See every visitor in real time, including device, browser, and location. No delay, pure live data.'
   },
@@ -63,24 +64,24 @@ export default function Landing({ session }: LandingProps) {
       {/* Navbar */}
       <nav className="w-full border-b border-neutral-800 sticky top-0 z-30 bg-[#18181b]/90 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 sm:px-10 flex items-center justify-between h-14">
-          <div className="flex items-center gap-4 font-bold text-lg tracking-tight text-lime-400">
+          <Link href="/" className="flex items-center gap-4 font-bold text-lg tracking-tight text-white hover:opacity-80 transition-opacity">
             <span className="font-mono">WebGhost 👻</span>
-          </div>
+          </Link>
           <div className="hidden md:flex items-center gap-8 text-xs font-semibold">
-            <a href="#features" className="hover:text-lime-400 transition px-2">Features</a>
-            <a href="#how" className="hover:text-lime-400 transition px-2">How It Works</a>
-            <a href="#code" className="hover:text-lime-400 transition px-2">Code</a>
-            <a href="#testimonials" className="hover:text-lime-400 transition px-2">Devs</a>
+            <a href="#features" className="hover:text-white transition px-2">Features</a>
+            <a href="#how" className="hover:text-white transition px-2">How It Works</a>
+            <a href="#code" className="hover:text-white transition px-2">Code</a>
+            <a href="#testimonials" className="hover:text-white transition px-2">Devs</a>
             {session?.user ? (
-              <a href="/dashboard" className="hover:text-lime-400 transition flex items-center gap-2 px-3 py-1 border border-lime-400 rounded bg-[#18181b]">
+              <a href="/dashboard" className="hover:text-white transition flex items-center gap-2 px-3 py-1 border border-neutral-700 rounded bg-[#18181b]">
                 <ArrowRightEndOnRectangleIcon className="h-4 w-4" /> Dashboard
               </a>
             ) : (
-              <a href="/auth" className="hover:text-lime-400 transition flex items-center gap-2 px-3 py-1 border border-lime-400 rounded bg-[#18181b]">
+              <a href="/auth" className="hover:text-white transition flex items-center gap-2 px-3 py-1 border border-neutral-700 rounded bg-[#18181b]">
                 <ArrowRightEndOnRectangleIcon className="h-4 w-4" /> Login
               </a>
             )}
-            <a href="/auth" className="ml-4 px-5 py-2 rounded bg-lime-400 text-[#18181b] hover:bg-lime-300 transition font-bold shadow-sm">Get Started</a>
+            <a href="/auth" className="ml-4 px-5 py-2 rounded bg-white text-[#18181b] hover:bg-neutral-200 transition font-bold shadow-sm">Get Started</a>
           </div>
           <div className="md:hidden">
             <button onClick={() => setIsMobileMenuOpen(true)} className="text-neutral-300">
@@ -94,23 +95,23 @@ export default function Landing({ session }: LandingProps) {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-[#18181b] md:hidden">
           <div className="flex justify-between items-center p-4 border-b border-neutral-800">
-            <span className="font-mono font-bold text-lg text-lime-400">WebGhost 👻</span>
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="font-mono font-bold text-lg text-white">WebGhost 👻</Link>
             <button onClick={() => setIsMobileMenuOpen(false)} className="text-neutral-300">
               <XMarkIcon className="h-6 w-6" />
             </button>
           </div>
           <div className="flex flex-col items-center justify-center h-[calc(100vh-60px)] gap-6 text-lg">
-            <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-lime-400 transition">Features</a>
-            <a href="#how" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-lime-400 transition">How It Works</a>
-            <a href="#code" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-lime-400 transition">Code</a>
-            <a href="#testimonials" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-lime-400 transition">Devs</a>
+            <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition">Features</a>
+            <a href="#how" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition">How It Works</a>
+            <a href="#code" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition">Code</a>
+            <a href="#testimonials" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white transition">Devs</a>
             <div className="w-4/5 border-t border-neutral-800 my-4"></div>
             {session?.user ? (
-              <a href="/dashboard" className="w-4/5 text-center px-6 py-3 rounded border-2 border-lime-400 bg-lime-400 text-[#18181b] font-bold shadow">
+              <a href="/dashboard" className="w-4/5 text-center px-6 py-3 rounded border-2 border-white bg-white text-[#18181b] font-bold shadow">
                 Go to Dashboard
               </a>
             ) : (
-              <a href="/auth" className="w-4/5 text-center px-6 py-3 rounded border-2 border-lime-400 bg-lime-400 text-[#18181b] font-bold shadow">
+              <a href="/auth" className="w-4/5 text-center px-6 py-3 rounded border-2 border-white bg-white text-[#18181b] font-bold shadow">
                 Get Started Free
               </a>
             )}
@@ -121,50 +122,39 @@ export default function Landing({ session }: LandingProps) {
       {/* Hero Section */}
       <section className="max-w-2xl mx-auto px-3 sm:px-6 py-16 text-center flex flex-col items-center">
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="text-3xl sm:text-5xl font-extrabold mb-4 tracking-tight font-mono">
-          <span className="inline-block w-full px-4 py-2 bg-gradient-to-r from-lime-400 via-teal-400 to-fuchsia-500 animate-text-gradient">
+          <span className="inline-block w-full px-4 py-2 bg-gradient-to-r from-neutral-100 via-teal-400 to-fuchsia-500 animate-text-gradient">
             See Who&apos;s On Your Site — Right Now
           </span>
         </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }} className="text-base sm:text-lg text-lime-300 mb-8 font-mono">
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }} className="text-base sm:text-lg text-neutral-100 mb-8 font-mono">
           Realtime, privacy-first analytics for devs. Know who&apos;s visiting, where they came from, and what they&apos;re doing — instantly.
         </motion.p>
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.7 }} className="flex flex-col sm:flex-row gap-3 justify-center mb-6 w-full">
           {session?.user ? (
-            <a href="/dashboard" className="w-full h-12 sm:w-[250px] sm:h-[54px] flex items-center justify-center px-6 py-3 rounded border-2 border-lime-400 bg-lime-400 text-[#18181b] font-bold text-base shadow hover:bg-[#18181b] hover:text-lime-400 transition gap-2">
+            <a href="/dashboard" className="w-full h-12 sm:w-[250px] sm:h-[54px] flex items-center justify-center px-6 py-3 rounded border-2 border-white bg-white text-[#18181b] font-bold text-base shadow hover:bg-[#18181b] hover:text-white transition gap-2">
               Go to Dashboard <ArrowRightIcon className="h-5 w-5" />
             </a>
           ) : (
-            <a href="/auth" className="w-full h-12 sm:w-[250px] sm:h-[54px] flex items-center justify-center px-6 py-3 rounded border-2 border-lime-400 bg-lime-400 text-[#18181b] font-bold text-base shadow hover:bg-[#18181b] hover:text-lime-400 transition gap-2">
+            <a href="/auth" className="w-full h-12 sm:w-[250px] sm:h-[54px] flex items-center justify-center px-6 py-3 rounded border-2 border-white bg-white text-[#18181b] font-bold text-base shadow hover:bg-[#18181b] hover:text-white transition gap-2">
               Get Started Free <ArrowRightIcon className="h-5 w-5" />
             </a>
           )}
-          <div className="w-full h-12 sm:w-[250px] sm:h-[54px] flex items-center justify-center mt-2 sm:mt-0 sm:ml-3">
-            <a href="https://www.producthunt.com/products/watch-dog?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-watch&#0045;dog" target="_blank" rel="noopener">
-              <img
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=986120&theme=neutral&t=1751312317108"
-                alt="Watch Dog - Live visitor tracking, no cookies, 1-line setup | Product Hunt"
-                style={{ width: '200px', height: '44px', borderRadius: '8px' }}
-                width="200"
-                height="44"
-              />
-            </a>
-          </div>
         </motion.div>
         
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.7 }} className="text-xs text-lime-700 mt-2 font-mono">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.7 }} className="text-xs text-neutral-500 mt-2 font-mono">
           Trusted by solo devs, indie hackers, and tiny startups.
         </motion.div>
       </section>
 
             <section id="code" className="max-w-3xl mx-auto px-3 sm:px-6 py-12">
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-xl sm:text-2xl font-bold text-center mb-6 text-green-400 font-mono">Add Analytics in 5 Seconds</motion.h2>
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-xl sm:text-2xl font-bold text-center mb-6 text-neutral-100 font-mono">Add Analytics in 5 Seconds</motion.h2>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="relative flex flex-col items-center justify-center">
-          <pre className="bg-[#18181b] text-green-400 font-mono rounded-xl p-5 text-base shadow-2xl border border-green-900 text-center w-full max-w-2xl mb-2 whitespace-pre-wrap overflow-x-auto break-words">
+          <pre className="bg-[#18181b] text-neutral-100 font-mono rounded-xl p-5 text-base shadow-2xl border border-neutral-800 text-center w-full max-w-2xl mb-2 whitespace-pre-wrap overflow-x-auto break-words">
             <code className="select-all">{codeExample}</code>
           </pre>
           <button
             onClick={() => {navigator.clipboard.writeText(codeExample)}}
-            className="absolute top-3 right-4 bg-lime-400 text-[#18181b] px-3 py-1 rounded font-bold text-xs shadow hover:bg-lime-300 transition focus:outline-none focus:ring-2 focus:ring-lime-400"
+            className="absolute top-3 right-4 bg-white text-[#18181b] px-3 py-1 rounded font-bold text-xs shadow hover:bg-neutral-200 transition focus:outline-none focus:ring-2 focus:ring-white"
             aria-label="Copy code"
           >
             Copy
@@ -175,7 +165,7 @@ export default function Landing({ session }: LandingProps) {
 
       {/* How It Works Section */}
       <section id="how" className="max-w-4xl mx-auto px-3 sm:px-6 py-12">
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-xl sm:text-2xl font-bold text-center mb-8 text-green-400 font-mono">How It Works</motion.h2>
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-xl sm:text-2xl font-bold text-center mb-8 text-neutral-100 font-mono">How It Works</motion.h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1, duration: 0.7 }} className="bg-[#23272e] rounded-lg p-5 flex flex-col items-center text-center shadow border border-neutral-800">
             <CodeBracketIcon className="h-8 w-8 text-yellow-400 mb-2" />
@@ -188,7 +178,7 @@ export default function Landing({ session }: LandingProps) {
             <div className="text-neutral-400 text-xs font-mono">See live data in your dashboard as soon as someone visits your site.</div>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.7 }} className="bg-[#23272e] rounded-lg p-5 flex flex-col items-center text-center shadow border border-neutral-800">
-            <EyeIcon className="h-8 w-8 text-green-400 mb-2" />
+            <EyeIcon className="h-8 w-8 text-neutral-100 mb-2" />
             <div className="font-semibold text-base mb-1 font-mono">Analyze & Build</div>
             <div className="text-neutral-400 text-xs font-mono">Use our API or dashboard to analyze, export, or automate your analytics.</div>
           </motion.div>
@@ -197,7 +187,7 @@ export default function Landing({ session }: LandingProps) {
 
       {/* Features Section */}
       <section id="features" className="max-w-5xl mx-auto px-3 sm:px-6 py-12">
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-xl sm:text-2xl font-bold text-center mb-8 text-green-400 font-mono">Features for Developers</motion.h2>
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-xl sm:text-2xl font-bold text-center mb-8 text-neutral-100 font-mono">Features for Developers</motion.h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {features.map((f, i) => (
             <motion.div
@@ -224,13 +214,13 @@ export default function Landing({ session }: LandingProps) {
       <footer className="border-t border-neutral-800 py-8 mt-12 text-xs font-mono">
         <div className="max-w-5xl mx-auto px-3 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex gap-4 mb-2 md:mb-0">
-            <a href="https://x.com/subhash-jh" target="_blank" rel="noopener" className="hover:text-green-400 transition">Twitter</a>
-            <a href="https://github.com/subhash-jhaa/" target="_blank" rel="noopener" className="hover:text-green-400 transition">GitHub</a>
+            <a href="https://x.com/subhash-jh" target="_blank" rel="noopener" className="hover:text-neutral-100 transition">Twitter</a>
+            <a href="https://github.com/subhash-jhaa/" target="_blank" rel="noopener" className="hover:text-neutral-100 transition">GitHub</a>
           </div>
           <div className="text-neutral-500 flex items-center gap-2">
             <span>© 2025 WebGhost</span>
             <span>•</span>
-            <span>Made with ❤️ by <a href="https://x.com/subhash-jh" target="_blank" rel="noopener" className="text-green-400 hover:underline">Subhash</a></span>
+            <span>Made with ❤️ by <a href="https://x.com/subhash-jh" target="_blank" rel="noopener" className="text-neutral-100 hover:underline">Subhash</a></span>
           </div>
         </div>
       </footer>
