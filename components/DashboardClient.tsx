@@ -106,16 +106,21 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
     if (!selectedProject) return;
     setDataFetched(false);
     try {
-      const [dailyRes, countriesRes, referrersRes] = await Promise.all([
-        fetch(`/api/stats/project/${selectedProject.id}/7days`),
-        fetch(`/api/stats/project/${selectedProject.id}/countries`),
-        fetch(`/api/stats/project/${selectedProject.id}/referrers`)
-      ]);
+      const fetchWithCheck = async (url: string) => {
+        const res = await fetch(url);
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+          throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      };
+
       const [dailyData, countriesData, referrersData] = await Promise.all([
-        dailyRes.json(),
-        countriesRes.json(),
-        referrersRes.json()
+        fetchWithCheck(`/api/stats/project/${selectedProject.id}/7days`),
+        fetchWithCheck(`/api/stats/project/${selectedProject.id}/countries`),
+        fetchWithCheck(`/api/stats/project/${selectedProject.id}/referrers`)
       ]);
+
       setDailyStats(dailyData);
       setCountryStats(countriesData);
       setReferrerStats(referrersData);
