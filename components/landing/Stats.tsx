@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { CARD, CARD_HOVER, MONO } from './Primitives';
+import { cn, CARD, CARD_HOVER, MONO } from './Primitives';
 import { STATS } from './Constants';
 
 function StatsRow() {
@@ -21,9 +21,6 @@ function StatsRow() {
     </div>
   );
 }
-
-// Helper for StatsRow
-function cn(...c: (string | undefined | false)[]) { return c.filter(Boolean).join(' '); }
 
 export function Stats() {
   return (

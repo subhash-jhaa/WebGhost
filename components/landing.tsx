@@ -1,8 +1,8 @@
-"use client"
 import React from 'react';
 import { Session } from 'next-auth';
 import { Navbar } from './landing/Navbar';
 import { Hero } from './landing/Hero';
+import { HeroVisuals } from './landing/HeroVisuals';
 import { Stats } from './landing/Stats';
 import { HowItWorks } from './landing/HowItWorks';
 import { Features } from './landing/Features';
@@ -24,6 +24,9 @@ export default function Landing({ session }: LandingProps) {
 
       {/* ── Hero ───────────────────────────────────────────────────────────── */}
       <Hero />
+
+      {/* ── Hero Visuals ───────────────────────────────────────────────────── */}
+      <HeroVisuals />
 
       {/* ── Stats ──────────────────────────────────────────────────────────── */}
       <Stats />

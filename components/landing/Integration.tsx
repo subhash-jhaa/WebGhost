@@ -1,8 +1,8 @@
 "use client"
 import React from 'react';
 import { Check } from 'lucide-react';
-import { SectionLabel, CARD } from './Primitives';
-import { HeroScript } from './Hero';
+import { cn, SectionLabel, CARD } from './Primitives';
+import { HeroScript } from './HeroVisuals';
 
 export function Integration() {
   return (
@@ -41,6 +41,3 @@ export function Integration() {
     </section>
   );
 }
-
-// Helper for Integration
-function cn(...c: (string | undefined | false)[]) { return c.filter(Boolean).join(' '); }

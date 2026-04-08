@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Session } from 'next-auth';
 import { Menu, X, LogIn, ChevronRight } from 'lucide-react';
-import { Button } from './Primitives';
+import { Button, cn, MONO } from './Primitives';
 
 interface NavbarProps {
   session?: Session | null;
@@ -17,7 +17,7 @@ export function Navbar({ session }: NavbarProps) {
       <nav className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <span className="font-mono text-base font-bold tracking-tight text-zinc-100">WebGhost</span>
+            <span className={cn(MONO, "text-base font-bold tracking-tight text-zinc-100")}>WebGhost</span>
             <span className="text-base">👻</span>
           </Link>
 
@@ -52,7 +52,7 @@ export function Navbar({ session }: NavbarProps) {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-zinc-950 flex flex-col">
           <div className="flex items-center justify-between border-b border-zinc-800 px-4 h-14">
-            <span className="font-mono font-bold text-zinc-100">WebGhost 👻</span>
+            <span className={cn(MONO, "font-bold text-zinc-100")}>WebGhost 👻</span>
             <button className="p-2 text-zinc-400 hover:bg-zinc-800 rounded-md" onClick={() => setMobileOpen(false)}>
               <X className="h-5 w-5" />
             </button>

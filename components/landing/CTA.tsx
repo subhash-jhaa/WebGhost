@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { CARD, MONO, Button } from './Primitives';
+import { cn, CARD, MONO, Button } from './Primitives';
 
 export function CTA() {
   return (
@@ -29,6 +29,3 @@ export function CTA() {
     </section>
   );
 }
-
-// Helper for CTA
-function cn(...c: (string | undefined | false)[]) { return c.filter(Boolean).join(' '); }

@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { MONO } from './Primitives';
+import { cn, MONO } from './Primitives';
 
 export function Footer() {
   return (
@@ -16,6 +16,3 @@ export function Footer() {
     </footer>
   );
 }
-
-// Helper for Footer
-function cn(...c: (string | undefined | false)[]) { return c.filter(Boolean).join(' '); }

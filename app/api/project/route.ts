@@ -60,6 +60,11 @@ export async function GET(): Promise<ProjectsResponse> {
     return createSuccessResponse(result.data || []);
   } catch (error) {
     console.error('Project fetch error:', error);
+    if (error instanceof Error) {
+      if (error.message.includes('Unauthorized')) {
+        return createErrorResponse('Unauthorized', 401);
+      }
+    }
     return createErrorResponse('Internal server error', 500);
   }
 } 

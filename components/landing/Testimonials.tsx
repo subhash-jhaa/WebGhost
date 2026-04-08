@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SectionLabel, CARD, CARD_HOVER, fadeUp } from './Primitives';
+import { cn, SectionLabel, CARD, CARD_HOVER, MONO, fadeUp } from './Primitives';
 import { TESTIMONIALS } from './Constants';
 
 export function Testimonials() {
@@ -39,7 +39,3 @@ export function Testimonials() {
     </section>
   );
 }
-
-// Helper for Testimonials
-function cn(...c: (string | undefined | false)[]) { return c.filter(Boolean).join(' '); }
-const MONO = "font-mono";

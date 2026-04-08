@@ -1,4 +1,3 @@
-"use client"
 import React from 'react';
 
 // ─── Utility ──────────────────────────────────────────────────────────────────
@@ -60,4 +59,5 @@ export const fadeUp = {
 // ─── Design Tokens ────────────────────────────────────────────────────────────
 export const CARD = "rounded-xl border border-zinc-800 bg-zinc-900";
 export const CARD_HOVER = "hover:border-zinc-700 transition-colors duration-200";
-export const MONO = "font-mono";
+// Uses the JetBrains Mono variable injected by the root layout
+export const MONO = "font-[family-name:var(--font-mono)]";

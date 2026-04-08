@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SectionLabel, CARD, CARD_HOVER, fadeUp } from './Primitives';
+import { cn, SectionLabel, CARD, CARD_HOVER, fadeUp } from './Primitives';
 import { FEATURES } from './Constants';
 
 export function Features() {
@@ -37,6 +37,3 @@ export function Features() {
     </section>
   );
 }
-
-// Helper for Features
-function cn(...c: (string | undefined | false)[]) { return c.filter(Boolean).join(' '); }
