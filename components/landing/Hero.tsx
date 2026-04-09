@@ -16,7 +16,7 @@ export function Hero() {
       className="mx-auto max-w-5xl px-4 sm:px-6 pt-48 pb-20 text-center flex flex-col items-center justify-center min-h-[60vh]"
     >
       <motion.div variants={fadeUp} custom={0}>
-        <SectionLabel>Introducing WebGhost v1.0</SectionLabel>
+        <SectionLabel>Introducing spectr v1.0</SectionLabel>
       </motion.div>
 
       <motion.h1

@@ -16,6 +16,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { LogoMark } from './landing/Logo'
 
 interface DashboardClientProps {
   session: Session
@@ -361,7 +362,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 <UserGroupIcon className="h-8 w-8 text-white" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-white font-mono mb-4">Welcome to WebGhost! 👻</h2>
+            <h2 className="text-2xl font-bold text-white font-mono mb-4">Welcome to spectr!</h2>
             <p className="text-zinc-400 font-mono mb-6">
               Create your first project to start tracking visitors in real-time. It only takes a few seconds to set up.
             </p>
@@ -428,8 +429,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         <div className="p-6">
           <div className="flex items-center justify-between gap-2 mb-8">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <UserGroupIcon className="h-6 w-6 text-white" />
-              <span className="font-bold text-lg text-white font-mono">WebGhost 👻</span>
+              <LogoMark size={28} />
+              <span className="font-bold text-lg text-white font-mono">spectr</span>
             </Link>
             <button
               onClick={() => setIsSidebarOpen(false)}

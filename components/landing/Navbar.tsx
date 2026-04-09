@@ -5,15 +5,16 @@ import { Session } from "next-auth";
 import { LogIn, ChevronRight, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, MONO } from "./Primitives";
+import { Logo, LogoMark } from "./Logo";
 
 interface NavbarProps {
   session?: Session | null;
 }
 
 const NAV_LINKS = [
-  { name: "Features", href: "#features" },
-  { name: "How It Works", href: "#how-it-works" },
-  { name: "Integration", href: "#code" },
+  { name: "Features", href: "/#features" },
+  { name: "How It Works", href: "/#how-it-works" },
+  { name: "Integration", href: "/#code" },
 ];
 
 const SPRING = { type: "spring", stiffness: 400, damping: 20 } as const;
@@ -81,15 +82,10 @@ export function Navbar({ session }: NavbarProps) {
       >
         <div className="mx-auto h-full max-w-7xl px-4 sm:px-6 flex items-center justify-between">
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-2">
-            <motion.span whileHover={{ scale: 1.04 }} transition={SPRING} className={cn(MONO, "text-[15px] font-bold text-white drop-shadow-[0_0_14px_rgba(255,255,255,0.18)]")}>
-              WebGhost
-            </motion.span>
-            <motion.span
-              animate={{ rotate: [0, -8, 8, -6, 6, 0] }}
-              transition={{ repeat: Infinity, repeatDelay: 4, duration: 0.6, ease: "easeInOut" }}
-              className="text-[17px] leading-none select-none inline-block"
-            >👻</motion.span>
+          <Link href="/" className="flex items-center">
+            <motion.div whileHover={{ scale: 1.02 }} transition={SPRING}>
+              <Logo className="h-10 w-auto" />
+            </motion.div>
           </Link>
 
           {/* Desktop nav */}
@@ -162,7 +158,7 @@ export function Navbar({ session }: NavbarProps) {
             >
               {/* Header */}
               <div className="flex h-16 shrink-0 items-center justify-between px-5 border-b border-white/[0.06]">
-                <span className={cn(MONO, "font-bold text-white text-sm")}>WebGhost 👻</span>
+                <LogoMark size={28} />
                 <motion.button whileTap={{ scale: 0.9 }} onClick={() => setOpen(false)}
                   className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-400 hover:bg-white/5 hover:text-white transition-colors"
                   aria-label="Close menu"

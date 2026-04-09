@@ -101,7 +101,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
                 <div className="w-1 h-1 rounded-full bg-amber-900/50" />
                 <div className="w-1 h-1 rounded-full bg-emerald-900/50" />
               </div>
-              <div className="text-zinc-400">$ node webghost.js</div>
+              <div className="text-zinc-400">$ node spectr.js</div>
               <div className="text-emerald-500/70">✔ Listening on port 3000</div>
             </div>
           </div>
@@ -123,7 +123,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
                   <span className="text-zinc-600">&lt;script</span>
                   <span className="text-amber-500/80">src</span>
-                  <span className="text-emerald-500/80 break-all">{`"https://webghost.vercel.app/g.js"`}</span>
+                  <span className="text-emerald-500/80 break-all">{`"https://spectr.vercel.app/g.js"`}</span>
                   <span className="text-zinc-600">&gt;&lt;/script&gt;</span>
                 </div>
               </div>

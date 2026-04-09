@@ -13,7 +13,7 @@ export function Footer() {
         className="mx-auto max-w-5xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6"
       >
         <motion.span variants={fadeIn} className={cn(MONO, "text-[12px] text-zinc-600 tracking-tight")}>
-          © 2026 WebGhost 👻 <span className="mx-2 text-zinc-800">|</span> <span className="hover:text-zinc-500 transition-colors cursor-default">Privacy First Analytics</span>
+          © 2026 spectr <span className="mx-2 text-zinc-800">|</span> <span className="hover:text-zinc-500 transition-colors cursor-default">Privacy First Analytics</span>
         </motion.span>
         
         <motion.div variants={fadeIn} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[12px] text-zinc-600">

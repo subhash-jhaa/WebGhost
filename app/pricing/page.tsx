@@ -9,7 +9,10 @@ import {
   ArrowRightIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline'
-import Link from 'next/link'
+import { Navbar } from '@/components/landing/Navbar';
+import { Footer } from '@/components/landing/Footer';
+import { cn, CARD, MONO, fadeUp, staggerContainer, Button } from '@/components/landing/Primitives';
+import { motion } from 'framer-motion';
 
 const Pricing = () => {
   const { data: session, status } = useSession()
@@ -72,11 +75,8 @@ const Pricing = () => {
 
     try {
       if (plan === 'FREE') {
-        // For now, just redirect to dashboard
-        // In a real implementation, you'd update the user's plan in the database
         router.push('/dashboard')
       } else if (plan === 'PRO') {
-        // Redirect to Stripe checkout
         const response = await fetch('/api/stripe/checkout', {
           method: 'POST',
           headers: {
@@ -105,195 +105,153 @@ const Pricing = () => {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-[#18181b] text-neutral-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <div className="text-white font-mono text-lg">Loading...</div>
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+          <div className={cn(MONO, "text-zinc-500 text-sm")}>INITIALIZING...</div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="bg-[#18181b] text-neutral-100 min-h-screen font-mono">
-      {/* Navbar */}
-      <nav className="w-full border-b border-neutral-800 sticky top-0 z-30 bg-[#18181b]/90 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-4 sm:px-10 flex items-center justify-between h-14">
-          <Link href="/" className="flex items-center gap-4 font-bold text-lg tracking-tight text-white hover:opacity-80 transition-opacity">
-            <span className="font-mono">WebGhost 👻</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-8 text-xs font-semibold">
-            <Link href="/#features" className="hover:text-white transition px-2">Features</Link>
-            <Link href="/#how" className="hover:text-white transition px-2">How It Works</Link>
-            <Link href="/#code" className="hover:text-white transition px-2">Code</Link>
-            <Link href="/#testimonials" className="hover:text-white transition px-2">Devs</Link>
-            {session ? (
-              <Link href="/dashboard" className="hover:text-white transition px-3 py-1 border border-neutral-700 rounded bg-[#18181b]">
-                Dashboard
-              </Link>
-            ) : (
-              <Link href="/auth" className="hover:text-white transition px-3 py-1 border border-neutral-700 rounded bg-[#18181b]">
-                Login
-              </Link>
-            )}
-          </div>
-        </div>
-      </nav>
+    <div className="bg-zinc-950 text-zinc-100 min-h-screen selection:bg-white/10">
+      <Navbar />
 
-      {/* Pricing Content */}
-      <div className="min-h-[calc(100vh-120px)] flex items-center justify-center px-4 py-12">
-        <div className="max-w-6xl mx-auto w-full">
+      <main className="relative pt-32 pb-24 overflow-hidden">
+        {/* Background Glows */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-white/[0.02] rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-white/[0.01] rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white font-mono mb-4">
+          <motion.div 
+            initial="hidden" animate="visible" variants={staggerContainer}
+            className="text-center mb-16"
+          >
+            <motion.div variants={fadeUp} className={cn(MONO, "text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-500 mb-4")}>
+              Simple Pricing
+            </motion.div>
+            <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
               Choose Your Plan
-            </h1>
-            <p className="text-neutral-400 text-lg font-mono max-w-2xl mx-auto">
+            </motion.h1>
+            <motion.p variants={fadeUp} className="text-zinc-500 text-lg max-w-2xl mx-auto leading-relaxed">
               Start free and upgrade when you need more power. All plans include real-time analytics and privacy-first tracking.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           {/* Pricing Cards */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {plans.map((plan) => (
-              <div
+          <motion.div 
+            initial="hidden" animate="visible" variants={staggerContainer}
+            className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+          >
+            {plans.map((plan, i) => (
+              <motion.div
                 key={plan.name}
-                className={`relative bg-[#23272e] rounded-lg border p-8 ${
-                  plan.popular 
-                    ? 'border-white shadow-lg shadow-white/10' 
-                    : 'border-neutral-800'
-                }`}
+                variants={fadeUp}
+                custom={i}
+                className={cn(
+                  CARD,
+                  "relative p-8 flex flex-col shadow-2xl transition-all duration-300",
+                  plan.popular ? "border-zinc-500/50 bg-zinc-900/60 ring-1 ring-zinc-500/10" : "bg-zinc-900/40"
+                )}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-white text-[#18181b] px-4 py-1 rounded-full text-xs font-bold font-mono flex items-center gap-1">
+                  <div className="absolute -top-4 left-6">
+                    <span className="bg-zinc-100 text-zinc-950 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-xl shadow-black/20">
                       <SparklesIcon className="h-3 w-3" />
                       Most Popular
                     </span>
                   </div>
                 )}
 
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white font-mono mb-2">
+                <div className="mb-8">
+                  <h3 className={cn(MONO, "text-sm font-bold text-zinc-500 uppercase tracking-widest mb-2")}>
                     {plan.name}
                   </h3>
-                  <div className="flex items-baseline justify-center gap-1 mb-2">
+                  <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-bold text-white">{plan.price}</span>
-                    <span className="text-neutral-400 font-mono">{plan.period}</span>
+                    <span className="text-zinc-500 font-medium">{plan.period}</span>
                   </div>
-                  <p className="text-neutral-400 text-sm font-mono">{plan.description}</p>
+                  <p className="mt-4 text-zinc-400 text-sm leading-relaxed">{plan.description}</p>
                 </div>
 
                 {/* Features */}
-                <div className="space-y-4 mb-8">
-                  <h4 className="text-neutral-100 font-semibold font-mono flex items-center gap-2">
-                    <CheckIcon className="h-4 w-4" />
-                    What&apos;s included:
-                  </h4>
-                  <ul className="space-y-3">
+                <div className="flex-1 space-y-6 mb-8">
+                  <div className="space-y-3">
                     {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckIcon className="h-4 w-4 text-neutral-100 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-neutral-300 font-mono">{feature}</span>
-                      </li>
+                      <div key={index} className="flex items-start gap-3">
+                        <CheckIcon className="h-4 w-4 text-zinc-100 mt-0.5 shrink-0" />
+                        <span className="text-sm text-zinc-300">{feature}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
 
                   {plan.limitations.length > 0 && (
-                    <>
-                      <h4 className="text-red-400 font-semibold font-mono flex items-center gap-2 mt-6">
-                        <XMarkIcon className="h-4 w-4" />
-                        Limitations:
-                      </h4>
-                      <ul className="space-y-3">
-                        {plan.limitations.map((limitation, index) => (
-                          <li key={index} className="flex items-start gap-3">
-                            <XMarkIcon className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-neutral-400 font-mono">{limitation}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
+                    <div className="pt-6 border-t border-zinc-800 space-y-3">
+                      {plan.limitations.map((limitation, index) => (
+                        <div key={index} className="flex items-start gap-3 opacity-50">
+                          <XMarkIcon className="h-4 w-4 text-zinc-600 mt-0.5 shrink-0" />
+                          <span className="text-sm text-zinc-500">{limitation}</span>
+                        </div>
+                      ))}
+                    </div>
                   )}
                 </div>
 
-                {/* CTA Button */}
-                <button
+                <Button
                   onClick={() => handlePlanSelect(plan.plan)}
                   disabled={isLoading}
-                  className={`w-full py-3 px-6 rounded-lg font-bold font-mono transition-all duration-200 flex items-center justify-center gap-2 ${
-                    plan.popular
-                      ? 'bg-white text-[#18181b] hover:bg-neutral-200 shadow-lg shadow-white/20'
-                      : 'bg-neutral-700 text-neutral-300 hover:bg-neutral-600 border border-neutral-600'
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                  variant={plan.popular ? 'default' : 'outline'}
+                  size="lg"
+                  className="w-full group"
                 >
                   {isLoading && selectedPlan === plan.plan ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
-                      Processing...
-                    </>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
                   ) : (
                     <>
                       {plan.buttonText}
-                      <ArrowRightIcon className="h-4 w-4" />
+                      <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
-                </button>
-              </div>
+                </Button>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* FAQ Section */}
-          <div className="mt-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-white font-mono text-center mb-8">
+          <div className="mt-24 max-w-3xl mx-auto">
+            <h2 className="text-2xl font-bold text-white tracking-tight text-center mb-12">
               Frequently Asked Questions
             </h2>
-            <div className="space-y-6">
-              <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h3 className="text-neutral-100 font-semibold font-mono mb-2">
-                  Can I upgrade or downgrade my plan anytime?
-                </h3>
-                <p className="text-neutral-400 text-sm font-mono">
-                  Yes! You can upgrade to Pro anytime. Downgrading to Free will take effect at the end of your current billing period.
-                </p>
-              </div>
-              <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h3 className="text-neutral-100 font-semibold font-mono mb-2">
-                  What happens to my data if I downgrade?
-                </h3>
-                <p className="text-neutral-400 text-sm font-mono">
-                  Your existing data is safe. You&apos;ll keep access to your first 2 projects, and we&apos;ll archive the rest until you upgrade again.
-                </p>
-              </div>
-              <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h3 className="text-neutral-100 font-semibold font-mono mb-2">
-                  Is there a free trial for Pro?
-                </h3>
-                <p className="text-neutral-400 text-sm font-mono">
-                  Yes! You can try Pro features free for 7 days. No credit card required to start.
-                </p>
-              </div>
+            <div className="grid gap-4">
+              {[
+                {
+                  q: "Can I upgrade or downgrade anytime?",
+                  a: "Yes! You can upgrade to Pro anytime. Downgrading to Free will take effect at the end of your current billing period."
+                },
+                {
+                  q: "What happens to my data if I downgrade?",
+                  a: "Your existing data is safe. You'll keep access to your first 2 projects, and we'll archive the rest until you upgrade again."
+                },
+                {
+                  q: "Is there a free trial for Pro?",
+                  a: "Yes! You can try Pro features free for 7 days. No credit card required to start."
+                }
+              ].map((faq, i) => (
+                <div key={i} className={cn(CARD, "p-6 bg-zinc-900/30")}>
+                  <h3 className="text-zinc-100 font-semibold mb-2">{faq.q}</h3>
+                  <p className="text-zinc-500 text-sm leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-neutral-800 py-8 text-xs font-mono">
-        <div className="max-w-5xl mx-auto px-3 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex gap-4 mb-2 md:mb-0">
-            <a href="https://x.com/subhash-jh" target="_blank" rel="noopener" className="hover:text-white transition">Twitter</a>
-            <a href="https://github.com/subhash-jhaa/" target="_blank" rel="noopener" className="hover:text-white transition">GitHub</a>
-          </div>
-          <div className="text-neutral-500 flex items-center gap-2">
-            <span>© 2025 WebGhost</span>
-            <span>•</span>
-            <span>Made with ❤️ by <a href="https://x.com/subhash-jh" target="_blank" rel="noopener" className="text-white hover:underline">Subhash</a></span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
 
-export default Pricing 
+export default Pricing

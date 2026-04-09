@@ -1,233 +1,113 @@
-# WebGhost - Privacy First Analytics Platform
+# 🌌 Spectr - Premium Privacy-First Analytics
 
-A real-time, privacy-first analytics platform for developers. See who's visiting your website right now with a simple one-line script.
+![Spectr Banner](public/preview.png)
 
-##  Features
+> **The next generation of web analytics.** Beautiful, high-performance, and deeply respectful of user privacy.
 
-- **Real-time Live Feed** - See active visitors in real-time
-- **One-line Integration** - Simple script tag to add to any website
-- **Privacy-First** - No cookies, GDPR compliant
-- **OAuth Authentication** - Google, GitHub, and Twitter login
-- **Project Management** - Create multiple projects for different sites
-- **Analytics Dashboard** - 7-day charts, country breakdown, referrer analysis
-- **Developer-Friendly** - Clean API for custom integrations
-
-##  Tech Stack
-
-- **Frontend**: Next.js 14+ (App Router), TypeScript, Tailwind CSS
-- **Backend**: Next.js API Routes, Prisma ORM
-- **Database**: PostgreSQL
-- **Authentication**: NextAuth.js with OAuth providers
-- **Deployment**: Vercel-ready
-
-##  Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd whos-viewing-me
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   Create a `.env.local` file with:
-   ```env
-   # Database
-   DATABASE_URL="postgresql://username:password@localhost:5432/whosviewingme"
-   
-   # NextAuth
-   NEXTAUTH_SECRET="your-secret-key-here"
-   NEXTAUTH_URL="http://localhost:3000"
-   
-   # App URL (for production)
-   NEXT_PUBLIC_APP_URL="https://your-domain.com"
-   
-   # OAuth Providers
-   GOOGLE_CLIENT_ID="your-google-client-id"
-   GOOGLE_CLIENT_SECRET="your-google-client-secret"
-   
-   GITHUB_CLIENT_ID="your-github-client-id"
-   GITHUB_CLIENT_SECRET="your-github-client-secret"
-   
-   TWITTER_CLIENT_ID="your-twitter-client-id"
-   TWITTER_CLIENT_SECRET="your-twitter-client-secret"
-   ```
-
-4. **Set up the database**
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
-
-5. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-## 🔧 OAuth Setup
-
-### Google OAuth
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing
-3. Enable Google+ API
-4. Create OAuth 2.0 credentials
-5. Add `http://localhost:3000/api/auth/callback/google` to authorized redirect URIs
-
-### GitHub OAuth
-1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
-2. Create a new OAuth App
-3. Set homepage URL to `http://localhost:3000`
-4. Set callback URL to `http://localhost:3000/api/auth/callback/github`
-
-### Twitter OAuth
-1. Go to [Twitter Developer Portal](https://developer.twitter.com/)
-2. Create a new app
-3. Set callback URL to `http://localhost:3000/api/auth/callback/twitter`
-
-## 🧪 Testing the Tracking System
-
-### Quick Test Setup
-1. **Start the development server**
-```bash
-npm run dev
-   ```
-
-2. **Create a test project**
-   - Go to `http://localhost:3000/auth` and sign in
-   - Create a new project in the dashboard
-   - Go to the "Setup" tab and copy the tracking script
-
-3. **Test with the built-in test page**
-   - Visit `http://localhost:3000/test`
-   - Open browser dev tools and add the tracking script to the page:
-   ```javascript
-   // In browser console, paste your tracking script
-   // Example: <script src="http://localhost:3000/track.js" data-site="your-project-id"></script>
-   ```
-
-4. **Verify tracking is working**
-   - Go back to your dashboard
-   - Check the "Live Feed" tab
-   - You should see your visit appear in real-time
-
-### Manual Testing
-1. **Create a simple HTML file** for testing:
-   ```html
-   <!DOCTYPE html>
-   <html>
-   <head>
-       <title>Test Page</title>
-       <!-- Add your tracking script here -->
-       <script src="http://localhost:3000/track.js" data-site="your-project-id"></script>
-   </head>
-   <body>
-       <h1>Test Page</h1>
-       <p>This page is being tracked!</p>
-   </body>
-   </html>
-   ```
-
-2. **Open the HTML file** in your browser
-3. **Check your dashboard** - the visit should appear in the live feed
-
-### Production Testing
-1. **Deploy to Vercel** (or your preferred platform)
-2. **Update environment variables** with your production domain
-3. **Test with the production URL** in the tracking script
-
-## 📊 Usage
-
-### 1. Create a Project
-- Sign in with your OAuth provider
-- Click "New Project" in the dashboard
-- Give your project a name
-
-### 2. Add Tracking Script
-- Go to the "Setup" tab
-- Copy the provided script tag
-- Add it to your website's `<head>` section
-
-### 3. View Analytics
-- **Overview**: See live visitors, 7-day traffic, countries, and referrers
-- **Live Feed**: Real-time list of active visitors
-- **Setup**: Get your tracking script and project details
-
-## 🔌 API Endpoints
-
-### Tracking
-- `POST /api/track` - Accept visitor data from tracking script
-
-### Projects
-- `GET /api/project` - Get user's projects
-- `POST /api/project` - Create new project
-
-### Analytics
-- `GET /api/stats/project/[id]/realtime` - Live visitors (last minute)
-- `GET /api/stats/project/[id]/7days` - 7-day visitor counts
-- `GET /api/stats/project/[id]/countries` - Country breakdown
-- `GET /api/stats/project/[id]/referrers` - Referrer breakdown
-
-##  Tracking Script
-
-The tracking script automatically collects:
-- Page URL
-- Referrer information
-- User agent
-- IP address (server-side)
-- Country and city (via Cloudflare headers)
-
-### Production Deployment
-For production, set the `NEXT_PUBLIC_APP_URL` environment variable:
-```env
-NEXT_PUBLIC_APP_URL="https://your-domain.com"
-```
-
-This ensures the tracking script uses your production domain instead of localhost.
-
-##  Deployment
-
-### Vercel (Recommended)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add environment variables in Vercel dashboard
-4. Set `NEXT_PUBLIC_APP_URL` to your Vercel domain
-5. Deploy!
-
-### Other Platforms
-- Set up PostgreSQL database
-- Configure environment variables
-- Set `NEXT_PUBLIC_APP_URL` to your domain
-- Build and deploy with `npm run build`
-
-##  Privacy & Compliance
-
-- **No Cookies**: Tracking script doesn't set any cookies
-- **GDPR Compliant**: Minimal data collection, user consent ready
-- **CCPA Ready**: California privacy law compliant
-- **Server-Side Processing**: IP detection happens server-side
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
-## 🆘 Support
-
-- Create an issue for bugs or feature requests
-- Check the documentation for common questions
-- Join our community discussions
+Spectr is a high-end analytics platform designed for developers who value both **aesthetic excellence** and **data integrity**. With a stunning dark-themed dashboard inspired by modern design trends, Spectr provides real-time insights without the overhead or privacy concerns of traditional trackers.
 
 ---
 
-Built with ❤️ for developers who care about privacy and simplicity.
+## ✨ Features that Define Excellence
+
+### 🌑 Premium Dark Interface
+A state-of-the-art dashboard built with **Aceternity UI** principles. Featuring glassmorphism, smooth animations, and a curated color palette that feels professional and refined.
+
+### ⚡ Real-Time Intelligence
+Watch your traffic as it happens. Our **SSE-powered Live Feed** gives you instantaneous feedback on every visitor, interaction, and event without ever refreshing the page.
+
+### 🛡️ Privacy by Design
+- **No Cookies Required**: Track users without intruding on their privacy.
+- **GDPR & CCPA Compliant**: Built from the ground up to respect global privacy standards.
+- **Zero Fingerprinting**: We focus on high-level traffic patterns, not individual tracking.
+
+### 🛠️ One-Line Integration
+Integrate Spectr into any project in seconds. Simply drop our minimal script tag into your `<head>` and start collecting insights immediately.
+
+---
+
+## 🚀 Technical Architecture
+
+Spectr is built on a modern, robust stack designed for scalability and speed:
+
+- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router, Turbopack)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict mode)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) & [Framer Motion](https://www.framer.com/motion/)
+- **Database**: [PostgreSQL](https://www.postgresql.org/) (Hosted on Neon)
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Auth**: [NextAuth.js](https://next-auth.js.org/) (Google & Twitter providers)
+
+---
+
+## 🛠️ Quick Start Guide
+
+### 1. Installation
+```bash
+git clone https://github.com/subhash-jhaa/WebGhost.git
+cd spectr
+npm install
+```
+
+### 2. Environment Configuration
+Create a `.env` file in the root directory:
+```env
+# Database
+DATABASE_URL="your-postgresql-url"
+
+# NextAuth
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+
+# OAuth Credentials
+GOOGLE_CLIENT_ID="your-google-id"
+GOOGLE_CLIENT_SECRET="your-google-secret"
+TWITTER_CLIENT_ID="your-twitter-id"
+TWITTER_CLIENT_SECRET="your-twitter-secret"
+```
+
+### 3. Database Initialization
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+---
+
+## 📊 The Dashboard Experience
+
+The Spectr dashboard is divided into three core pillars:
+
+1. **Overview**: A high-level view of your 7-day traffic trends, country distributions, and top referrers.
+2. **Live Feed**: A dynamic, real-time stream of incoming visitors, showing their location, page visits, and entry points.
+3. **Project Management**: Effortlessly create tracking keys for multiple domains and manage your analytics assets.
+
+---
+
+## 🔌 API Ecosystem
+
+Spectr provides a clean, documented API for custom integrations:
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/track` | `POST` | Ingest visitor telemetry |
+| `/api/project` | `GET` | List all tracked domains |
+| `/api/realtime` | `GET` | SSE stream for live visitor data |
+| `/api/stats/[id]` | `GET` | Aggregated historical analytics |
+
+---
+
+## 🔒 Privacy Commitment
+
+Spectr does **not** collect personally identifiable information (PII). We utilize server-side IP detection to provide geo-location insights, but we never store full IP addresses or use persistent browser cookies.
+
+---
+
+## 📄 License & Support
+
+Software provided under the **MIT License**.
+
+Built with ❤️ by **subhash-jhaa**. For support, please open an issue in the repository or join our community discussions.
+
+---
+
+**Ready to see who's viewing you?** [Get Started with Spectr](http://localhost:3000/auth)

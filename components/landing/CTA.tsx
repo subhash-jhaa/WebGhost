@@ -16,7 +16,7 @@ export function CTA() {
         <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
         
         <motion.div variants={fadeUp} custom={0} className={cn(MONO, "text-[11px] text-zinc-600 mb-6 bg-zinc-950 px-3 py-1 rounded-full border border-zinc-800 w-fit mx-auto")}>
-          $ webghost init --site=your-domain.com
+          $ spectr init --site=your-domain.com
         </motion.div>
         
         <motion.h2 variants={fadeUp} custom={1} className="font-mono text-2xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-4 text-balance">

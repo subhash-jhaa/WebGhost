@@ -65,7 +65,7 @@ export function Testimonials() {
           <div>
             <SectionLabel>From the community</SectionLabel>
             <h2 className="font-mono text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-4">
-              Devs Love WebGhost
+              Devs Love spectr
             </h2>
             <p className="text-zinc-500 text-base max-w-md leading-relaxed">
               Fast, clean analytics that stay out of your way. See what our early adopters are saying about the platform.
