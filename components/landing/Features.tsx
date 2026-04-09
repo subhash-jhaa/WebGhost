@@ -24,12 +24,14 @@ export function Features() {
   );
 }
 
+type FeatureVariant = 'realtime' | 'privacy' | 'console' | 'script' | 'insights' | 'api';
+
 interface Feature {
-  icon: React.ElementType;
-  title: string;
-  desc: string;
-  variant: 'realtime' | 'privacy' | 'console' | 'script' | 'insights' | 'api';
-  span: number;
+  readonly icon: React.ElementType;
+  readonly title: string;
+  readonly desc: string;
+  readonly variant: FeatureVariant;
+  readonly span: number;
 }
 
 function FeatureCard({ feature, index }: { feature: Feature; index: number }) {

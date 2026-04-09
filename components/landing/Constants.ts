@@ -61,7 +61,7 @@ export const FEATURES = [
     variant: 'api',
     span: 3
   },
-];
+] as const;
 
 export const STEPS = [
   { n: '01', icon: Code2, title: 'Add the Script', desc: 'Paste one line into your HTML. Works with any framework or static site.' },
