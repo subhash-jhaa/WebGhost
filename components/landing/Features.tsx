@@ -24,7 +24,15 @@ export function Features() {
   );
 }
 
-function FeatureCard({ feature, index }: { feature: any; index: number }) {
+interface Feature {
+  icon: React.ElementType;
+  title: string;
+  desc: string;
+  variant: 'realtime' | 'privacy' | 'console' | 'script' | 'insights' | 'api';
+  span: number;
+}
+
+function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
   const { icon: Icon, title, desc, variant, span } = feature;
 
   return (
@@ -113,7 +121,7 @@ function FeatureCard({ feature, index }: { feature: any; index: number }) {
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
                   <span className="text-zinc-600">&lt;script</span>
                   <span className="text-amber-500/80">src</span>
-                  <span className="text-emerald-500/80 break-all">"https://webghost.vercel.app/g.js"</span>
+                  <span className="text-emerald-500/80 break-all">{`"https://webghost.vercel.app/g.js"`}</span>
                   <span className="text-zinc-600">&gt;&lt;/script&gt;</span>
                 </div>
               </div>
@@ -158,10 +166,10 @@ function FeatureCard({ feature, index }: { feature: any; index: number }) {
               {desc}
             </p>
             <div className="mt-auto overflow-x-auto rounded-lg border border-zinc-800 bg-black/40 p-3 font-mono text-[9px] text-zinc-500 group-hover:border-zinc-700 transition-colors">
-              <div className="text-zinc-600 mb-0.5">// GET /api/v1/stats</div>
+              <div className="text-zinc-600 mb-0.5">{`// GET /api/v1/stats`}</div>
               <div className="text-zinc-300">{"{"}</div>
-              <div className="pl-3">"visitors": <span className="text-emerald-400">1284</span>,</div>
-              <div className="pl-3">"active": <span className="text-amber-400">true</span></div>
+              <div className="pl-3">{`"visitors"`}: <span className="text-emerald-400">1284</span>,</div>
+              <div className="pl-3">{`"active"`}: <span className="text-amber-400">true</span></div>
               <div className="text-zinc-300">{"}"}</div>
             </div>
           </div>

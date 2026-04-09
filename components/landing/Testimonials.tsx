@@ -4,7 +4,7 @@ import { motion, useAnimation, useInView } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
-import { cn, SectionLabel, CARD, CARD_HOVER, fadeUp } from './Primitives';
+import { cn, SectionLabel, CARD } from './Primitives';
 import { TESTIMONIALS } from './Constants';
 
 // ─── Local UI Wrappers ────────────────────────────────────────────────────────
@@ -113,7 +113,7 @@ export function Testimonials() {
                 <div className="relative flex-1">
                   <Quote className="absolute -top-3 -left-3 h-8 w-8 text-zinc-800 opacity-50 rotate-180" />
                   <p className="relative z-10 text-lg font-medium text-zinc-100 leading-relaxed italic">
-                    "{t.content}"
+                    {`"${t.content}"`}
                   </p>
                 </div>
 

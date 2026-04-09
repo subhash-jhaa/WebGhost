@@ -1,11 +1,11 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  ArrowRight, Terminal, Copy, Check, Code2,
+  ArrowRight, Code2,
 } from 'lucide-react';
-import { Button, cn, CARD, MONO, fadeUp, staggerContainer, SectionLabel } from './Primitives';
-import { VISITORS } from './Constants';
+import { Button, fadeUp, staggerContainer, SectionLabel } from './Primitives';
+
 
 export function Hero() {
   return (
