@@ -301,23 +301,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   }
 
   const getTrackingScript = (projectId: string) => {
-    // Priority: 
-    // 1. Explicitly set environment variable
-    // 2. Current window origin (if not localhost)
-    // 3. Fallback to production domain
-    let baseUrl = process.env.NEXT_PUBLIC_APP_URL;
-    
-    if (!baseUrl && typeof window !== 'undefined') {
-      const origin = window.location.origin;
-      if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-        baseUrl = 'https://tryspectr.vercel.app';
-      } else {
-        baseUrl = origin;
-      }
-    }
-    
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://tryspectr.vercel.app';
     return `<script src="${baseUrl}/track.js" data-site="${projectId}"></script>`
   }
+
 
   const copyToClipboard = async (text: string) => {
     setIsCopyingScript(true)
