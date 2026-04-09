@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   Terminal, Copy, Check,
 } from 'lucide-react';
-import { cn, CARD, MONO, fadeUp } from './Primitives';
+import { cn, CARD, MONO, fadeUp, staggerContainer, fadeIn, scaleIn } from './Primitives';
 import { VISITORS } from './Constants';
 
 function FlagIcon({ code }: { code: string }) {
@@ -28,8 +28,8 @@ function LiveFeed() {
   }, []);
 
   return (
-    <div className={cn(CARD, "w-full max-w-md mx-auto overflow-hidden")}>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800">
+    <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-md mx-auto overflow-hidden relative shadow-2xl")}>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-900/50">
         <div className="flex items-center gap-2">
           <Terminal className="h-3.5 w-3.5 text-zinc-500" />
           <span className={cn(MONO, "text-xs text-zinc-400")}>live_visitors.log</span>
@@ -37,18 +37,18 @@ function LiveFeed() {
         <div className="flex items-center gap-2">
           <span
             className="h-2 w-2 rounded-full bg-emerald-400"
-            style={{ boxShadow: tick ? '0 0 8px #34d399' : '0 0 4px #34d399', transition: 'box-shadow 0.4s' }}
+            style={{ boxShadow: tick ? '0 0 10px #34d399' : '0 0 4px #34d399', transition: 'box-shadow 0.4s' }}
           />
           <span className="text-[11px] text-zinc-600 font-mono">LIVE</span>
         </div>
       </div>
-      <div className="divide-y divide-zinc-800/60">
+      <div className="divide-y divide-zinc-800/60 bg-black/20">
         {rows.map((v, i) => (
           <motion.div
             key={`${v.flag}-${v.page}-${i}`}
             initial={{ opacity: 0, x: -6 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.25, delay: i * 0.04 }}
+            transition={{ duration: 0.3, delay: i * 0.05 }}
             className="flex items-center justify-between px-4 py-2.5 text-xs"
           >
             <div className="flex items-center gap-2.5 min-w-0">
@@ -62,11 +62,11 @@ function LiveFeed() {
           </motion.div>
         ))}
       </div>
-      <div className="px-4 py-2.5 border-t border-zinc-800 flex items-center gap-2">
+      <div className="px-4 py-2.5 border-t border-zinc-800 flex items-center gap-2 bg-zinc-900/30">
         <span className={cn(MONO, "text-[11px] text-emerald-400")}>●</span>
-        <span className="text-[11px] text-zinc-600">Streaming from 4 active sessions</span>
+        <span className="text-[11px] text-zinc-600">Streaming 1,284 active sessions</span>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -89,12 +89,12 @@ export function HeroScript() {
   ];
 
   return (
-    <div className={cn(CARD, "w-full max-w-lg mx-auto overflow-hidden")}>
+    <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-lg mx-auto overflow-hidden shadow-2xl")}>
       <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 bg-zinc-950">
         <div className="flex items-center gap-1.5">
-          <div className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-          <div className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-          <div className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+          <div className="h-2.5 w-2.5 rounded-full bg-zinc-800" />
+          <div className="h-2.5 w-2.5 rounded-full bg-zinc-800" />
+          <div className="h-2.5 w-2.5 rounded-full bg-zinc-800" />
           <span className={cn(MONO, "ml-2 text-[11px] text-zinc-600")}>index.html</span>
         </div>
         <button
@@ -109,53 +109,77 @@ export function HeroScript() {
       <div className="px-5 py-4 bg-zinc-950">
         <pre className={cn(MONO, "text-sm leading-relaxed")}>
           {lines.map((line, i) => (
-            <div key={i}>
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 + (i * 0.1), duration: 0.5 }}
+            >
               {line.tokens.map((tok, j) => (
                 <span key={j} className={tok.c}>{tok.t}</span>
               ))}
-            </div>
+            </motion.div>
           ))}
         </pre>
       </div>
       <div className="flex items-center gap-2 px-5 py-3 border-t border-zinc-800 bg-zinc-950 flex-wrap">
-        {['< 2KB', 'No npm', 'GDPR safe'].map(b => (
-          <span key={b} className={cn(MONO, "text-[10px] text-zinc-500 border border-zinc-800 rounded px-2 py-0.5")}>
+        {['< 2KB', 'No dependencies', 'Open source'].map((b, i) => (
+          <motion.span 
+            key={b} 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.2 + (i * 0.1) }}
+            className={cn(MONO, "text-[10px] text-zinc-600 border border-zinc-800 rounded px-2 py-0.5")}
+          >
             {b}
-          </span>
+          </motion.span>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export function HeroVisuals() {
   return (
-    <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12">
+    <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12 relative">
+      {/* Background Glows */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-violet-500/5 rounded-full blur-[100px] pointer-events-none" />
+
       <motion.div
-        initial="hidden" whileInView="visible" viewport={{ once: true }}
-        variants={fadeUp} custom={0}
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={staggerContainer}
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10"
       >
-        <div className="flex flex-col gap-3">
-          <div className="text-left">
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-600 mb-2 font-mono">Step 1 — Install</p>
+        <motion.div variants={fadeUp} className="flex flex-col gap-3">
+          <div className="text-left flex items-center gap-3 mb-2">
+            <div className="h-4 w-4 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            </div>
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-600 font-mono">Step 1 — Install</p>
           </div>
           <HeroScript />
-          <div className="flex items-center gap-2 text-xs text-zinc-600 px-1">
+          <motion.div variants={fadeIn} className="flex items-center gap-2 text-xs text-zinc-600 px-1 pt-2">
             <Check className="h-3 w-3 text-emerald-500 shrink-0" />
             <span>Works with React, Next.js, Vue, or plain HTML</span>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="text-left">
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-600 mb-2 font-mono">Step 2 — Watch it live</p>
+          </motion.div>
+        </motion.div>
+
+        <motion.div variants={fadeUp} className="flex flex-col gap-3">
+          <div className="text-left flex items-center gap-3 mb-2">
+            <div className="h-4 w-4 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center overflow-hidden">
+               <div className="h-full w-full bg-gradient-to-tr from-zinc-800 to-zinc-700 animate-pulse" />
+            </div>
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-600 font-mono">Step 2 — Watch it live</p>
           </div>
           <LiveFeed />
-          <div className="flex items-center gap-2 text-xs text-zinc-600 px-1">
+          <motion.div variants={fadeIn} className="flex items-center gap-2 text-xs text-zinc-600 px-1 pt-2">
             <Check className="h-3 w-3 text-emerald-500 shrink-0" />
             <span>Data appears within seconds of installing</span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </section>
   );

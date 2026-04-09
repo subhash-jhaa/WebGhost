@@ -19,12 +19,48 @@ export const STATS = [
 ];
 
 export const FEATURES = [
-  { icon: Eye, title: 'Live User Feed', desc: 'Every visitor in real time — device, browser, country. Zero delay, zero sampling.' },
-  { icon: BarChart3, title: 'Referrer & Country Insights', desc: 'Know exactly where traffic comes from, which links perform, and which regions are active.' },
-  { icon: Code2, title: '1-Line Script', desc: 'Integrate in seconds. One copy-paste. No bloat, no npm, no build step required.' },
-  { icon: Cpu, title: 'Dev Console Mode', desc: 'Open a live analytics console in your browser. Feels like devtools, built for users.' },
-  { icon: ShieldCheck, title: 'Privacy-First', desc: 'No cookies, no fingerprinting. Fully GDPR & CCPA compliant — ethical by default.' },
-  { icon: Plug, title: 'Open REST API', desc: 'Fetch analytics programmatically. Build Slack bots, CLI tools, or custom dashboards.' },
+  { 
+    icon: Eye, 
+    title: 'Live User Feed', 
+    desc: 'Every visitor in real time — device, browser, country. Zero delay, zero sampling.',
+    variant: 'realtime',
+    span: 4
+  },
+  { 
+    icon: ShieldCheck, 
+    title: 'Privacy-First', 
+    desc: 'No cookies, no fingerprinting. Fully GDPR & CCPA compliant — ethical by default.',
+    variant: 'privacy',
+    span: 2
+  },
+  { 
+    icon: Cpu, 
+    title: 'Dev Console Mode', 
+    desc: 'Open a live analytics console in your browser. Feels like devtools, built for users.',
+    variant: 'console',
+    span: 2
+  },
+  { 
+    icon: Code2, 
+    title: '1-Line Script', 
+    desc: 'Integrate in seconds. One copy-paste. No bloat, no npm, no build step required.',
+    variant: 'script',
+    span: 4
+  },
+  { 
+    icon: BarChart3, 
+    title: 'Referrer & Country Insights', 
+    desc: 'Know exactly where traffic comes from, which links perform, and which regions are active.',
+    variant: 'insights',
+    span: 3
+  },
+  { 
+    icon: Plug, 
+    title: 'Open REST API', 
+    desc: 'Fetch analytics programmatically. Build Slack bots, CLI tools, or custom dashboards.',
+    variant: 'api',
+    span: 3
+  },
 ];
 
 export const STEPS = [
@@ -34,7 +70,31 @@ export const STEPS = [
 ];
 
 export const TESTIMONIALS = [
-  { quote: "Dropped it in 30 seconds and had live data instantly. This is exactly what indie devs need.", name: "Alex K.", handle: "@alexbuilds" },
-  { quote: "Finally analytics that don't slow down my site or need GDPR consent banners. Perfect.", name: "Mia T.", handle: "@mia_codes" },
-  { quote: "The dev console mode is wild. I can see users browsing in real time while I'm debugging.", name: "Ravi S.", handle: "@ravi_dev" },
+  {
+    id: 1,
+    name: "Alex Johnson",
+    role: "Full Stack Developer",
+    company: "TechFlow",
+    content: "Dropped it in 30 seconds and had live data instantly. This is exactly what indie devs need. The privacy-first approach is exactly what I was looking for.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=250&h=250&auto=format&fit=crop",
+  },
+  {
+    id: 2,
+    name: "Sarah Miller",
+    role: "Frontend Engineer",
+    company: "DesignHub",
+    content: "Finally analytics that don't slow down my site or need GDPR consent banners. Perfect for my portfolio and client projects.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=250&h=250&auto=format&fit=crop",
+  },
+  {
+    id: 3,
+    name: "Michael Chen",
+    role: "Product Lead",
+    company: "InnovateLabs",
+    content: "The dev console mode is wild. I can see users browsing in real time while I'm debugging. It has changed how we look at user behavior.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=250&h=250&auto=format&fit=crop",
+  },
 ];

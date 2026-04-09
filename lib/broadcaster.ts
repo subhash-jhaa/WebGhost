@@ -14,7 +14,17 @@ export interface Visitor {
 // Store active connections
 export const connections = new Map<string, ReadableStreamDefaultController>();
 
+// Track which controllers have been closed to avoid ERR_INVALID_STATE
+const closedControllers = new WeakSet<ReadableStreamDefaultController>();
+
+export function markControllerClosed(controller: ReadableStreamDefaultController) {
+  closedControllers.add(controller);
+}
+
 export async function sendStats(projectId: string, controller: ReadableStreamDefaultController) {
+  // Do not write to a controller that has already been closed
+  if (closedControllers.has(controller)) return;
+
   try {
     const oneMinuteAgo = new Date(Date.now() - 60 * 1000);
     
@@ -54,7 +64,10 @@ export async function sendStats(projectId: string, controller: ReadableStreamDef
       timestamp: new Date().toISOString(),
     };
 
-    controller.enqueue(`data: ${JSON.stringify(stats)}\n\n`);
+    // Final guard: check again right before enqueue
+    if (!closedControllers.has(controller)) {
+      controller.enqueue(`data: ${JSON.stringify(stats)}\n\n`);
+    }
   } catch (error) {
     console.error('Error getting stats:', error);
   }

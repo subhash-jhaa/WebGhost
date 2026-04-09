@@ -1,13 +1,24 @@
 "use client"
-import React from 'react';
-import { cn, CARD, CARD_HOVER, MONO } from './Primitives';
+import { motion } from 'framer-motion';
+import { cn, CARD, CARD_HOVER, MONO, fadeUp, staggerContainer } from './Primitives';
 import { STATS } from './Constants';
 
 function StatsRow() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <motion.div 
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={staggerContainer}
+      className="grid grid-cols-1 sm:grid-cols-3 gap-3"
+    >
       {STATS.map(({ label, value, icon: Icon, unit }, i) => (
-        <div key={i} className={cn(CARD, CARD_HOVER, "p-5 flex items-start gap-4")}>
+        <motion.div 
+          key={i} 
+          variants={fadeUp}
+          custom={i}
+          className={cn(CARD, CARD_HOVER, "p-5 flex items-start gap-4")}
+        >
           <div className="p-2 rounded-lg bg-zinc-800 border border-zinc-700 shrink-0">
             <Icon className="h-4 w-4 text-zinc-400" />
           </div>
@@ -16,9 +27,9 @@ function StatsRow() {
             <div className="text-sm font-medium text-zinc-300">{label}</div>
             <div className={cn(MONO, "text-[11px] text-zinc-600 mt-0.5")}>{unit}</div>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 

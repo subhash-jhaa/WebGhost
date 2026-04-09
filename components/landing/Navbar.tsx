@@ -1,75 +1,212 @@
-"use client"
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Session } from 'next-auth';
-import { Menu, X, LogIn, ChevronRight } from 'lucide-react';
-import { Button, cn, MONO } from './Primitives';
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Session } from "next-auth";
+import { LogIn, ChevronRight, ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn, MONO } from "./Primitives";
 
 interface NavbarProps {
   session?: Session | null;
 }
 
+const NAV_LINKS = [
+  { name: "Features", href: "#features" },
+  { name: "How It Works", href: "#how-it-works" },
+  { name: "Integration", href: "#code" },
+];
+
+const SPRING = { type: "spring", stiffness: 400, damping: 20 } as const;
+const EASE   = [0.16, 1, 0.3, 1] as const;
+
+// Animated 3-line hamburger ↔ X
+function Hamburger({ open }: { open: boolean }) {
+  const line = "block h-[1.5px] w-full bg-zinc-300 rounded-full";
+  return (
+    <div className="relative w-5 h-4 flex flex-col justify-between">
+      <motion.span animate={open ? { rotate: 45, y: 8 }  : { rotate: 0, y: 0 }}  transition={{ duration: 0.35, ease: EASE }} className={cn(line, "origin-center")} />
+      <motion.span animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} transition={{ duration: 0.2 }} className={line} />
+      <motion.span animate={open ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} transition={{ duration: 0.35, ease: EASE }} className={cn(line, "origin-center")} />
+    </div>
+  );
+}
+
+// Desktop nav link with sliding underline
+function NavLink({ name, href, onClick }: { name: string; href: string; onClick?: () => void }) {
+  return (
+    <a href={href} onClick={onClick} className="group relative px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors duration-200">
+      {name}
+      <span className="absolute bottom-0.5 left-4 right-4 h-px bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+    </a>
+  );
+}
+
+// Reusable spring-scaled button wrapper
+function SpringBtn({ children, className, onClick }: { children: React.ReactNode; className: string; onClick?: () => void }) {
+  return (
+    <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={SPRING} onClick={onClick} className={className}>
+      {children}
+    </motion.button>
+  );
+}
+
 export function Navbar({ session }: NavbarProps) {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen]       = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 24);
+    fn();
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   return (
     <>
-      <nav className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        className={cn(
+          "fixed top-0 inset-x-0 z-50 transition-all duration-500",
+          scrolled
+            ? "h-14 bg-zinc-950/75 backdrop-blur-xl backdrop-saturate-150 border-b border-white/[0.06] shadow-[0_1px_40px_rgba(0,0,0,0.4)]"
+            : "h-16 bg-transparent"
+        )}
+      >
+        <div className="mx-auto h-full max-w-7xl px-4 sm:px-6 flex items-center justify-between">
+          {/* Brand */}
           <Link href="/" className="flex items-center gap-2">
-            <span className={cn(MONO, "text-base font-bold tracking-tight text-zinc-100")}>WebGhost</span>
-            <span className="text-base">👻</span>
+            <motion.span whileHover={{ scale: 1.04 }} transition={SPRING} className={cn(MONO, "text-[15px] font-bold text-white drop-shadow-[0_0_14px_rgba(255,255,255,0.18)]")}>
+              WebGhost
+            </motion.span>
+            <motion.span
+              animate={{ rotate: [0, -8, 8, -6, 6, 0] }}
+              transition={{ repeat: Infinity, repeatDelay: 4, duration: 0.6, ease: "easeInOut" }}
+              className="text-[17px] leading-none select-none inline-block"
+            >👻</motion.span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-1 text-sm">
-            {[['#features', 'Features'], ['#how-it-works', 'How It Works'], ['#code', 'Integration']].map(([href, label]) => (
-              <a key={href} href={href} className="rounded-md px-3 py-1.5 text-zinc-500 hover:text-zinc-100 hover:bg-zinc-800 transition-colors text-[15px] font-medium">
-                {label}
-              </a>
-            ))}
-            <div className="mx-2 h-4 w-px bg-zinc-800" />
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center -mx-1">
+            {NAV_LINKS.map((l) => <NavLink key={l.href} {...l} />)}
+          </nav>
+
+          {/* Desktop CTAs */}
+          <div className="hidden md:flex items-center gap-2">
             {session?.user ? (
-              <a href="/dashboard">
-                <Button variant="outline" size="default"><LogIn className="h-4 w-4" />Dashboard</Button>
-              </a>
+              <Link href="/dashboard">
+                <SpringBtn className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 h-9 text-sm font-medium text-zinc-300 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all">
+                  <LogIn className="h-3.5 w-3.5" /> Dashboard
+                </SpringBtn>
+              </Link>
             ) : (
-              <a href="/auth">
-                <Button variant="outline" size="default"><LogIn className="h-4 w-4" />Login</Button>
-              </a>
+              <Link href="/auth">
+                <SpringBtn className="inline-flex items-center gap-2 rounded-lg px-4 h-9 text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+                  Login
+                </SpringBtn>
+              </Link>
             )}
-            <a href="/auth" className="ml-1">
-              <Button size="default">Get Started <ChevronRight className="h-4 w-4" /></Button>
-            </a>
+            <Link href="/auth">
+              <motion.button
+                whileHover={{ scale: 1.03, boxShadow: "0 0 24px rgba(255,255,255,0.12)" }}
+                whileTap={{ scale: 0.97 }}
+                transition={SPRING}
+                className="relative inline-flex items-center gap-1.5 rounded-lg px-4 h-9 text-sm font-semibold bg-white text-zinc-950 overflow-hidden"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-zinc-100 to-white opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative">Get Started</span>
+                <ChevronRight className="relative h-3.5 w-3.5" />
+              </motion.button>
+            </Link>
           </div>
 
-          <button className="md:hidden rounded-md p-2 text-zinc-400 hover:bg-zinc-800" onClick={() => setMobileOpen(true)}>
-            <Menu className="h-5 w-5" />
-          </button>
+          {/* Mobile trigger */}
+          <motion.button whileTap={{ scale: 0.9 }} onClick={() => setOpen(!open)}
+            className="md:hidden flex h-10 w-10 items-center justify-center rounded-lg text-zinc-400 hover:bg-white/5 hover:text-white transition-colors"
+            aria-label="Toggle menu"
+          >
+            <Hamburger open={open} />
+          </motion.button>
         </div>
-      </nav>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-zinc-950 flex flex-col">
-          <div className="flex items-center justify-between border-b border-zinc-800 px-4 h-14">
-            <span className={cn(MONO, "font-bold text-zinc-100")}>WebGhost 👻</span>
-            <button className="p-2 text-zinc-400 hover:bg-zinc-800 rounded-md" onClick={() => setMobileOpen(false)}>
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="flex flex-col items-center justify-center flex-1 gap-6 text-base">
-            {[['#features', 'Features'], ['#how-it-works', 'How It Works'], ['#code', 'Integration']].map(([href, label]) => (
-              <a key={href} href={href} onClick={() => setMobileOpen(false)} className="text-zinc-300 hover:text-white transition font-medium">
-                {label}
-              </a>
-            ))}
-            <div className="w-48 border-t border-zinc-800 my-1" />
-            <a href="/auth" onClick={() => setMobileOpen(false)} className="w-4/5">
-              <Button size="lg" className="w-full">Get Started Free</Button>
-            </a>
-          </div>
-        </div>
-      )}
+        {/* Glow line on scroll */}
+        <AnimatePresence>
+          {scrolled && (
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} exit={{ opacity: 0, scaleX: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"
+            />
+          )}
+        </AnimatePresence>
+      </motion.header>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div key="bd" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+            />
+            <motion.div key="dr" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
+              transition={{ duration: 0.4, ease: EASE }}
+              className="fixed top-0 right-0 bottom-0 z-50 w-[min(320px,85vw)] flex flex-col bg-zinc-950 border-l border-white/[0.06] shadow-2xl"
+            >
+              {/* Header */}
+              <div className="flex h-16 shrink-0 items-center justify-between px-5 border-b border-white/[0.06]">
+                <span className={cn(MONO, "font-bold text-white text-sm")}>WebGhost 👻</span>
+                <motion.button whileTap={{ scale: 0.9 }} onClick={() => setOpen(false)}
+                  className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-400 hover:bg-white/5 hover:text-white transition-colors"
+                  aria-label="Close menu"
+                >
+                  <Hamburger open={true} />
+                </motion.button>
+              </div>
+
+              {/* Links */}
+              <nav className="flex flex-col gap-1 p-4">
+                {NAV_LINKS.map((l, i) => (
+                  <motion.a key={l.href} href={l.href} onClick={() => setOpen(false)}
+                    initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 + i * 0.06, ease: EASE }}
+                    className="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors group"
+                  >
+                    {l.name}
+                    <ArrowUpRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-60 transition-opacity" />
+                  </motion.a>
+                ))}
+              </nav>
+
+              <div className="mx-5 h-px bg-white/[0.06]" />
+
+              {/* CTA */}
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, ease: EASE }}
+                className="flex flex-col gap-3 p-5 mt-auto"
+              >
+                {[
+                  { label: "Login", icon: <LogIn className="h-4 w-4 opacity-50" />, cls: "border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white" },
+                  { label: "Get Started Free", icon: <ChevronRight className="h-4 w-4 opacity-60" />, cls: "bg-white text-zinc-950 hover:bg-zinc-100 shadow-[0_0_20px_rgba(255,255,255,0.1)]" },
+                ].map(({ label, icon, cls }) => (
+                  <Link key={label} href="/auth" onClick={() => setOpen(false)} className="w-full">
+                    <button className={cn("w-full inline-flex items-center justify-between rounded-xl px-5 py-3.5 text-sm font-medium transition-all", cls)}>
+                      {label} {icon}
+                    </button>
+                  </Link>
+                ))}
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

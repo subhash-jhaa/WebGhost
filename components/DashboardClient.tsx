@@ -107,12 +107,18 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
     setDataFetched(false);
     try {
       const fetchWithCheck = async (url: string) => {
-        const res = await fetch(url);
-        if (!res.ok) {
-          const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
-          throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 10_000);
+        try {
+          const res = await fetch(url, { signal: controller.signal });
+          if (!res.ok) {
+            const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(errorData.error || `HTTP ${res.status}`);
+          }
+          return res.json();
+        } finally {
+          clearTimeout(timer);
         }
-        return res.json();
       };
 
       const [dailyData, countriesData, referrersData] = await Promise.all([
@@ -126,7 +132,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       setReferrerStats(referrersData);
       setDataFetched(true);
     } catch (error) {
-      console.error('Error fetching stats:', error);
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.warn('Stats fetch timed out, will retry on next project selection.');
+      } else {
+        console.error('Error fetching stats:', error);
+      }
       setDataFetched(true); // allow UI to recover
     }
   }, [selectedProject]);
@@ -344,7 +354,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   if (!loading && projects.length === 0) {
   return (
       <>
-        <div className="min-h-screen bg-[#18181b] text-neutral-100 flex items-center justify-center">
+        <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
           <div className="text-center max-w-md mx-auto px-4">
             <div className="animate-pulse">
               <div className="h-16 w-16 bg-white/20 rounded-full mx-auto mb-6 flex items-center justify-center">
@@ -352,12 +362,12 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               </div>
             </div>
             <h2 className="text-2xl font-bold text-white font-mono mb-4">Welcome to WebGhost! 👻</h2>
-            <p className="text-neutral-400 font-mono mb-6">
+            <p className="text-zinc-400 font-mono mb-6">
               Create your first project to start tracking visitors in real-time. It only takes a few seconds to set up.
             </p>
             <button
               onClick={() => setShowNewProjectModal(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono font-bold mx-auto cursor-pointer"
+              className="flex items-center gap-2 px-6 py-3 bg-white text-zinc-950 rounded hover:bg-zinc-200 transition font-mono font-bold mx-auto cursor-pointer"
             >
               <PlusIcon className="h-5 w-5" />
               Create Your First Project
@@ -368,25 +378,25 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         {/* New Project Modal */}
         {showNewProjectModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800 w-96">
-              <h3 className="text-xl font-bold text-neutral-100 mb-4 font-mono">Create New Project</h3>
+            <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800 w-96">
+              <h3 className="text-xl font-bold text-zinc-100 mb-4 font-mono">Create New Project</h3>
               <input
                 type="text"
                 placeholder="Project name"
                 value={newProjectName}
                 onChange={(e) => setNewProjectName(e.target.value)}
-                className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
+                className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
                 onKeyPress={(e) => e.key === 'Enter' && createProject()}
               />
               <div className="flex gap-3">
                 <button
                   onClick={createProject}
                   disabled={isCreatingProject}
-                  className="flex-1 px-4 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-2 bg-white text-zinc-950 rounded hover:bg-zinc-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isCreatingProject ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#18181b]"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-zinc-950"></div>
                       Creating...
                     </>
                   ) : (
@@ -399,7 +409,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     setNewProjectName('')
                   }}
                   disabled={isCreatingProject}
-                  className="flex-1 px-4 py-2 bg-neutral-700 text-neutral-300 rounded hover:bg-neutral-600 transition font-mono cursor-pointer disabled:bg-neutral-700/50 disabled:cursor-not-allowed"
+                  className="flex-1 px-4 py-2 bg-zinc-700 text-zinc-300 rounded hover:bg-zinc-600 transition font-mono cursor-pointer disabled:bg-zinc-700/50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
@@ -412,9 +422,9 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-[#18181b] text-neutral-100 flex">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#23272e] border-r border-neutral-800 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}>
+      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-zinc-900/80 border-r border-zinc-800 backdrop-blur-xl transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}>
         <div className="p-6">
           <div className="flex items-center justify-between gap-2 mb-8">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -423,7 +433,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
             </Link>
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="md:hidden text-neutral-400 hover:text-white cursor-pointer"
+              className="md:hidden text-zinc-400 hover:text-white cursor-pointer"
             >
               <XMarkIcon className="h-6 w-6" />
             </button>
@@ -434,8 +444,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('overview')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
                 activeTab === 'overview' 
-                  ? 'bg-white text-[#18181b]' 
-                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800'
+                  ? 'bg-white text-zinc-950' 
+                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
               }`}
             >
               <ChartBarIcon className="h-5 w-5" />
@@ -445,8 +455,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('live')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
                 activeTab === 'live' 
-                  ? 'bg-white text-[#18181b]' 
-                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800'
+                  ? 'bg-white text-zinc-950' 
+                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
               }`}
             >
               <EyeIcon className="h-5 w-5" />
@@ -456,8 +466,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('setup')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
                 activeTab === 'setup' 
-                  ? 'bg-white text-[#18181b]' 
-                  : 'text-neutral-300 hover:text-white hover:bg-neutral-800'
+                  ? 'bg-white text-zinc-950' 
+                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
               }`}
             >
               <CogIcon className="h-5 w-5" />
@@ -466,13 +476,13 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
           </nav>
         </div>
         
-        <div className="mt-auto p-6 border-t border-neutral-800">
-          <div className="text-xs text-neutral-500 mb-2 font-mono">
+        <div className="mt-auto p-6 border-t border-zinc-800">
+          <div className="text-xs text-zinc-500 mb-2 font-mono">
             {session.user?.name || session.user?.email}
           </div>
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-neutral-300 hover:text-red-400 transition font-mono cursor-pointer"
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-zinc-300 hover:text-red-400 transition font-mono cursor-pointer"
           >
             <ArrowRightOnRectangleIcon className="h-4 w-4" />
             Sign Out
@@ -483,31 +493,31 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col md:ml-0">
         {/* Top Bar */}
-        <div className="bg-[#23272e] border-b border-neutral-800 p-4">
+        <div className="bg-zinc-950/80 border-b border-zinc-800 p-4 backdrop-blur-xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="md:hidden text-neutral-400 hover:text-white cursor-pointer"
+                className="md:hidden text-zinc-400 hover:text-white cursor-pointer"
               >
                 <Bars3Icon className="h-6 w-6" />
               </button>
               <div className="relative min-w-[180px] w-56">
                 <button
                   onClick={() => setDropdownOpen((open) => !open)}
-                  className="w-full flex items-center justify-between px-4 py-2 bg-[#18181b] border border-neutral-700 rounded text-white font-mono focus:outline-none focus:ring-2 focus:ring-white"
+                  className="w-full flex items-center justify-between px-4 py-2 bg-zinc-950 border border-zinc-700 rounded text-white font-mono focus:outline-none focus:ring-2 focus:ring-white"
                 >
                   {selectedProject?.name || 'Select Project'}
                   <svg className={`w-4 h-4 ml-2 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                 </button>
                 {dropdownOpen && (
-                  <div ref={dropdownRef} className="absolute z-50 mt-2 w-full bg-[#23272e] rounded-lg shadow-lg border border-neutral-800 overflow-hidden">
-                    <div className="px-4 py-2 text-xs text-neutral-400 font-mono">Personal account</div>
+                  <div ref={dropdownRef} className="absolute z-50 mt-2 w-full bg-zinc-900 rounded-lg shadow-lg border border-zinc-800 overflow-hidden">
+                    <div className="px-4 py-2 text-xs text-zinc-400 font-mono">Personal account</div>
                     {projects.map((project) => (
                       <button
                         key={project.id}
                         onClick={() => handleProjectSwitch(project)}
-                        className={`w-full text-left px-4 py-2 font-mono text-sm flex items-center gap-2 transition-colors ${selectedProject?.id === project.id ? 'bg-neutral-800 text-white' : 'text-neutral-200 hover:bg-neutral-700'}`}
+                        className={`w-full text-left px-4 py-2 font-mono text-sm flex items-center gap-2 transition-colors ${selectedProject?.id === project.id ? 'bg-zinc-800 text-white' : 'text-zinc-200 hover:bg-zinc-700'}`}
                       >
                         {project.name}
                         {selectedProject?.id === project.id && (
@@ -520,7 +530,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               </div>
               <button
                 onClick={() => setShowNewProjectModal(true)}
-                className="flex items-center gap-2 px-3 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono text-sm cursor-pointer"
+                className="flex items-center gap-2 px-3 py-2 bg-white text-zinc-950 rounded hover:bg-zinc-200 transition font-mono text-sm cursor-pointer"
               >
                 <PlusIcon className="h-4 w-4" />
                 <span className="hidden sm:inline">New Project</span>
@@ -531,14 +541,14 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${
                 realtimeConnected 
-                  ? 'bg-neutral-100' 
+                  ? 'bg-zinc-100' 
                   : isConnecting 
                     ? 'bg-blue-400 animate-pulse' 
                     : reconnectionAttempts > 0 
                       ? 'bg-yellow-400 animate-pulse' 
                       : 'bg-red-400 animate-pulse'
               }`}></div>
-              <span className="text-xs text-neutral-400 font-mono">
+              <span className="text-xs text-zinc-400 font-mono">
                 {realtimeConnected 
                   ? 'Live' 
                   : isConnecting
@@ -554,7 +564,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     setReconnectionAttempts(0)
                     setupRealtimeConnection()
                   }}
-                  className="text-xs text-white hover:text-neutral-200 transition cursor-pointer font-mono"
+                  className="text-xs text-white hover:text-zinc-200 transition cursor-pointer font-mono"
                 >
                   Retry
                 </button>
@@ -566,7 +576,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         {/* Content Area */}
         <div className="flex-1 p-6 overflow-auto">
           {loading && (
-            <div className="flex items-center gap-2 mb-4 p-3 bg-[#23272e] rounded-lg border border-neutral-800 w-fit mx-auto">
+            <div className="flex items-center gap-2 mb-4 p-3 bg-zinc-900 rounded-xl border border-zinc-800 w-fit mx-auto">
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               <span className="text-white font-mono text-sm">Fetching project data...</span>
             </div>
@@ -576,10 +586,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
             <div className="space-y-6">
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
+                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
                   <div className="flex items-center gap-3 mb-2">
-                    <EyeIcon className={`h-6 w-6 text-neutral-100 ${realtimeStats.count > 0 ? 'animate-pulse' : ''}`} />
-                    <h3 className="text-neutral-100 font-semibold font-mono">Live Visitors</h3>
+                    <EyeIcon className={`h-6 w-6 text-zinc-100 ${realtimeStats.count > 0 ? 'animate-pulse' : ''}`} />
+                    <h3 className="text-zinc-100 font-semibold font-mono">Live Visitors</h3>
                   </div>
                   {loading ? (
                     <div className="flex items-center justify-center min-h-[200px]">
@@ -589,7 +599,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     <p className="text-3xl font-bold text-white">{realtimeStats.count}</p>
                   )}
                 </div>
-                <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
+                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
                   <div className="flex items-center gap-3 mb-2">
                     <ChartBarIcon className="h-6 w-6 text-cyan-400" />
                     <h3 className="text-cyan-400 font-semibold font-mono">7-Day Total</h3>
@@ -604,7 +614,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     </p>
                   )}
                 </div>
-                <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
+                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
                   <div className="flex items-center gap-3 mb-2">
                     <GlobeAltIcon className="h-6 w-6 text-blue-400" />
                     <h3 className="text-blue-400 font-semibold font-mono">Countries</h3>
@@ -617,7 +627,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     <p className="text-3xl font-bold text-white">{countryStats.length}</p>
                   )}
                 </div>
-                <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
+                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
                   <div className="flex items-center gap-3 mb-2">
                     <LinkIcon className="h-6 w-6 text-purple-400" />
                     <h3 className="text-purple-400 font-semibold font-mono">Referrers</h3>
@@ -635,8 +645,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               {/* Charts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* 7-Day Chart */}
-                <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                  <h3 className="text-neutral-100 font-semibold mb-4 font-mono">7-Day Traffic</h3>
+                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                  <h3 className="text-zinc-100 font-semibold mb-4 font-mono">7-Day Traffic</h3>
                   <div className="space-y-2">
                     {loading ? (
                       <div className="flex items-center justify-center min-h-[200px]">
@@ -649,10 +659,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
                         return (
                           <div key={day.date} className="flex items-center gap-3">
-                            <span className="text-xs text-neutral-400 font-mono w-16">
+                            <span className="text-xs text-zinc-400 font-mono w-16">
                               {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                             </span>
-                            <div className="flex-1 bg-neutral-800 rounded-full h-2 overflow-hidden">
+                            <div className="flex-1 bg-zinc-800 rounded-full h-2 overflow-hidden">
                               <div 
                                 className="bg-white h-2 rounded-full transition-all"
                                 style={{ width: `${percentage}%` }}
@@ -669,8 +679,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 </div>
 
                 {/* Countries Chart */}
-                <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                  <h3 className="text-neutral-100 font-semibold mb-4 font-mono">Top Countries</h3>
+                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                  <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Top Countries</h3>
                   <div className="space-y-2">
                     {loading ? (
                       <div className="flex items-center justify-center min-h-[200px]">
@@ -679,10 +689,10 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     ) : (
                       countryStats.slice(0, 5).map((country) => (
                         <div key={country.country} className="flex items-center gap-3">
-                          <span className="text-xs text-neutral-400 font-mono flex-1">
+                          <span className="text-xs text-zinc-400 font-mono flex-1">
                             {country.country}
                           </span>
-                          <div className="flex-1 bg-neutral-800 rounded-full h-2">
+                          <div className="flex-1 bg-zinc-800 rounded-full h-2">
                             <div 
                               className="bg-blue-400 h-2 rounded-full transition-all"
                               style={{ width: `${(country.visitors / Math.max(...countryStats.map(c => c.visitors))) * 100}%` }}
@@ -699,8 +709,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               </div>
 
               {/* Referrers Table */}
-              <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h3 className="text-neutral-100 font-semibold mb-4 font-mono">Top Referrers</h3>
+              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Top Referrers</h3>
                 <div className="space-y-2">
                   {loading ? (
                     <div className="flex items-center justify-center min-h-[200px]">
@@ -708,8 +718,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     </div>
                   ) : (
                     referrerStats.slice(0, 10).map((referrer) => (
-                      <div key={referrer.referrer} className="flex items-center justify-between py-2 border-b border-neutral-800 last:border-b-0">
-                        <span className="text-sm text-neutral-300 font-mono">{referrer.referrer}</span>
+                      <div key={referrer.referrer} className="flex items-center justify-between py-2 border-b border-zinc-800 last:border-b-0">
+                        <span className="text-sm text-zinc-300 font-mono">{referrer.referrer}</span>
                         <span className="text-sm text-purple-400 font-mono">{referrer.visitors} visitors</span>
                       </div>
                     ))
@@ -721,11 +731,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
           {activeTab === 'live' && (
             <div className="space-y-6">
-              <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
+              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
                 <div className="flex items-center gap-3 mb-4">
-                  <EyeIcon className="h-6 w-6 text-neutral-100" />
-                  <h2 className="text-xl font-bold text-neutral-100 font-mono">Live Feed</h2>
-                  <span className="text-sm text-neutral-400 font-mono">
+                  <EyeIcon className="h-6 w-6 text-zinc-100" />
+                  <h2 className="text-xl font-bold text-zinc-100 font-mono">Live Feed</h2>
+                  <span className="text-sm text-zinc-400 font-mono">
                     {realtimeStats.count} active visitors
                   </span>
                 </div>
@@ -733,33 +743,33 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 {realtimeStats.visitors.length > 0 ? (
                   <div className="space-y-3">
                     {realtimeStats.visitors.map((visitor) => (
-                      <div key={visitor.id} className="bg-[#18181b] p-4 rounded border border-neutral-800">
+                      <div key={visitor.id} className="bg-zinc-950 p-4 rounded border border-zinc-800">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-neutral-100 rounded-full animate-pulse"></div>
+                            <div className="w-2 h-2 bg-zinc-100 rounded-full animate-pulse"></div>
                             <span className="text-sm text-white font-mono font-semibold">
                               {visitor.country}, {visitor.city}
                             </span>
                           </div>
-                          <span className="text-xs text-neutral-500 font-mono">
+                          <span className="text-xs text-zinc-500 font-mono">
                             {new Date(visitor.timestamp).toLocaleTimeString()}
                           </span>
                         </div>
                         
                         {/* Page Information */}
-                        <div className="bg-[#23272e] p-3 rounded mb-2">
+                        <div className="bg-zinc-900 p-3 rounded mb-2">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs text-neutral-500 font-mono">🌐</span>
-                            <span className="text-xs text-neutral-400 font-mono">{getDomain(visitor.pageUrl)}</span>
+                            <span className="text-xs text-zinc-500 font-mono">🌐</span>
+                            <span className="text-xs text-zinc-400 font-mono">{getDomain(visitor.pageUrl)}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-neutral-500 font-mono">📄</span>
+                            <span className="text-xs text-zinc-500 font-mono">📄</span>
                             <span className="text-sm text-white font-mono font-semibold">
                               {getPageName(visitor.pageUrl)}
                             </span>
                           </div>
                           <div className="mt-1">
-                            <span className="text-xs text-neutral-600 font-mono break-all">
+                            <span className="text-xs text-zinc-600 font-mono break-all">
                               {visitor.pageUrl}
                             </span>
                           </div>
@@ -768,8 +778,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                         {/* Referrer Information */}
                         {visitor.referrer && visitor.referrer !== '' && (
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-neutral-500 font-mono">🔗</span>
-                            <span className="text-xs text-neutral-400 font-mono">
+                            <span className="text-xs text-zinc-500 font-mono">🔗</span>
+                            <span className="text-xs text-zinc-400 font-mono">
                               From: {visitor.referrer}
                             </span>
                           </div>
@@ -779,8 +789,8 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <EyeIcon className="h-12 w-12 text-neutral-600 mx-auto mb-4" />
-                    <p className="text-neutral-400 font-mono">No active visitors right now</p>
+                    <EyeIcon className="h-12 w-12 text-zinc-600 mx-auto mb-4" />
+                    <p className="text-zinc-400 font-mono">No active visitors right now</p>
                   </div>
                 )}
               </div>
@@ -789,13 +799,13 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
           {activeTab === 'setup' && selectedProject && (
             <div className="space-y-6">
-              <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h2 className="text-xl font-bold text-neutral-100 mb-4 font-mono">Setup Instructions</h2>
-                <p className="text-neutral-400 mb-4 font-mono">
-                  Add this script to your website&apos;s <code className="bg-[#18181b] p-1 rounded text-white">&lt;head&gt;</code> to start tracking visitors:
+              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <h2 className="text-xl font-bold text-zinc-100 mb-4 font-mono">Setup Instructions</h2>
+                <p className="text-zinc-400 mb-4 font-mono">
+                  Add this script to your website&apos;s <code className="bg-zinc-950 p-1 rounded text-white">&lt;head&gt;</code> to start tracking visitors:
                 </p>
                 
-                <div className="bg-[#18181b] p-4 rounded border border-neutral-800 mb-4">
+                <div className="bg-zinc-950 p-4 rounded border border-zinc-800 mb-4">
                   <code className="text-white font-mono text-sm select-all">
                     {getTrackingScript(selectedProject.id)}
                   </code>
@@ -804,11 +814,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 <button
                   onClick={() => copyToClipboard(getTrackingScript(selectedProject.id))}
                   disabled={isCopyingScript}
-                  className="px-4 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-4 py-2 bg-white text-zinc-950 rounded hover:bg-zinc-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   {isCopyingScript ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#18181b]"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-zinc-950"></div>
                       Copying...
                     </>
                   ) : (
@@ -817,15 +827,15 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 </button>
               </div>
 
-              <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800">
-                <h3 className="text-neutral-100 font-semibold mb-4 font-mono">Project Details</h3>
+              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Project Details</h3>
                 <div className="space-y-2 text-sm font-mono">
                   <div className="flex justify-between">
-                    <span className="text-neutral-400">Project ID:</span>
+                    <span className="text-zinc-400">Project ID:</span>
                     <span className="text-white">{selectedProject.id}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-neutral-400">Created:</span>
+                    <span className="text-zinc-400">Created:</span>
                     <span className="text-white">
                       {new Date(selectedProject.createdAt).toLocaleDateString()}
                     </span>
@@ -833,9 +843,9 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 </div>
               </div>
 
-              <div className="bg-red-900/20 p-6 rounded-lg border border-red-500/30">
+              <div className="bg-red-900/20 p-6 rounded-xl border border-red-500/30">
                 <h3 className="text-red-400 font-semibold mb-2 font-mono">Danger Zone</h3>
-                <p className="text-neutral-400 text-sm mb-4 font-mono">
+                <p className="text-zinc-400 text-sm mb-4 font-mono">
                   Deleting a project is irreversible. It will permanently remove the project and all associated event data.
                 </p>
                 <button
@@ -853,12 +863,12 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* Delete Project Modal */}
       {showDeleteModal && selectedProject && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="bg-[#23272e] p-6 rounded-lg border border-red-500/50 w-full max-w-md">
+          <div className="bg-zinc-900 p-6 rounded-xl border border-red-500/50 w-full max-w-md">
             <h3 className="text-xl font-bold text-red-400 mb-2 font-mono">Delete Project</h3>
-            <p className="text-neutral-400 mb-4 text-sm font-mono">
+            <p className="text-zinc-400 mb-4 text-sm font-mono">
               This action cannot be undone. This will permanently delete the <strong className="text-white">{selectedProject.name}</strong> project and all of its associated data.
             </p>
-            <p className="text-neutral-400 mb-4 text-sm font-mono">
+            <p className="text-zinc-400 mb-4 text-sm font-mono">
               Please type the project name to confirm:
             </p>
             <input
@@ -866,7 +876,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               placeholder={selectedProject.name}
               value={deleteConfirmationName}
               onChange={(e) => setDeleteConfirmationName(e.target.value)}
-              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
+              className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && deleteProject()}
             />
             <div className="flex gap-3">
@@ -890,7 +900,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   setDeleteConfirmationName('')
                 }}
                 disabled={isDeletingProject}
-                className="flex-1 px-4 py-2 bg-neutral-700 text-neutral-300 rounded hover:bg-neutral-600 transition font-mono cursor-pointer disabled:bg-neutral-700/50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 bg-zinc-700 text-zinc-300 rounded hover:bg-zinc-600 transition font-mono cursor-pointer disabled:bg-zinc-700/50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>
@@ -902,25 +912,25 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* New Project Modal */}
       {showNewProjectModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-[#23272e] p-6 rounded-lg border border-neutral-800 w-96">
-            <h3 className="text-xl font-bold text-neutral-100 mb-4 font-mono">Create New Project</h3>
+          <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800 w-96">
+            <h3 className="text-xl font-bold text-zinc-100 mb-4 font-mono">Create New Project</h3>
             <input
               type="text"
               placeholder="Project name"
               value={newProjectName}
               onChange={(e) => setNewProjectName(e.target.value)}
-              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
+              className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && createProject()}
             />
             <div className="flex gap-3">
               <button
                 onClick={createProject}
                 disabled={isCreatingProject}
-                className="flex-1 px-4 py-2 bg-white text-[#18181b] rounded hover:bg-neutral-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2 bg-white text-zinc-950 rounded hover:bg-zinc-200 transition font-mono cursor-pointer disabled:bg-white/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isCreatingProject ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#18181b]"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-zinc-950"></div>
                     Creating...
                   </>
                 ) : (
@@ -933,7 +943,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   setNewProjectName('')
                 }}
                 disabled={isCreatingProject}
-                className="flex-1 px-4 py-2 bg-neutral-700 text-neutral-300 rounded hover:bg-neutral-600 transition font-mono cursor-pointer disabled:bg-neutral-700/50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 bg-zinc-700 text-zinc-300 rounded hover:bg-zinc-600 transition font-mono cursor-pointer disabled:bg-zinc-700/50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>
@@ -945,12 +955,12 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* Delete Project Modal */}
       {showDeleteModal && selectedProject && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="bg-[#23272e] p-6 rounded-lg border border-red-500/50 w-full max-w-md">
+          <div className="bg-zinc-900 p-6 rounded-xl border border-red-500/50 w-full max-w-md">
             <h3 className="text-xl font-bold text-red-400 mb-2 font-mono">Delete Project</h3>
-            <p className="text-neutral-400 mb-4 text-sm font-mono">
+            <p className="text-zinc-400 mb-4 text-sm font-mono">
               This action cannot be undone. This will permanently delete the <strong className="text-white">{selectedProject.name}</strong> project and all of its associated data.
             </p>
-            <p className="text-neutral-400 mb-4 text-sm font-mono">
+            <p className="text-zinc-400 mb-4 text-sm font-mono">
               Please type the project name to confirm:
             </p>
             <input
@@ -958,7 +968,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               placeholder={selectedProject.name}
               value={deleteConfirmationName}
               onChange={(e) => setDeleteConfirmationName(e.target.value)}
-              className="w-full bg-[#18181b] border border-neutral-700 rounded px-3 py-2 text-white font-mono mb-4"
+              className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && deleteProject()}
             />
             <div className="flex gap-3">
@@ -982,7 +992,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                   setDeleteConfirmationName('')
                 }}
                 disabled={isDeletingProject}
-                className="flex-1 px-4 py-2 bg-neutral-700 text-neutral-300 rounded hover:bg-neutral-600 transition font-mono cursor-pointer disabled:bg-neutral-700/50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 bg-zinc-700 text-zinc-300 rounded hover:bg-zinc-600 transition font-mono cursor-pointer disabled:bg-zinc-700/50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connections, sendStats } from '@/lib/broadcaster';
+import { connections, sendStats, markControllerClosed } from '@/lib/broadcaster';
 import { 
   requireAuth, 
   verifyProjectOwnership 
@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
         
         request.signal.addEventListener('abort', () => {
           console.log(`Client for project ${projectId} disconnected.`);
+          markControllerClosed(controller);
           cleanup();
           try {
             controller.close();
