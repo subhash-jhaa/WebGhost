@@ -23,8 +23,8 @@ export function Hero() {
         variants={fadeUp} custom={1}
         className="font-mono mx-auto max-w-4xl text-[3.2rem] sm:text-[5rem] font-bold tracking-tight text-zinc-100 leading-[1.05] mb-8"
       >
-        See Who&apos;s On Your Site<br />
-        <span className="text-zinc-100 italic">Right Now.</span>
+        See Who&apos;s On Your<br />
+        Site <span className="text-zinc-100 italic">Right Now.</span>
       </motion.h1>
 
       <motion.p
