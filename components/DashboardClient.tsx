@@ -301,8 +301,21 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   }
 
   const getTrackingScript = (projectId: string) => {
-    // Use environment variable for production, fallback to current origin
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
+    // Priority: 
+    // 1. Explicitly set environment variable
+    // 2. Current window origin (if not localhost)
+    // 3. Fallback to production domain
+    let baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    
+    if (!baseUrl && typeof window !== 'undefined') {
+      const origin = window.location.origin;
+      if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+        baseUrl = 'https://tryspectr.vercel.app';
+      } else {
+        baseUrl = origin;
+      }
+    }
+    
     return `<script src="${baseUrl}/track.js" data-site="${projectId}"></script>`
   }
 

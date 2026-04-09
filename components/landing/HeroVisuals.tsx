@@ -70,7 +70,7 @@ function LiveFeed() {
   );
 }
 
-const ONE_LINER = '<script src="https://spectr.vercel.app/track.js" data-site="YOUR_SITE_ID" defer></script>';
+const ONE_LINER = '<script src="https://tryspectr.vercel.app/track.js" data-site="YOUR_SITE_ID" defer></script>';
 
 export function HeroScript() {
   const [copied, setCopied] = useState(false);
@@ -82,7 +82,7 @@ export function HeroScript() {
 
   const lines = [
     { tokens: [{ t: '<', c: 'text-zinc-500' }, { t: 'script', c: 'text-sky-400' }] },
-    { tokens: [{ t: '  src', c: 'text-violet-400' }, { t: '=', c: 'text-zinc-500' }, { t: '"https://spectr.vercel.app/track.js"', c: 'text-emerald-400' }] },
+    { tokens: [{ t: '  src', c: 'text-violet-400' }, { t: '=', c: 'text-zinc-500' }, { t: '"https://tryspectr.vercel.app/track.js"', c: 'text-emerald-400' }] },
     { tokens: [{ t: '  data-site', c: 'text-violet-400' }, { t: '=', c: 'text-zinc-500' }, { t: '"YOUR_SITE_ID"', c: 'text-amber-400' }] },
     { tokens: [{ t: '  defer', c: 'text-violet-400' }] },
     { tokens: [{ t: '>', c: 'text-zinc-500' }, { t: '</', c: 'text-zinc-500' }, { t: 'script', c: 'text-sky-400' }, { t: '>', c: 'text-zinc-500' }] },

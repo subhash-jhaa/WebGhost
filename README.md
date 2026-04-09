@@ -56,9 +56,10 @@ DATABASE_URL="your-postgresql-url"
 
 # NextAuth
 NEXTAUTH_SECRET="your-secret-key"
-NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL="http://localhost:3000" # Use https://tryspectr.vercel.app in production
 
-# OAuth Credentials
+# App URL
+NEXT_PUBLIC_APP_URL="http://localhost:3000" # Use https://tryspectr.vercel.app in production
 GOOGLE_CLIENT_ID="your-google-id"
 GOOGLE_CLIENT_SECRET="your-google-secret"
 TWITTER_CLIENT_ID="your-twitter-id"
@@ -110,4 +111,4 @@ Built with ❤️ by **subhash-jhaa**. For support, please open an issue in the 
 
 ---
 
-**Ready to see who's viewing you?** [Get Started with Spectr](http://localhost:3000/auth)
+**Ready to see who's viewing you?** [Get Started with Spectr](https://tryspectr.vercel.app/auth)
