@@ -10,6 +10,7 @@ import { Integration } from './landing/Integration';
 import { Testimonials } from './landing/Testimonials';
 import { CTA } from './landing/CTA';
 import { Footer } from './landing/Footer';
+import { Pricing } from './landing/Pricing';
 
 interface LandingProps {
   session?: Session | null;
@@ -47,6 +48,9 @@ export default function Landing({ session }: LandingProps) {
 
       {/* ── Testimonials ───────────────────────────────────────────────────── */}
       <Testimonials />
+
+      {/* ── Pricing ────────────────────────────────────────────────────────── */}
+      <Pricing />
 
       {/* ── CTA ────────────────────────────────────────────────────────────── */}
       <CTA />

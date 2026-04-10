@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "spectr",
+  title: "spectr | Know Your Traffic.",
   description: "Realtime, privacy-first analytics for developers.",
   icons: {
     icon: "/favicon.svg",
