@@ -11,6 +11,7 @@ import { Testimonials } from './landing/Testimonials';
 import { CTA } from './landing/CTA';
 import { Footer } from './landing/Footer';
 import { Pricing } from './landing/Pricing';
+import { AddProject } from './landing/AddProject';
 
 interface LandingProps {
   session?: Session | null;
@@ -39,6 +40,9 @@ export default function Landing({ session }: LandingProps) {
 
       {/* ── How It Works ───────────────────────────────────────────────────── */}
       <HowItWorks />
+
+      {/* ── Add Project ────────────────────────────────────────────────────── */}
+      <AddProject />
 
       {/* ── Features ───────────────────────────────────────────────────────── */}
       <Features />

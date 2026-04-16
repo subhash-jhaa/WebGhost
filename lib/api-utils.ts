@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authConfig } from '@/lib/auth';
+import { getAppSession, requireAppSession } from '@/lib/session';
 import { SessionUser, ApiErrorResponse, CorsHeaders } from '../interfaces/api';
 import { ProjectQueries } from '../queries';
 
@@ -11,24 +10,22 @@ export const corsHeaders: CorsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
-// Authentication utilities
+// Authentication utilities — Next.js 15 App Router compatible
 export async function getAuthenticatedUser(): Promise<SessionUser | null> {
-  const session = await getServerSession(authConfig);
-  return session?.user as SessionUser || null;
+  const user = await getAppSession();
+  if (!user) return null;
+  return user as unknown as SessionUser;
 }
 
 export async function requireAuth(): Promise<SessionUser> {
-  const user = await getAuthenticatedUser();
-  if (!user?.id) {
-    throw new Error('Unauthorized');
-  }
-  return user;
+  const user = await requireAppSession();
+  return user as unknown as SessionUser;
 }
 
 // Project ownership verification
 export async function verifyProjectOwnership(projectId: string, userId: string) {
   const result = await ProjectQueries.findByIdAndUser(projectId, userId);
-  
+
   if (!result.success || !result.data) {
     throw new Error('Project not found or access denied');
   }
@@ -44,7 +41,7 @@ export function createErrorResponse(
 ): NextResponse<ApiErrorResponse> {
   return NextResponse.json(
     { error: message },
-    { 
+    {
       status,
       headers: { ...corsHeaders, ...headers }
     }
@@ -65,13 +62,13 @@ export function createSuccessResponse<T>(
 // Request validation utilities
 export function validateRequiredFields(body: Record<string, unknown>, fields: string[]): string[] {
   const missingFields: string[] = [];
-  
+
   for (const field of fields) {
     if (!body[field]) {
       missingFields.push(field);
     }
   }
-  
+
   return missingFields;
 }
 
@@ -85,7 +82,7 @@ export function getClientIP(request: NextRequest): string {
   const realIP = request.headers.get('x-real-ip');
   const cfConnectingIP = request.headers.get('cf-connecting-ip');
   const xClientIP = request.headers.get('x-client-ip');
-  
+
   if (forwarded) {
     return forwarded.split(',')[0].trim();
   }
@@ -98,7 +95,7 @@ export function getClientIP(request: NextRequest): string {
   if (xClientIP) {
     return xClientIP;
   }
-  
+
   return 'Unknown';
 }
 
@@ -107,7 +104,7 @@ export function getCountry(request: NextRequest): string {
   const xCountry = request.headers.get('x-country');
   const xGeoCountry = request.headers.get('x-geo-country');
   const xVercelCountry = request.headers.get('x-vercel-ip-country');
-  
+
   if (cfCountry && cfCountry !== 'XX') {
     return cfCountry;
   }
@@ -120,7 +117,7 @@ export function getCountry(request: NextRequest): string {
   if (xVercelCountry) {
     return xVercelCountry;
   }
-  
+
   return 'Unknown';
 }
 
@@ -128,7 +125,7 @@ export function getCity(request: NextRequest): string {
   const cfCity = request.headers.get('cf-ipcity');
   const xCity = request.headers.get('x-city');
   const xGeoCity = request.headers.get('x-geo-city');
-  
+
   if (cfCity) {
     return cfCity;
   }
@@ -138,7 +135,7 @@ export function getCity(request: NextRequest): string {
   if (xGeoCity) {
     return xGeoCity;
   }
-  
+
   return 'Unknown';
 }
 
@@ -149,10 +146,10 @@ export async function getLocationFromIP(ip: string): Promise<{ country: string; 
     if (ip === 'Unknown' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.')) {
       return { country: 'Unknown', city: 'Unknown' };
     }
-    
+
     const response = await fetch(`http://ip-api.com/json/${ip}?fields=country,city`);
     const data = await response.json();
-    
+
     if (data.status === 'success') {
       return {
         country: data.country || 'Unknown',
@@ -162,7 +159,7 @@ export async function getLocationFromIP(ip: string): Promise<{ country: string; 
   } catch (error) {
     console.debug('IP geolocation failed:', error);
   }
-  
+
   return { country: 'Unknown', city: 'Unknown' };
 }
 

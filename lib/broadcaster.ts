@@ -11,8 +11,8 @@ export interface Visitor {
   sessionId: string | null;
 }
 
-// Store active connections
-export const connections = new Map<string, ReadableStreamDefaultController>();
+// Store active connections: projectId -> Set of controllers
+export const connections = new Map<string, Set<ReadableStreamDefaultController>>();
 
 // Track which controllers have been closed to avoid ERR_INVALID_STATE
 const closedControllers = new WeakSet<ReadableStreamDefaultController>();
@@ -75,8 +75,11 @@ export async function sendStats(projectId: string, controller: ReadableStreamDef
 
 // Function to broadcast updates to all connected clients for a project
 export async function broadcastUpdate(projectId: string) {
-  const controller = connections.get(projectId);
-  if (controller) {
-    await sendStats(projectId, controller);
+  const projectConnections = connections.get(projectId);
+  if (projectConnections) {
+    const promises = Array.from(projectConnections).map(controller => 
+      sendStats(projectId, controller)
+    );
+    await Promise.all(promises);
   }
-} 
+}

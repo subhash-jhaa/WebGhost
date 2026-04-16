@@ -21,14 +21,27 @@ export async function GET(request: NextRequest) {
         if (interval) {
           clearInterval(interval);
         }
-        connections.delete(projectId);
+        
+        // Remove only this specific controller from the project's set
+        const projectConnections = connections.get(projectId);
+        if (projectConnections) {
+          projectConnections.delete(controller);
+          // If no more clients are watching this project, clean up the map entry
+          if (projectConnections.size === 0) {
+            connections.delete(projectId);
+          }
+        }
       };
       
       try {
         const user = await requireAuth();
         await verifyProjectOwnership(projectId, user.id);
 
-        connections.set(projectId, controller);
+        // Add this new connection to the set for this project
+        if (!connections.has(projectId)) {
+          connections.set(projectId, new Set());
+        }
+        connections.get(projectId)!.add(controller);
         
         request.signal.addEventListener('abort', () => {
           console.log(`Client for project ${projectId} disconnected.`);
@@ -43,7 +56,9 @@ export async function GET(request: NextRequest) {
         await sendStats(projectId, controller);
 
         interval = setInterval(async () => {
-          if (!connections.has(projectId)) {
+          const projectConnections = connections.get(projectId);
+          // If this controller is no longer in the set, it means it was cleaned up
+          if (!projectConnections || !projectConnections.has(controller)) {
             cleanup();
             try {
               controller.close();

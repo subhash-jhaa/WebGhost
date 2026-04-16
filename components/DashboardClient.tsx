@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 import { Session } from 'next-auth'
 import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react'
-import { 
-  ChartBarIcon, 
-  EyeIcon, 
-  CogIcon, 
+import {
+  ChartBarIcon,
+  EyeIcon,
+  CogIcon,
   PlusIcon,
   ArrowRightOnRectangleIcon,
   GlobeAltIcon,
@@ -67,21 +67,21 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   const [showNewProjectModal, setShowNewProjectModal] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
   const [loading, setLoading] = useState(true);
-  
+
   // Real-time connection state
   const [isConnecting, setIsConnecting] = useState(false);
   const [realtimeConnected, setRealtimeConnected] = useState(false);
   const [reconnectionAttempts, setReconnectionAttempts] = useState(0);
   const maxReconnectionAttempts = 5;
   const [reconnectionTimeout, setReconnectionTimeout] = useState<NodeJS.Timeout | null>(null);
-  
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmationName, setDeleteConfirmationName] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCreatingProject, setIsCreatingProject] = useState(false);
   const [isDeletingProject, setIsDeletingProject] = useState(false);
   const [isCopyingScript, setIsCopyingScript] = useState(false);
-  
+
   const eventSourceRef = useRef<EventSource | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -159,11 +159,11 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
     if (reconnectionTimeout) {
       clearTimeout(reconnectionTimeout);
     }
-    
+
     if (reconnectionAttempts >= maxReconnectionAttempts) {
-        console.log('Max reconnection attempts reached.');
-        setIsConnecting(false);
-        return;
+      console.log('Max reconnection attempts reached.');
+      setIsConnecting(false);
+      return;
     }
 
     setIsConnecting(true);
@@ -204,33 +204,33 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
       const nextAttempt = reconnectionAttempts + 1;
       const delay = Math.min(1000 * Math.pow(2, nextAttempt), 30000);
-      
+
       const timeout = setTimeout(() => {
         setReconnectionAttempts(nextAttempt);
       }, delay);
       setReconnectionTimeout(timeout);
     };
   }, [selectedProject, reconnectionAttempts, reconnectionTimeout]);
-  
+
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
 
   useEffect(() => {
     if (selectedProject) {
-        fetchStats();
-        // Trigger connection logic whenever project or reconnection state changes
-        setupRealtimeConnection();
+      fetchStats();
+      // Trigger connection logic whenever project or reconnection state changes
+      setupRealtimeConnection();
     }
-    
+
     // Cleanup on unmount or when dependencies change
     return () => {
-        if (eventSourceRef.current) {
-            eventSourceRef.current.close();
-        }
-        if (reconnectionTimeout) {
-            clearTimeout(reconnectionTimeout);
-        }
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close();
+      }
+      if (reconnectionTimeout) {
+        clearTimeout(reconnectionTimeout);
+      }
     };
   }, [selectedProject, reconnectionAttempts, fetchStats, setupRealtimeConnection, reconnectionTimeout]);
 
@@ -262,7 +262,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newProjectName })
       })
-      
+
       const newProject = await response.json()
       setProjects([newProject, ...projects])
       setSelectedProject(newProject)
@@ -285,7 +285,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
     setIsDeletingProject(true)
     try {
       await fetch(`/api/project/${selectedProject.id}`, { method: 'DELETE' })
-      
+
       // Reset state and fetch new project list
       setDeleteConfirmationName('')
       setShowDeleteModal(false)
@@ -322,17 +322,17 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
     try {
       const urlObj = new URL(url)
       const path = urlObj.pathname
-      
+
       if (path === '/' || path === '') {
         return 'Home'
       }
-      
+
       // Remove leading slash and get the last part
       const parts = path.split('/').filter(part => part.length > 0)
       if (parts.length === 0) {
         return 'Home'
       }
-      
+
       // Get the last part and capitalize it
       const lastPart = parts[parts.length - 1]
       return lastPart.charAt(0).toUpperCase() + lastPart.slice(1).replace(/[-_]/g, ' ')
@@ -353,7 +353,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
   // Show loading state when no projects exist yet
   if (!loading && projects.length === 0) {
-  return (
+    return (
       <>
         <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
           <div className="text-center max-w-md mx-auto px-4">
@@ -373,6 +373,12 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               <PlusIcon className="h-5 w-5" />
               Create Your First Project
             </button>
+            <Link 
+              href="/" 
+              className="block mt-6 text-zinc-500 hover:text-zinc-300 transition-colors font-mono text-sm underline underline-offset-4"
+            >
+              Back to Home
+            </Link>
           </div>
         </div>
 
@@ -439,44 +445,41 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               <XMarkIcon className="h-6 w-6" />
             </button>
           </div>
-          
+
           <nav className="space-y-2">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
-                activeTab === 'overview' 
-                  ? 'bg-white text-zinc-950' 
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${activeTab === 'overview'
+                  ? 'bg-white text-zinc-950'
                   : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
-              }`}
+                }`}
             >
               <ChartBarIcon className="h-5 w-5" />
               Overview
             </button>
             <button
               onClick={() => setActiveTab('live')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
-                activeTab === 'live' 
-                  ? 'bg-white text-zinc-950' 
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${activeTab === 'live'
+                  ? 'bg-white text-zinc-950'
                   : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
-              }`}
+                }`}
             >
               <EyeIcon className="h-5 w-5" />
               Live Feed
             </button>
             <button
               onClick={() => setActiveTab('setup')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${
-                activeTab === 'setup' 
-                  ? 'bg-white text-zinc-950' 
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${activeTab === 'setup'
+                  ? 'bg-white text-zinc-950'
                   : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
-              }`}
+                }`}
             >
               <CogIcon className="h-5 w-5" />
               Setup
             </button>
           </nav>
         </div>
-        
+
         <div className="mt-auto p-6 border-t border-zinc-800">
           <div className="text-xs text-zinc-500 mb-2 font-mono">
             {session.user?.name || session.user?.email}
@@ -537,24 +540,23 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 <span className="hidden sm:inline">New Project</span>
               </button>
             </div>
-            
+
             {/* Real-time connection indicator */}
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${
-                realtimeConnected 
-                  ? 'bg-zinc-100' 
-                  : isConnecting 
-                    ? 'bg-blue-400 animate-pulse' 
-                    : reconnectionAttempts > 0 
-                      ? 'bg-yellow-400 animate-pulse' 
+              <div className={`w-2 h-2 rounded-full ${realtimeConnected
+                  ? 'bg-zinc-100'
+                  : isConnecting
+                    ? 'bg-blue-400 animate-pulse'
+                    : reconnectionAttempts > 0
+                      ? 'bg-yellow-400 animate-pulse'
                       : 'bg-red-400 animate-pulse'
-              }`}></div>
+                }`}></div>
               <span className="text-xs text-zinc-400 font-mono">
-                {realtimeConnected 
-                  ? 'Live' 
+                {realtimeConnected
+                  ? 'Live'
                   : isConnecting
                     ? 'Connecting...'
-                    : reconnectionAttempts > 0 
+                    : reconnectionAttempts > 0
                       ? `Reconnecting... (${reconnectionAttempts}/${maxReconnectionAttempts})`
                       : 'Disconnected'
                 }
@@ -664,7 +666,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                               {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                             </span>
                             <div className="flex-1 bg-zinc-800 rounded-full h-2 overflow-hidden">
-                              <div 
+                              <div
                                 className="bg-white h-2 rounded-full transition-all"
                                 style={{ width: `${percentage}%` }}
                               />
@@ -694,7 +696,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                             {country.country}
                           </span>
                           <div className="flex-1 bg-zinc-800 rounded-full h-2">
-                            <div 
+                            <div
                               className="bg-blue-400 h-2 rounded-full transition-all"
                               style={{ width: `${(country.visitors / Math.max(...countryStats.map(c => c.visitors))) * 100}%` }}
                             />
@@ -740,7 +742,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     {realtimeStats.count} active visitors
                   </span>
                 </div>
-                
+
                 {realtimeStats.visitors.length > 0 ? (
                   <div className="space-y-3">
                     {realtimeStats.visitors.map((visitor) => (
@@ -756,7 +758,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                             {new Date(visitor.timestamp).toLocaleTimeString()}
                           </span>
                         </div>
-                        
+
                         {/* Page Information */}
                         <div className="bg-zinc-900 p-3 rounded mb-2">
                           <div className="flex items-center gap-2 mb-1">
@@ -775,7 +777,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                             </span>
                           </div>
                         </div>
-                        
+
                         {/* Referrer Information */}
                         {visitor.referrer && visitor.referrer !== '' && (
                           <div className="flex items-center gap-2">
@@ -805,13 +807,13 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 <p className="text-zinc-400 mb-4 font-mono">
                   Add this script to your website&apos;s <code className="bg-zinc-950 p-1 rounded text-white">&lt;head&gt;</code> to start tracking visitors:
                 </p>
-                
+
                 <div className="bg-zinc-950 p-4 rounded border border-zinc-800 mb-4">
                   <code className="text-white font-mono text-sm select-all">
                     {getTrackingScript(selectedProject.id)}
                   </code>
                 </div>
-                
+
                 <button
                   onClick={() => copyToClipboard(getTrackingScript(selectedProject.id))}
                   disabled={isCopyingScript}
