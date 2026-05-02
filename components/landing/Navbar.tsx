@@ -194,7 +194,7 @@ export function Navbar({ session }: NavbarProps) {
                   className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-400 hover:bg-white/5 hover:text-white transition-colors"
                   aria-label="Close menu"
                 >
-                  <Hamburger open={true} />
+                  <Hamburger open={true} scrolled={true} />
                 </motion.button>
               </div>
 

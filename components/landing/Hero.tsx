@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import {
   ArrowRight, Code2, Star,
 } from 'lucide-react';
@@ -86,6 +87,3 @@ export function Hero() {
     </motion.section>
   );
 }
-
-// Helper Link component to handle next/link import if needed
-import Link from 'next/link';
