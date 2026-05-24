@@ -38,8 +38,8 @@ export function AddProject() {
                 desc: 'Keep analytics for different domains completely separate.' 
               },
             ].map((item, i) => (
-              <div key={i} className="flex gap-4 p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/50 group hover:border-zinc-700 transition-colors">
-                <div className="h-10 w-10 shrink-0 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300">
+              <div key={i} className="flex gap-4 p-4 rounded-xl bg-black border border-zinc-800/50 group hover:border-zinc-700 transition-colors">
+                <div className="h-10 w-10 shrink-0 rounded-lg bg-zinc-950 border border-zinc-700 flex items-center justify-center group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300">
                   <item.icon className="h-5 w-5" />
                 </div>
                 <div>
@@ -58,19 +58,19 @@ export function AddProject() {
         >
           {/* Mockup UI */}
           <div className={cn(CARD, "p-1 rounded-2xl overflow-hidden shadow-2xl shadow-emerald-500/5")}>
-            <div className="bg-zinc-950 rounded-[14px] p-6 border border-zinc-800/50">
+            <div className="bg-black rounded-[14px] p-6 border border-zinc-800/50">
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-zinc-800" />
                   <div className="w-3 h-3 rounded-full bg-zinc-800" />
                   <div className="w-3 h-3 rounded-full bg-zinc-800" />
                 </div>
-                <div className="h-4 w-32 bg-zinc-900 rounded-full" />
+                <div className="h-4 w-32 bg-black rounded-full" />
               </div>
 
               <div className="space-y-4">
-                <div className="text-center py-8 px-4 rounded-xl border border-dashed border-zinc-800 bg-zinc-900/30">
-                  <div className="h-12 w-12 rounded-full bg-zinc-800 mx-auto flex items-center justify-center mb-4 text-zinc-500">
+                <div className="text-center py-8 px-4 rounded-xl border border-dashed border-zinc-800 bg-black/30">
+                  <div className="h-12 w-12 rounded-full bg-black mx-auto flex items-center justify-center mb-4 text-zinc-500">
                     <Plus className="h-6 w-6" />
                   </div>
                   <h3 className="text-zinc-100 font-semibold mb-1">Create Your First Project</h3>
@@ -81,9 +81,9 @@ export function AddProject() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-900/50 flex items-center justify-between blur-[1px] opacity-50">
+                <div className="p-4 rounded-xl border border-zinc-800 bg-black/50 flex items-center justify-between blur-[1px] opacity-50">
                   <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded bg-zinc-800" />
+                    <div className="h-8 w-8 rounded bg-black" />
                     <div className="space-y-1">
                       <div className="h-3 w-20 bg-zinc-700 rounded" />
                       <div className="h-2 w-12 bg-zinc-800 rounded" />

@@ -39,7 +39,7 @@ export function Integration() {
                   custom={i + 1}
                   className="flex items-center gap-2.5 group"
                 >
-                  <div className="h-5 w-5 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0 group-hover:border-emerald-500/50 transition-colors">
+                  <div className="h-5 w-5 rounded-full bg-black border border-zinc-700 flex items-center justify-center shrink-0 group-hover:border-emerald-500/50 transition-colors">
                     <Check className="h-3 w-3 text-emerald-400" />
                   </div>
                   <span className="text-[13px] text-zinc-400 group-hover:text-zinc-300 transition-colors">{t}</span>

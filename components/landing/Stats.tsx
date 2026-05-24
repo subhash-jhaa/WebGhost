@@ -19,7 +19,7 @@ function StatsRow() {
           custom={i}
           className={cn(CARD, CARD_HOVER, "p-5 flex items-start gap-4")}
         >
-          <div className="p-2 rounded-lg bg-zinc-800 border border-zinc-700 shrink-0">
+          <div className="p-2 rounded-lg bg-black border border-zinc-800 shrink-0">
             <Icon className="h-4 w-4 text-zinc-400" />
           </div>
           <div>

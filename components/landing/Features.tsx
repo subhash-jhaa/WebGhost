@@ -47,7 +47,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
         {variant === 'realtime' && (
           <div className="relative z-10 flex flex-col h-full">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-zinc-800 border border-zinc-700 group-hover:border-zinc-500 transition-colors">
+              <div className="p-2 rounded-lg bg-black border border-zinc-800 group-hover:border-zinc-500 transition-colors">
                 <Icon className="h-4 w-4 text-zinc-100" />
               </div>
               <h3 className="font-semibold text-zinc-100 text-base">{title}</h3>
@@ -74,7 +74,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
         {variant === 'privacy' && (
           <div className="flex flex-col items-center justify-center text-center h-full">
             <div className="mb-4 relative">
-              <div className="relative z-10 p-4 rounded-full bg-zinc-800 border border-zinc-700 shadow-xl group-hover:scale-105 transition-transform duration-500">
+              <div className="relative z-10 p-4 rounded-full bg-black border border-zinc-800 shadow-xl group-hover:scale-105 transition-transform duration-500">
                 <Icon className="h-6 w-6 text-zinc-100" />
               </div>
               <div className="absolute inset-0 animate-ping opacity-10 bg-zinc-400 rounded-full blur-xl" />
@@ -88,7 +88,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
 
         {variant === 'console' && (
           <div className="flex flex-col h-full">
-            <div className="p-2 rounded-lg bg-zinc-800 border border-zinc-700 w-fit mb-3 group-hover:border-zinc-500 transition-colors">
+            <div className="p-2 rounded-lg bg-black border border-zinc-800 w-fit mb-3 group-hover:border-zinc-500 transition-colors">
               <Icon className="h-4 w-4 text-zinc-100" />
             </div>
             <h3 className="font-semibold text-zinc-100 text-[14px] mb-1">{title}</h3>
@@ -111,7 +111,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
           <div className={cn("grid grid-cols-1 sm:grid-cols-2 h-full -m-5 sm:-m-6")}>
             <div className="p-5 sm:p-6 flex flex-col justify-between">
               <div>
-                <div className="p-2 rounded-lg bg-zinc-800 border border-zinc-700 w-fit mb-4 group-hover:border-zinc-500 transition-colors">
+                <div className="p-2 rounded-lg bg-black border border-zinc-800 w-fit mb-4 group-hover:border-zinc-500 transition-colors">
                   <Icon className="h-4 w-4 text-zinc-100" />
                 </div>
                 <h3 className="font-semibold text-zinc-100 text-base mb-1">{title}</h3>
@@ -119,7 +119,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
                   {desc}
                 </p>
               </div>
-              <div className="mt-6 rounded-lg border border-zinc-700/50 bg-zinc-800/50 p-2.5 font-mono text-[9px] sm:text-[10px] text-zinc-400 group-hover:border-zinc-500 transition-colors overflow-hidden">
+              <div className="mt-6 rounded-lg border border-zinc-700/50 bg-black/50 p-2.5 font-mono text-[9px] sm:text-[10px] text-zinc-400 group-hover:border-zinc-500 transition-colors overflow-hidden">
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
                   <span className="text-zinc-600">&lt;script</span>
                   <span className="text-amber-500/80">src</span>
@@ -128,7 +128,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
                 </div>
               </div>
             </div>
-            <div className="relative bg-zinc-800/20 border-l border-zinc-800 overflow-hidden min-h-[140px]">
+            <div className="relative bg-black/20 border-l border-zinc-800 overflow-hidden min-h-[140px]">
               <div className="absolute inset-0 flex items-center justify-center">
                  <svg className="w-full h-24 text-zinc-700/30 group-hover:text-zinc-500/40 transition-colors" viewBox="0 0 200 100" preserveAspectRatio="none">
                     <path d="M0,50 Q25,10 50,50 T100,50 T150,50 T200,50" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5 5" className="animate-[pulse_3s_infinite]" />
@@ -141,7 +141,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
 
         {variant === 'insights' && (
           <div className="flex flex-col h-full">
-            <div className="p-2 rounded-lg bg-zinc-800 border border-zinc-700 w-fit mb-3 group-hover:border-zinc-500 transition-colors">
+            <div className="p-2 rounded-lg bg-black border border-zinc-800 w-fit mb-3 group-hover:border-zinc-500 transition-colors">
               <Icon className="h-4 w-4 text-zinc-100" />
             </div>
             <h3 className="font-semibold text-zinc-100 text-base mb-1">{title}</h3>
@@ -150,7 +150,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
             </p>
             <div className="grid grid-cols-2 gap-2 mt-auto">
               {[42, 28, 15, 64].map((v, i) => (
-                <div key={i} className="bg-zinc-800/30 border border-zinc-700/30 rounded p-1.5 flex items-end gap-1.5 h-12">
+                <div key={i} className="bg-black/30 border border-zinc-800/30 rounded p-1.5 flex items-end gap-1.5 h-12">
                   <div className="w-full bg-zinc-700/50 rounded-t-sm transition-all duration-700 group-hover:bg-zinc-500" style={{ height: `${v}%` }} />
                 </div>
               ))}
@@ -160,7 +160,7 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
 
         {variant === 'api' && (
           <div className="flex flex-col h-full">
-            <div className="p-2 rounded-lg bg-zinc-800 border border-zinc-700 w-fit mb-3 group-hover:border-zinc-500 transition-colors">
+            <div className="p-2 rounded-lg bg-black border border-zinc-800 w-fit mb-3 group-hover:border-zinc-500 transition-colors">
               <Icon className="h-4 w-4 text-zinc-100" />
             </div>
             <h3 className="font-semibold text-zinc-100 text-base mb-1">{title}</h3>

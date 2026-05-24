@@ -7,7 +7,7 @@ import { Pricing } from '@/components/landing/Pricing'
 
 const PricingPage = () => {
   return (
-    <div className="bg-zinc-950 text-zinc-100 min-h-screen selection:bg-white/10">
+    <div className="bg-black text-zinc-100 min-h-screen selection:bg-white/10">
       <Navbar />
       <main className="pt-24 pb-12">
         <Pricing />

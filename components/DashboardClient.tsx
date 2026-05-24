@@ -355,7 +355,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   if (!loading && projects.length === 0) {
     return (
       <>
-        <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
+        <div className="min-h-screen bg-black text-zinc-100 flex items-center justify-center">
           <div className="text-center max-w-md mx-auto px-4">
             <div className="animate-pulse">
               <div className="h-16 w-16 bg-white/20 rounded-full mx-auto mb-6 flex items-center justify-center">
@@ -385,14 +385,14 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         {/* New Project Modal */}
         {showNewProjectModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800 w-96">
+            <div className="bg-black p-6 rounded-xl border border-zinc-900 w-96">
               <h3 className="text-xl font-bold text-zinc-100 mb-4 font-mono">Create New Project</h3>
               <input
                 type="text"
                 placeholder="Project name"
                 value={newProjectName}
                 onChange={(e) => setNewProjectName(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
+                className="w-full bg-black border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
                 onKeyPress={(e) => e.key === 'Enter' && createProject()}
               />
               <div className="flex gap-3">
@@ -429,9 +429,9 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex">
+    <div className="min-h-screen bg-black text-zinc-100 flex">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-zinc-900/80 border-r border-zinc-800 backdrop-blur-xl transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}>
+      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-black/80 border-r border-zinc-900 backdrop-blur-xl transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}>
         <div className="p-6">
           <div className="flex items-center justify-between gap-2 mb-8">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -451,7 +451,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('overview')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${activeTab === 'overview'
                   ? 'bg-white text-zinc-950'
-                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
+                  : 'text-zinc-300 hover:text-white hover:bg-zinc-900'
                 }`}
             >
               <ChartBarIcon className="h-5 w-5" />
@@ -461,7 +461,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('live')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${activeTab === 'live'
                   ? 'bg-white text-zinc-950'
-                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
+                  : 'text-zinc-300 hover:text-white hover:bg-zinc-900'
                 }`}
             >
               <EyeIcon className="h-5 w-5" />
@@ -471,7 +471,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               onClick={() => setActiveTab('setup')}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm font-mono transition cursor-pointer ${activeTab === 'setup'
                   ? 'bg-white text-zinc-950'
-                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
+                  : 'text-zinc-300 hover:text-white hover:bg-zinc-900'
                 }`}
             >
               <CogIcon className="h-5 w-5" />
@@ -480,7 +480,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
           </nav>
         </div>
 
-        <div className="mt-auto p-6 border-t border-zinc-800">
+        <div className="mt-auto p-6 border-t border-zinc-900">
           <div className="text-xs text-zinc-500 mb-2 font-mono">
             {session.user?.name || session.user?.email}
           </div>
@@ -497,7 +497,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col md:ml-0">
         {/* Top Bar */}
-        <div className="bg-zinc-950/80 border-b border-zinc-800 p-4 backdrop-blur-xl">
+        <div className="bg-black/80 border-b border-zinc-900 p-4 backdrop-blur-xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
@@ -509,19 +509,19 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               <div className="relative min-w-[180px] w-56">
                 <button
                   onClick={() => setDropdownOpen((open) => !open)}
-                  className="w-full flex items-center justify-between px-4 py-2 bg-zinc-950 border border-zinc-700 rounded text-white font-mono focus:outline-none focus:ring-2 focus:ring-white"
+                  className="w-full flex items-center justify-between px-4 py-2 bg-black border border-zinc-700 rounded text-white font-mono focus:outline-none focus:ring-2 focus:ring-white"
                 >
                   {selectedProject?.name || 'Select Project'}
                   <svg className={`w-4 h-4 ml-2 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                 </button>
                 {dropdownOpen && (
-                  <div ref={dropdownRef} className="absolute z-50 mt-2 w-full bg-zinc-900 rounded-lg shadow-lg border border-zinc-800 overflow-hidden">
+                  <div ref={dropdownRef} className="absolute z-50 mt-2 w-full bg-black rounded-lg shadow-lg border border-zinc-900 overflow-hidden">
                     <div className="px-4 py-2 text-xs text-zinc-400 font-mono">Personal account</div>
                     {projects.map((project) => (
                       <button
                         key={project.id}
                         onClick={() => handleProjectSwitch(project)}
-                        className={`w-full text-left px-4 py-2 font-mono text-sm flex items-center gap-2 transition-colors ${selectedProject?.id === project.id ? 'bg-zinc-800 text-white' : 'text-zinc-200 hover:bg-zinc-700'}`}
+                        className={`w-full text-left px-4 py-2 font-mono text-sm flex items-center gap-2 transition-colors ${selectedProject?.id === project.id ? 'bg-zinc-900 text-white' : 'text-zinc-200 hover:bg-zinc-700'}`}
                       >
                         {project.name}
                         {selectedProject?.id === project.id && (
@@ -579,7 +579,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
         {/* Content Area */}
         <div className="flex-1 p-6 overflow-auto">
           {loading && (
-            <div className="flex items-center gap-2 mb-4 p-3 bg-zinc-900 rounded-xl border border-zinc-800 w-fit mx-auto">
+            <div className="flex items-center gap-2 mb-4 p-3 bg-black rounded-xl border border-zinc-900 w-fit mx-auto">
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               <span className="text-white font-mono text-sm">Fetching project data...</span>
             </div>
@@ -589,7 +589,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
             <div className="space-y-6">
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <div className="bg-black p-6 rounded-xl border border-zinc-900">
                   <div className="flex items-center gap-3 mb-2">
                     <EyeIcon className={`h-6 w-6 text-zinc-100 ${realtimeStats.count > 0 ? 'animate-pulse' : ''}`} />
                     <h3 className="text-zinc-100 font-semibold font-mono">Live Visitors</h3>
@@ -602,7 +602,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     <p className="text-3xl font-bold text-white">{realtimeStats.count}</p>
                   )}
                 </div>
-                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <div className="bg-black p-6 rounded-xl border border-zinc-900">
                   <div className="flex items-center gap-3 mb-2">
                     <ChartBarIcon className="h-6 w-6 text-cyan-400" />
                     <h3 className="text-cyan-400 font-semibold font-mono">7-Day Total</h3>
@@ -617,7 +617,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     </p>
                   )}
                 </div>
-                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <div className="bg-black p-6 rounded-xl border border-zinc-900">
                   <div className="flex items-center gap-3 mb-2">
                     <GlobeAltIcon className="h-6 w-6 text-blue-400" />
                     <h3 className="text-blue-400 font-semibold font-mono">Countries</h3>
@@ -630,7 +630,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     <p className="text-3xl font-bold text-white">{countryStats.length}</p>
                   )}
                 </div>
-                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <div className="bg-black p-6 rounded-xl border border-zinc-900">
                   <div className="flex items-center gap-3 mb-2">
                     <LinkIcon className="h-6 w-6 text-purple-400" />
                     <h3 className="text-purple-400 font-semibold font-mono">Referrers</h3>
@@ -648,7 +648,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               {/* Charts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* 7-Day Chart */}
-                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <div className="bg-black p-6 rounded-xl border border-zinc-900">
                   <h3 className="text-zinc-100 font-semibold mb-4 font-mono">7-Day Traffic</h3>
                   <div className="space-y-2">
                     {loading ? (
@@ -665,7 +665,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                             <span className="text-xs text-zinc-400 font-mono w-16">
                               {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                             </span>
-                            <div className="flex-1 bg-zinc-800 rounded-full h-2 overflow-hidden">
+                            <div className="flex-1 bg-zinc-900 rounded-full h-2 overflow-hidden">
                               <div
                                 className="bg-white h-2 rounded-full transition-all"
                                 style={{ width: `${percentage}%` }}
@@ -682,7 +682,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 </div>
 
                 {/* Countries Chart */}
-                <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                <div className="bg-black p-6 rounded-xl border border-zinc-900">
                   <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Top Countries</h3>
                   <div className="space-y-2">
                     {loading ? (
@@ -695,7 +695,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                           <span className="text-xs text-zinc-400 font-mono flex-1">
                             {country.country}
                           </span>
-                          <div className="flex-1 bg-zinc-800 rounded-full h-2">
+                          <div className="flex-1 bg-zinc-900 rounded-full h-2">
                             <div
                               className="bg-blue-400 h-2 rounded-full transition-all"
                               style={{ width: `${(country.visitors / Math.max(...countryStats.map(c => c.visitors))) * 100}%` }}
@@ -712,7 +712,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               </div>
 
               {/* Referrers Table */}
-              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+              <div className="bg-black p-6 rounded-xl border border-zinc-900">
                 <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Top Referrers</h3>
                 <div className="space-y-2">
                   {loading ? (
@@ -721,7 +721,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                     </div>
                   ) : (
                     referrerStats.slice(0, 10).map((referrer) => (
-                      <div key={referrer.referrer} className="flex items-center justify-between py-2 border-b border-zinc-800 last:border-b-0">
+                      <div key={referrer.referrer} className="flex items-center justify-between py-2 border-b border-zinc-900 last:border-b-0">
                         <span className="text-sm text-zinc-300 font-mono">{referrer.referrer}</span>
                         <span className="text-sm text-purple-400 font-mono">{referrer.visitors} visitors</span>
                       </div>
@@ -734,7 +734,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
           {activeTab === 'live' && (
             <div className="space-y-6">
-              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+              <div className="bg-black p-6 rounded-xl border border-zinc-900">
                 <div className="flex items-center gap-3 mb-4">
                   <EyeIcon className="h-6 w-6 text-zinc-100" />
                   <h2 className="text-xl font-bold text-zinc-100 font-mono">Live Feed</h2>
@@ -746,7 +746,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 {realtimeStats.visitors.length > 0 ? (
                   <div className="space-y-3">
                     {realtimeStats.visitors.map((visitor) => (
-                      <div key={visitor.id} className="bg-zinc-950 p-4 rounded border border-zinc-800">
+                      <div key={visitor.id} className="bg-black p-4 rounded border border-zinc-900">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
                             <div className="w-2 h-2 bg-zinc-100 rounded-full animate-pulse"></div>
@@ -760,7 +760,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                         </div>
 
                         {/* Page Information */}
-                        <div className="bg-zinc-900 p-3 rounded mb-2">
+                        <div className="bg-black p-3 rounded mb-2">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="text-xs text-zinc-500 font-mono">🌐</span>
                             <span className="text-xs text-zinc-400 font-mono">{getDomain(visitor.pageUrl)}</span>
@@ -802,13 +802,13 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
 
           {activeTab === 'setup' && selectedProject && (
             <div className="space-y-6">
-              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+              <div className="bg-black p-6 rounded-xl border border-zinc-900">
                 <h2 className="text-xl font-bold text-zinc-100 mb-4 font-mono">Setup Instructions</h2>
                 <p className="text-zinc-400 mb-4 font-mono">
-                  Add this script to your website&apos;s <code className="bg-zinc-950 p-1 rounded text-white">&lt;head&gt;</code> to start tracking visitors:
+                  Add this script to your website&apos;s <code className="bg-black p-1 rounded text-white">&lt;head&gt;</code> to start tracking visitors:
                 </p>
 
-                <div className="bg-zinc-950 p-4 rounded border border-zinc-800 mb-4">
+                <div className="bg-black p-4 rounded border border-zinc-900 mb-4">
                   <code className="text-white font-mono text-sm select-all">
                     {getTrackingScript(selectedProject.id)}
                   </code>
@@ -830,7 +830,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
                 </button>
               </div>
 
-              <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+              <div className="bg-black p-6 rounded-xl border border-zinc-900">
                 <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Project Details</h3>
                 <div className="space-y-2 text-sm font-mono">
                   <div className="flex justify-between">
@@ -866,7 +866,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* Delete Project Modal */}
       {showDeleteModal && selectedProject && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 p-6 rounded-xl border border-red-500/50 w-full max-w-md">
+          <div className="bg-black p-6 rounded-xl border border-red-500/50 w-full max-w-md">
             <h3 className="text-xl font-bold text-red-400 mb-2 font-mono">Delete Project</h3>
             <p className="text-zinc-400 mb-4 text-sm font-mono">
               This action cannot be undone. This will permanently delete the <strong className="text-white">{selectedProject.name}</strong> project and all of its associated data.
@@ -879,7 +879,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               placeholder={selectedProject.name}
               value={deleteConfirmationName}
               onChange={(e) => setDeleteConfirmationName(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
+              className="w-full bg-black border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && deleteProject()}
             />
             <div className="flex gap-3">
@@ -915,14 +915,14 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* New Project Modal */}
       {showNewProjectModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 p-6 rounded-xl border border-zinc-800 w-96">
+          <div className="bg-black p-6 rounded-xl border border-zinc-900 w-96">
             <h3 className="text-xl font-bold text-zinc-100 mb-4 font-mono">Create New Project</h3>
             <input
               type="text"
               placeholder="Project name"
               value={newProjectName}
               onChange={(e) => setNewProjectName(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
+              className="w-full bg-black border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && createProject()}
             />
             <div className="flex gap-3">
@@ -958,7 +958,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
       {/* Delete Project Modal */}
       {showDeleteModal && selectedProject && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 p-6 rounded-xl border border-red-500/50 w-full max-w-md">
+          <div className="bg-black p-6 rounded-xl border border-red-500/50 w-full max-w-md">
             <h3 className="text-xl font-bold text-red-400 mb-2 font-mono">Delete Project</h3>
             <p className="text-zinc-400 mb-4 text-sm font-mono">
               This action cannot be undone. This will permanently delete the <strong className="text-white">{selectedProject.name}</strong> project and all of its associated data.
@@ -971,7 +971,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
               placeholder={selectedProject.name}
               value={deleteConfirmationName}
               onChange={(e) => setDeleteConfirmationName(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
+              className="w-full bg-black border border-zinc-700 rounded px-3 py-2 text-white font-mono mb-4"
               onKeyPress={(e) => e.key === 'Enter' && deleteProject()}
             />
             <div className="flex gap-3">

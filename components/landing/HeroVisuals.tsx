@@ -29,7 +29,7 @@ function LiveFeed() {
 
   return (
     <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-md mx-auto overflow-hidden relative shadow-2xl")}>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-900/50">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-black/50">
         <div className="flex items-center gap-2">
           <Terminal className="h-3.5 w-3.5 text-zinc-500" />
           <span className={cn(MONO, "text-xs text-zinc-400")}>live_visitors.log</span>
@@ -62,7 +62,7 @@ function LiveFeed() {
           </motion.div>
         ))}
       </div>
-      <div className="px-4 py-2.5 border-t border-zinc-800 flex items-center gap-2 bg-zinc-900/30">
+      <div className="px-4 py-2.5 border-t border-zinc-800 flex items-center gap-2 bg-black/30">
         <span className={cn(MONO, "text-[11px] text-emerald-400")}>●</span>
         <span className="text-[11px] text-zinc-600">Streaming 1,284 active sessions</span>
       </div>
@@ -90,7 +90,7 @@ export function HeroScript() {
 
   return (
     <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-lg mx-auto overflow-hidden shadow-2xl")}>
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 bg-zinc-950">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 bg-black">
         <div className="flex items-center gap-1.5">
           <div className="h-2.5 w-2.5 rounded-full bg-zinc-800" />
           <div className="h-2.5 w-2.5 rounded-full bg-zinc-800" />
@@ -99,14 +99,14 @@ export function HeroScript() {
         </div>
         <button
           onClick={copy}
-          className="flex items-center gap-1.5 text-[11px] text-zinc-500 hover:text-zinc-200 transition-colors px-2 py-1 rounded border border-zinc-800 hover:border-zinc-700 bg-zinc-900"
+          className="flex items-center gap-1.5 text-[11px] text-zinc-500 hover:text-zinc-200 transition-colors px-2 py-1 rounded border border-zinc-800 hover:border-zinc-700 bg-black"
         >
           {copied
             ? <><Check className="h-3 w-3 text-emerald-400" /><span className="text-emerald-400">Copied!</span></>
             : <><Copy className="h-3 w-3" /><span>Copy</span></>}
         </button>
       </div>
-      <div className="px-5 py-4 bg-zinc-950">
+      <div className="px-5 py-4 bg-black">
         <pre className={cn(MONO, "text-sm leading-relaxed")}>
           {lines.map((line, i) => (
             <motion.div 
@@ -122,7 +122,7 @@ export function HeroScript() {
           ))}
         </pre>
       </div>
-      <div className="flex items-center gap-2 px-5 py-3 border-t border-zinc-800 bg-zinc-950 flex-wrap">
+      <div className="flex items-center gap-2 px-5 py-3 border-t border-zinc-800 bg-black flex-wrap">
         {['< 2KB', 'No dependencies', 'Open source'].map((b, i) => (
           <motion.span 
             key={b} 

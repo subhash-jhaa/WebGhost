@@ -12,6 +12,7 @@ import { CTA } from './landing/CTA';
 import { Footer } from './landing/Footer';
 import { Pricing } from './landing/Pricing';
 import { AddProject } from './landing/AddProject';
+import { FAQ } from './landing/FAQ';
 
 interface LandingProps {
   session?: Session | null;
@@ -19,7 +20,7 @@ interface LandingProps {
 
 export default function Landing({ session }: LandingProps) {
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 overflow-x-hidden">
+    <div className="min-h-screen bg-black text-zinc-100 overflow-x-hidden">
 
       {/* ── Navbar ─────────────────────────────────────────────────────────── */}
       <Navbar session={session} />
@@ -32,11 +33,6 @@ export default function Landing({ session }: LandingProps) {
 
       {/* ── Stats ──────────────────────────────────────────────────────────── */}
       <Stats />
-
-      {/* ── Divider ────────────────────────────────────────────────────────── */}
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <div className="h-px w-full bg-zinc-800" />
-      </div>
 
       {/* ── How It Works ───────────────────────────────────────────────────── */}
       <HowItWorks />
@@ -55,6 +51,9 @@ export default function Landing({ session }: LandingProps) {
 
       {/* ── Pricing ────────────────────────────────────────────────────────── */}
       <Pricing />
+
+      {/* ── FAQ ────────────────────────────────────────────────────────────── */}
+      <FAQ />
 
       {/* ── CTA ────────────────────────────────────────────────────────────── */}
       <CTA />

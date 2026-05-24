@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import {
   NotepadTextDashed,
-  Mail,
 } from "lucide-react";
 import { cn } from "@/components/lib/utils";
 
@@ -40,8 +39,8 @@ export const Footer = ({
   className,
 }: FooterProps) => {
   return (
-    <section className={cn("relative w-full mt-0 overflow-hidden bg-zinc-950 text-zinc-100", className)}>
-      <footer className="border-t border-white/5 bg-zinc-950/50 mt-10 relative">
+    <section className={cn("relative w-full mt-0 overflow-hidden bg-black text-zinc-100", className)}>
+      <footer className="border-t border-white/5 bg-black/50 mt-10 relative">
         <div className="max-w-7xl flex flex-col justify-between mx-auto min-h-[20rem] sm:min-h-[30rem] md:min-h-[35rem] relative p-4 py-8">
           <div className="flex flex-col mb-12 sm:mb-20 md:mb-0 w-full">
             <div className="w-full flex flex-col items-center">
@@ -123,7 +122,7 @@ export const Footer = ({
         {/* Bottom logo */}
         <button 
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="absolute bottom-24 md:bottom-20 backdrop-blur-xl rounded-3xl bg-zinc-900/60 left-1/2 border border-white/20 flex items-center justify-center p-2 -translate-x-1/2 z-10 transition-all overflow-hidden drop-shadow-[0_0px_50px_rgba(255,255,255,0.15)] cursor-pointer"
+          className="absolute bottom-24 md:bottom-20 backdrop-blur-xl rounded-3xl bg-black/60 left-1/2 border border-white/20 flex items-center justify-center p-2 -translate-x-1/2 z-10 transition-all overflow-hidden drop-shadow-[0_0px_50px_rgba(255,255,255,0.15)] cursor-pointer"
         >
           {brandIcon ? (
             <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 flex items-center justify-center rounded-2xl overflow-hidden shadow-2xl relative z-10">

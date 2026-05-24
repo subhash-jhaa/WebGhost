@@ -7,7 +7,7 @@ import { STEPS } from './Constants';
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="mx-auto max-w-5xl px-4 sm:px-6 py-20">
-      <motion.div 
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
@@ -25,7 +25,7 @@ export function HowItWorks() {
         </motion.p>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -38,9 +38,9 @@ export function HowItWorks() {
             variants={fadeUp}
             custom={i}
           >
-            <div className={cn(CARD, CARD_HOVER, "h-full p-6 flex flex-col gap-5 relative overflow-hidden group")}>
+            <div className="rounded-xl bg-black h-full p-6 flex flex-col gap-5 relative overflow-hidden group transition-colors duration-200">
               {/* large step number background */}
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, scale: 0.5 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 + (i * 0.1), duration: 0.5 }}
@@ -48,7 +48,7 @@ export function HowItWorks() {
               >
                 {n}
               </motion.span>
-              <div className="p-2.5 rounded-lg bg-zinc-800 border border-zinc-700 w-fit group-hover:border-zinc-500 transition-colors">
+              <div className="p-2.5 rounded-lg bg-black border border-zinc-800 w-fit group-hover:border-zinc-500 transition-colors">
                 <Icon className="h-5 w-5 text-zinc-300" />
               </div>
               <div className="relative z-10">

@@ -47,14 +47,14 @@ export default function AuthClient() {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#121212] flex items-center justify-center overflow-hidden selection:bg-white/10 selection:text-white">
+    <div className="relative min-h-screen w-full bg-black flex items-center justify-center overflow-hidden selection:bg-white/10 selection:text-white">
       <Noise />
       
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="relative z-10 w-full max-w-[440px] px-10 py-12 flex flex-col items-center bg-[#22272e] rounded-2xl shadow-2xl border border-white/5"
+        className="relative z-10 w-full max-w-[440px] px-10 py-12 flex flex-col items-center bg-black rounded-2xl shadow-2xl border border-white/5"
       >
         {/* Logo & Branding */}
         <div className="flex items-center gap-2.5 mb-8">
@@ -130,7 +130,7 @@ export default function AuthClient() {
                       autoFocus
                       autoComplete="email"
                       placeholder="name@company.com"
-                      className="w-full bg-zinc-900/50 text-white placeholder-zinc-500 text-center border border-white/10 focus:border-white/20 rounded-lg focus:outline-none py-3 text-sm transition-all duration-300"
+                      className="w-full bg-black/50 text-white placeholder-zinc-500 text-center border border-white/10 focus:border-white/20 rounded-lg focus:outline-none py-3 text-sm transition-all duration-300"
                       onFocus={() => setIsFocused(true)}
                       onBlur={() => setIsFocused(false)}
                       value={email}

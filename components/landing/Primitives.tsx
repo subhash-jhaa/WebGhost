@@ -7,7 +7,7 @@ export function cn(...c: (string | undefined | false)[]) { return c.filter(Boole
 export function Badge({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span className={cn(
-      "inline-flex items-center gap-1.5 rounded-full border border-zinc-700 bg-zinc-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-zinc-400",
+      "inline-flex items-center gap-1.5 rounded-full border border-zinc-700 bg-black px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-zinc-400",
       className
     )}>
       {children}
@@ -88,7 +88,7 @@ export const scaleIn = {
 };
 
 // ─── Design Tokens ────────────────────────────────────────────────────────────
-export const CARD = "rounded-xl border border-zinc-800 bg-zinc-900";
+export const CARD = "rounded-xl border border-zinc-800 bg-black";
 export const CARD_HOVER = "hover:border-zinc-700 transition-colors duration-200";
 // Uses the JetBrains Mono variable injected by the root layout
 export const MONO = "font-[family-name:var(--font-mono)]";
