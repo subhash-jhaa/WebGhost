@@ -11,7 +11,8 @@ interface SessionUser {
 
 const TestPage = async () => {
   const session = await requireAuth();
-  const projects = await prisma.project.findMany({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const projects = await (prisma as any).project.findMany({
     where: { userId: (session.user as SessionUser).id },
     orderBy: { createdAt: 'asc' },
   });

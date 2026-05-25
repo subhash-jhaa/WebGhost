@@ -4,6 +4,11 @@ import { motion } from 'framer-motion';
 import { Plus, Layout, ArrowRight } from 'lucide-react';
 import { cn, SectionLabel, CARD, fadeUp, staggerContainer } from './Primitives';
 
+const ADD_PROJECT_STEPS = [
+  { icon: Plus, title: 'Instant Setup', desc: 'Give your project a name and you\'re ready to go.' },
+  { icon: Layout, title: 'Isolated Data', desc: 'Keep analytics for different domains completely separate.' },
+];
+
 export function AddProject() {
   return (
     <section id="add-project" className="mx-auto max-w-5xl px-4 sm:px-6 py-20">
@@ -26,18 +31,7 @@ export function AddProject() {
           </p>
           
           <div className="space-y-4">
-            {[
-              { 
-                icon: Plus, 
-                title: 'Instant Setup', 
-                desc: 'Give your project a name and you&apos;re ready to go.' 
-              },
-              { 
-                icon: Layout, 
-                title: 'Isolated Data', 
-                desc: 'Keep analytics for different domains completely separate.' 
-              },
-            ].map((item, i) => (
+            {ADD_PROJECT_STEPS.map((item, i) => (
               <div key={i} className="flex gap-4 p-4 rounded-xl bg-black border border-zinc-800/50 group hover:border-zinc-700 transition-colors">
                 <div className="h-10 w-10 shrink-0 rounded-lg bg-zinc-950 border border-zinc-700 flex items-center justify-center group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300">
                   <item.icon className="h-5 w-5" />

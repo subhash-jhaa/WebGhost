@@ -20,7 +20,7 @@ interface LandingProps {
 
 export default function Landing({ session }: LandingProps) {
   return (
-    <div className="min-h-screen bg-black text-zinc-100 overflow-x-hidden">
+    <div className="min-h-screen bg-black text-zinc-100 overflow-x-clip">
 
       {/* ── Navbar ─────────────────────────────────────────────────────────── */}
       <Navbar session={session} />

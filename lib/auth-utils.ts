@@ -27,5 +27,10 @@ export async function requireGuest() {
 }
 
 export async function getOptionalSession() {
-  return await getSession();
+  try {
+    return await getSession();
+  } catch (error) {
+    console.error("Failed to retrieve optional session (database might be offline/sleeping):", error);
+    return null;
+  }
 }

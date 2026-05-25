@@ -1,6 +1,6 @@
 import {
   Eye, BarChart3, Code2, Cpu, ShieldCheck, Plug,
-  Globe, Users, Zap, MousePointer, Activity,
+  Globe, Zap, Activity,
 } from 'lucide-react';
 
 export const VISITORS = [
@@ -64,9 +64,27 @@ export const FEATURES = [
 ] as const;
 
 export const STEPS = [
-  { n: '01', icon: Code2, title: 'Add the Script', desc: 'Paste one line into your HTML. Works with any framework or static site.' },
-  { n: '02', icon: MousePointer, title: 'Visitors Get Tracked', desc: 'Every page view captured instantly — no delay, no data loss, no sampling.' },
-  { n: '03', icon: Users, title: 'Analyze & Grow', desc: 'Open your dashboard or hit the API. Understand your audience and ship with confidence.' },
+  { 
+    n: '01', 
+    title: 'Add the Script', 
+    desc: 'Paste one line into your HTML. Works with any framework or static site. No package install required.',
+    tags: ['HTML Script', 'React & Next.js', 'Vue & Svelte', 'Zero dependencies'],
+    image: 'https://framerusercontent.com/images/bAWXu6pSyXw8ybD8kMDerQUyM.jpg'
+  },
+  { 
+    n: '02', 
+    title: 'Visitors Get Tracked', 
+    desc: 'Every page view captured instantly. No cookie banners required, completely privacy-first by default.',
+    tags: ['Real-time capture', 'Privacy-first', 'No cookies', 'GDPR/CCPA compliant'],
+    image: 'https://framerusercontent.com/images/k0Cvbc9DtijuES7vWlFyYKV8kwA.jpg'
+  },
+  { 
+    n: '03', 
+    title: 'Analyze & Grow', 
+    desc: 'Open your dashboard or query the REST API. Understand your audience, see referral sources, and track key conversion events.',
+    tags: ['Dev Console Mode', 'Live User Feed', 'REST API', 'Event tracking'],
+    image: 'https://framerusercontent.com/images/RjEhGhZ1TlRfag11iMARRLDr7Iw.jpg'
+  },
 ];
 
 export const TESTIMONIALS = [

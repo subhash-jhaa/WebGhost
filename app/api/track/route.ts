@@ -80,7 +80,8 @@ export async function POST(request: NextRequest): Promise<TrackingResponse> {
       const existingEventResult = await EventQueries.findRecentBySession(projectId, sessionId, 5);
 
       if (existingEventResult.success && existingEventResult.data) {
-        const existingEvent = existingEventResult.data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const existingEvent = existingEventResult.data as any;
         
         // Check if this is a page change (different URL)
         if (existingEvent.pageUrl === pageUrl) {
@@ -104,7 +105,8 @@ export async function POST(request: NextRequest): Promise<TrackingResponse> {
 
           return createSuccessResponse({ 
             success: true, 
-            eventId: updateResult.data.id, 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            eventId: (updateResult.data as any).id, 
             updated: true 
           });
         } else {
@@ -133,7 +135,8 @@ export async function POST(request: NextRequest): Promise<TrackingResponse> {
 
           return createSuccessResponse({ 
             success: true, 
-            eventId: createResult.data.id, 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            eventId: (createResult.data as any).id, 
             updated: false, 
             pageChange: true 
           });
@@ -166,7 +169,8 @@ export async function POST(request: NextRequest): Promise<TrackingResponse> {
 
     return createSuccessResponse({ 
       success: true, 
-      eventId: createResult.data.id, 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      eventId: (createResult.data as any).id, 
       updated: false 
     });
   } catch (error) {

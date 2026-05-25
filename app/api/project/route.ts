@@ -7,7 +7,8 @@ import {
 import { 
   CreateProjectRequest, 
   ProjectResponse, 
-  ProjectsResponse 
+  ProjectsResponse,
+  Project
 } from '../../../interfaces/api';
 import { ProjectQueries } from '../../../queries';
 
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest): Promise<ProjectResponse> {
       return createErrorResponse('Failed to create project', 500);
     }
 
-    return createSuccessResponse(result.data, 201);
+    return createSuccessResponse(result.data as unknown as Project, 201);
   } catch (error) {
     console.error('Create project error:', error);
     if (error instanceof Error) {
@@ -57,7 +58,7 @@ export async function GET(): Promise<ProjectsResponse> {
       return createErrorResponse(result.error || 'Failed to fetch projects', 500);
     }
 
-    return createSuccessResponse(result.data || []);
+    return createSuccessResponse((result.data || []) as unknown as Project[]);
   } catch (error) {
     console.error('Project fetch error:', error);
     if (error instanceof Error) {
