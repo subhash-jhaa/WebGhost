@@ -28,8 +28,8 @@ function LiveFeed() {
   }, []);
 
   return (
-    <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-md mx-auto overflow-hidden relative shadow-2xl")}>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-black/50">
+    <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-md mx-auto overflow-hidden relative shadow-2xl bg-zinc-950/40")}>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-950/20">
         <div className="flex items-center gap-2">
           <Terminal className="h-3.5 w-3.5 text-zinc-500" />
           <span className={cn(MONO, "text-xs text-zinc-400")}>live_visitors.log</span>
@@ -42,7 +42,7 @@ function LiveFeed() {
           <span className="text-[11px] text-zinc-600 font-mono">LIVE</span>
         </div>
       </div>
-      <div className="divide-y divide-zinc-800/60 bg-black/20">
+      <div className="divide-y divide-zinc-800/40 bg-transparent">
         {rows.map((v, i) => (
           <motion.div
             key={`${v.flag}-${v.page}-${i}`}
@@ -62,9 +62,9 @@ function LiveFeed() {
           </motion.div>
         ))}
       </div>
-      <div className="px-4 py-2.5 border-t border-zinc-800 flex items-center gap-2 bg-black/30">
+      <div className="px-4 py-2.5 border-t border-zinc-800/80 flex items-center gap-2 bg-zinc-950/20">
         <span className={cn(MONO, "text-[11px] text-emerald-400")}>●</span>
-        <span className="text-[11px] text-zinc-600">Streaming 1,284 active sessions</span>
+        <span className="text-[11px] text-zinc-500">Streaming 1,284 active sessions</span>
       </div>
     </motion.div>
   );
@@ -89,8 +89,8 @@ export function HeroScript() {
   ];
 
   return (
-    <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-lg mx-auto overflow-hidden shadow-2xl")}>
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 bg-black">
+    <motion.div variants={scaleIn} className={cn(CARD, "w-full max-w-lg mx-auto overflow-hidden shadow-2xl bg-zinc-950/40")}>
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 bg-zinc-950/20">
         <div className="flex items-center gap-1.5">
           <div className="h-2.5 w-2.5 rounded-full bg-zinc-800" />
           <div className="h-2.5 w-2.5 rounded-full bg-zinc-800" />
@@ -99,14 +99,14 @@ export function HeroScript() {
         </div>
         <button
           onClick={copy}
-          className="flex items-center gap-1.5 text-[11px] text-zinc-500 hover:text-zinc-200 transition-colors px-2 py-1 rounded border border-zinc-800 hover:border-zinc-700 bg-black"
+          className="flex items-center gap-1.5 text-[11px] text-zinc-500 hover:text-zinc-200 transition-colors px-2 py-1 rounded border border-zinc-800/60 hover:border-zinc-700 bg-zinc-950/30"
         >
           {copied
             ? <><Check className="h-3 w-3 text-emerald-400" /><span className="text-emerald-400">Copied!</span></>
             : <><Copy className="h-3 w-3" /><span>Copy</span></>}
         </button>
       </div>
-      <div className="px-5 py-4 bg-black overflow-x-auto">
+      <div className="px-5 py-4 bg-zinc-950/50 overflow-x-auto">
         <pre className={cn(MONO, "text-sm leading-relaxed whitespace-pre")}>
           {lines.map((line, i) => (
             <motion.div 
@@ -122,14 +122,14 @@ export function HeroScript() {
           ))}
         </pre>
       </div>
-      <div className="flex items-center gap-2 px-5 py-3 border-t border-zinc-800 bg-black flex-wrap">
+      <div className="flex items-center gap-2 px-5 py-3 border-t border-zinc-800/80 bg-zinc-950/20 flex-wrap">
         {['< 2KB', 'No dependencies', 'Open source'].map((b, i) => (
           <motion.span 
             key={b} 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.2 + (i * 0.1) }}
-            className={cn(MONO, "text-[10px] text-zinc-600 border border-zinc-800 rounded px-2 py-0.5")}
+            className={cn(MONO, "text-[10px] text-zinc-500 border border-zinc-800/40 rounded px-2 py-0.5 bg-zinc-950/30")}
           >
             {b}
           </motion.span>
@@ -141,17 +141,17 @@ export function HeroScript() {
 
 export function HeroVisuals() {
   return (
-    <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12 relative">
+    <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 relative">
       {/* Background Glows */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-violet-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-violet-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.2 }}
         variants={staggerContainer}
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10"
+        className="rounded-3xl border border-zinc-800/50 bg-zinc-900/10 backdrop-blur-md p-6 sm:p-10 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10 shadow-[0_0_50px_rgba(0,0,0,0.3)] shadow-inner"
       >
         <motion.div variants={fadeUp} className="flex flex-col gap-3">
           <div className="text-left flex items-center gap-3 mb-2">

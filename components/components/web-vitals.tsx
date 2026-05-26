@@ -43,27 +43,10 @@ export function WebVitals() {
 					Field experience on real sessions, measured at the origin.
 				</CardDescription>
 			</CardHeader>
-			<CardContent>
-				<ul className="grid gap-6 sm:grid-cols-3">
-					{vitals.map((v) => (
-						<li className="flex flex-col gap-1" key={v.label}>
-							<p className="text-pretty font-medium text-sm">{v.label}</p>
-							<p className="text-pretty text-muted-foreground text-xs">
-								{v.name}
-							</p>
-							<p className="text-balance font-semibold text-2xl tabular-nums">
-								{v.value}
-							</p>
-							<div className="flex items-center gap-1.5 text-pretty text-muted-foreground text-xs">
-								<Delta value={v.delta} variant="default">
-									<DeltaIcon />
-									<DeltaValue suffix={v.suffix} />
-								</Delta>
-								<span>{v.deltaLabel}</span>
-							</div>
-						</li>
-					))}
-				</ul>
+			<CardContent className="py-12">
+				<div className="text-center text-muted-foreground font-mono text-xs max-w-md mx-auto">
+					No Web Vitals telemetry received. Add the tracking script to your site header to automatically monitor Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Cumulative Layout Shift (CLS).
+				</div>
 			</CardContent>
 		</Card>
 	);

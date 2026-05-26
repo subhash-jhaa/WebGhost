@@ -26,14 +26,14 @@ const Card = ({ step, i, progress, range, targetScale }: {
       {/* Card */}
       <motion.div 
         style={{ scale, y: i * 25 }}
-        className="relative w-full rounded-3xl bg-[#0f0f0f] border border-zinc-800/80 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] origin-top flex flex-col"
+        className="relative w-full rounded-xl border border-zinc-800/80 bg-zinc-950/50 backdrop-blur-md overflow-hidden shadow-xl origin-top flex flex-col"
       >
         {/* Card Top: Title & Mobile Step */}
         <div className="p-6 sm:p-8 border-b border-zinc-800/50 flex justify-between items-center">
           <h3 className="text-xl sm:text-2xl font-medium text-zinc-100">
             {step.title}
           </h3>
-          <span className="lg:hidden text-[#ff7024] font-mono font-bold text-lg">
+          <span className="lg:hidden text-[#DEDBC8] font-mono font-bold text-lg">
             0{i + 1}
           </span>
         </div>
@@ -54,7 +54,7 @@ const Card = ({ step, i, progress, range, targetScale }: {
             <div className="flex flex-col gap-4 mb-8">
               {step.tags && step.tags.map((tag: string, j: number) => (
                 <div key={j} className="flex items-center gap-4">
-                  <div className="w-1.5 h-1.5 bg-[#ff7024] rotate-45 flex-shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#DEDBC8] rotate-45 flex-shrink-0" />
                   <span className="text-zinc-400 text-sm sm:text-base font-medium">{tag}</span>
                 </div>
               ))}
@@ -97,7 +97,7 @@ export function HowItWorks() {
   });
 
   return (
-    <section id="how-it-works" ref={container} className="relative w-full py-24 sm:py-32">
+    <section id="how-it-works" ref={container} className="relative w-full py-20 sm:py-28">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -121,7 +121,7 @@ export function HowItWorks() {
         {/* Left Side: Sticky Step Number (Desktop only) */}
         <div className="hidden lg:flex flex-col items-end w-48 shrink-0 h-[80vh] sticky top-28 pt-8">
           <div className="flex items-center gap-4">
-            <span className="text-[#ff7024] font-semibold text-sm tracking-widest">STEP</span>
+            <span className="text-[#DEDBC8] font-semibold text-sm tracking-widest">STEP</span>
             <div className="relative h-[180px] w-28 overflow-hidden flex items-center justify-center">
               <AnimatePresence mode="popLayout">
                 <motion.span
@@ -131,7 +131,6 @@ export function HowItWorks() {
                   exit={{ y: -60, opacity: 0 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute text-[#1a1a1a] text-[180px] font-bold leading-none tracking-tighter"
-                  style={{ fontFamily: 'system-ui, sans-serif' }}
                 >
                   {activeIndex + 1}
                 </motion.span>

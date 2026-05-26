@@ -18,13 +18,7 @@ import {
 } from "@/components/components/ui/table";
 import { ArrowRightIcon } from "lucide-react";
 
-const rows = [
-	{ host: "news.ycombinator.com", sessions: 1420 },
-	{ host: "t.co", sessions: 980 },
-	{ host: "github.com", sessions: 760 },
-	{ host: "producthunt.com", sessions: 540 },
-	{ host: "reddit.com", sessions: 410 },
-] as const;
+
 
 export interface TopReferrersProps {
 	data?: { referrer: string; visitors: number }[];
@@ -36,7 +30,7 @@ export function TopReferrers({ data }: TopReferrersProps) {
 				host: item.referrer || "Direct",
 				sessions: item.visitors
 			})).slice(0, 5)
-		: rows;
+		: [];
 
 	return (
 		<Card className="relative dark:bg-transparent">
@@ -62,16 +56,24 @@ export function TopReferrers({ data }: TopReferrersProps) {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{mappedRows.map((row) => (
-							<TableRow className="hover:bg-transparent" key={row.host}>
-								<TableCell className="max-w-[220px] truncate pl-6 font-medium">
-									<span className="text-xs">{row.host}</span>
-								</TableCell>
-								<TableCell className="pr-6 text-end text-muted-foreground text-xs tabular-nums">
-									{formatInteger(row.sessions)}
+						{mappedRows.length > 0 ? (
+							mappedRows.map((row) => (
+								<TableRow className="hover:bg-transparent" key={row.host}>
+									<TableCell className="max-w-[220px] truncate pl-6 font-medium">
+										<span className="text-xs">{row.host}</span>
+									</TableCell>
+									<TableCell className="pr-6 text-end text-muted-foreground text-xs tabular-nums">
+										{formatInteger(row.sessions)}
+									</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={2} className="text-center py-8 text-muted-foreground font-mono text-xs">
+									No referrers.
 								</TableCell>
 							</TableRow>
-						))}
+						)}
 					</TableBody>
 				</Table>
 			</CardContent>

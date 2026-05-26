@@ -123,7 +123,7 @@ export function Pricing() {
   };
 
   return (
-    <section id="pricing" className="relative py-24 md:py-40 bg-black overflow-hidden px-4">
+    <section id="pricing" className="relative py-20 sm:py-28 bg-black overflow-hidden px-4 sm:px-6 lg:px-8">
       
       {/* ─── Circular Radial Glow Grid Background ──────────────────────────────── */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -150,14 +150,14 @@ export function Pricing() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto">
         
         {/* Header */}
         <div className="text-center mb-16 md:mb-24">
-          <h2 className="inline-block text-3xl md:text-6xl font-bold bg-[radial-gradient(61.17%_178.53%_at_38.83%_-13.54%,#3B3B3B_0%,#888787_12.61%,#FFFFFF_50%,#888787_80%,#3B3B3B_100%)] bg-clip-text text-transparent tracking-tight leading-tight">
+          <h2 className="inline-block text-3xl md:text-5xl lg:text-6xl font-bold bg-[radial-gradient(61.17%_178.53%_at_38.83%_-13.54%,#3B3B3B_0%,#888787_12.61%,#FFFFFF_50%,#888787_80%,#3B3B3B_100%)] bg-clip-text text-transparent tracking-tight leading-tight">
             Choose Your Plan
           </h2>
-          <p className="max-w-md text-sm text-neutral-400 mx-auto mt-4 leading-relaxed">
+          <p className="max-w-md text-sm text-zinc-400 mx-auto mt-4 leading-relaxed">
             Track visitor flows, live dashboards, and api access. Pay once for lifetime, or start with basic usage.
           </p>
         </div>
@@ -168,13 +168,13 @@ export function Pricing() {
             <div 
               key={p.name}
               className={cn(
-                "rounded-3xl bg-black/60 backdrop-blur-md p-8 border transition-all duration-300 relative flex flex-col justify-between",
-                p.popular ? "border-neutral-700 ring-1 ring-white/10" : "border-neutral-800/80"
+                "rounded-xl bg-zinc-950/50 backdrop-blur-md p-8 border transition-all duration-300 relative flex flex-col justify-between",
+                p.popular ? "border-zinc-700 ring-1 ring-white/10" : "border-zinc-800/80"
               )}
             >
               {p.badge && (
                 <div className="absolute -top-4 left-0 right-0 flex justify-center">
-                  <span className="text-[9px] font-bold text-white tracking-widest px-4 py-1.5 rounded-full bg-gradient-to-b from-[#393939] via-[#141414] to-[#303030] shadow-md border border-neutral-700">
+                  <span className="text-[9px] font-bold text-white tracking-widest px-4 py-1.5 rounded-full bg-gradient-to-b from-[#393939] via-[#141414] to-[#303030] shadow-md border border-zinc-700">
                     {p.badge}
                   </span>
                 </div>
@@ -183,13 +183,13 @@ export function Pricing() {
               <div className="flex flex-col h-full">
                 {/* Upper card area */}
                 <div className="mb-8">
-                  <div className="inline-flex items-center font-bold justify-center px-3 py-1 rounded-lg border border-neutral-800 bg-black/40">
+                  <div className="inline-flex items-center font-bold justify-center px-3 py-1 rounded-lg border border-zinc-800 bg-black/40">
                     <h3 className="text-xs text-white uppercase tracking-wider">{p.name}</h3>
                   </div>
-                  <p className="text-sm text-neutral-400 mt-4 font-medium">{p.description}</p>
+                  <p className="text-sm text-zinc-400 mt-4 font-medium">{p.description}</p>
                   <div className="mt-4 flex items-baseline">
                     <span className="text-5xl font-bold text-white">{p.price}</span>
-                    <span className="text-neutral-500 text-xs ml-2">/ {p.period}</span>
+                    <span className="text-zinc-500 text-xs ml-2">/ {p.period}</span>
                   </div>
                 </div>
 
@@ -197,15 +197,15 @@ export function Pricing() {
                 <div className="space-y-4 mb-8 flex-1">
                   {p.features.map((f, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <Check className="h-4 w-4 text-neutral-400 shrink-0 mt-0.5" />
-                      <span className="text-sm text-neutral-300 leading-tight">{f}</span>
+                      <Check className="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
+                      <span className="text-sm text-zinc-300 leading-tight">{f}</span>
                     </div>
                   ))}
 
                   {p.limitations.map((l, i) => (
                     <div key={i} className="flex items-start gap-3 opacity-40">
-                      <X className="h-4 w-4 text-neutral-600 shrink-0 mt-0.5" />
-                      <span className="text-sm text-neutral-500 leading-tight">{l}</span>
+                      <X className="h-4 w-4 text-zinc-600 shrink-0 mt-0.5" />
+                      <span className="text-sm text-zinc-500 leading-tight">{l}</span>
                     </div>
                   ))}
                 </div>
@@ -216,10 +216,10 @@ export function Pricing() {
                     onClick={() => handlePlanSelect(p.plan)}
                     disabled={isLoading && selectedPlan === p.plan}
                     className={cn(
-                      "w-full py-3 rounded-xl text-sm font-bold relative transition duration-200 flex items-center justify-center border border-neutral-800 shadow-md",
+                      "w-full py-3 rounded-full text-sm font-semibold relative transition duration-200 flex items-center justify-center",
                       p.popular
-                        ? "text-white bg-gradient-to-b from-neutral-700 to-neutral-800 hover:from-neutral-600 hover:to-neutral-700 [background:linear-gradient(0deg,#151515,#151515),linear-gradient(180deg,rgba(21,21,21,0)_66.3%,rgba(255,255,255,0.5)_100%)]"
-                        : "text-zinc-300 bg-black hover:bg-neutral-950 border-neutral-800"
+                        ? "text-zinc-950 bg-white hover:bg-zinc-100 shadow-[0_4px_12px_rgba(255,255,255,0.1)]"
+                        : "text-zinc-300 bg-transparent border border-zinc-800 hover:border-zinc-700 hover:text-white"
                     )}
                   >
                     {isLoading && selectedPlan === p.plan ? (

@@ -16,13 +16,7 @@ import {
 	ShareBarListValue,
 } from "@/components/components/share-bar-list";
 
-const browsers = [
-	{ label: "Chrome", share: 58 },
-	{ label: "Safari", share: 22 },
-	{ label: "Edge", share: 9 },
-	{ label: "Firefox", share: 7 },
-	{ label: "Other", share: 4 },
-] as const;
+
 
 export interface BrowserShareProps {
 	visitors?: { userAgent: string }[];
@@ -54,7 +48,7 @@ export function BrowserShare({ visitors = [] }: BrowserShareProps) {
 				{ label: "Firefox" as const, share: Math.round((browserCounts.Firefox / total) * 100) },
 				{ label: "Other" as const, share: Math.round((browserCounts.Other / total) * 100) },
 			].sort((a, b) => b.share - a.share)
-		: browsers;
+		: [];
 
 	return (
 		<Card className="dark:bg-transparent">
@@ -65,17 +59,23 @@ export function BrowserShare({ visitors = [] }: BrowserShareProps) {
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="p-0 py-1">
-				<ShareBarList aria-label="Sessions by browser">
-					{browserShares.map((row) => (
-						<ShareBarListItem key={row.label} value={row.share}>
-							<ShareBarListContent>
-								<ShareBarListLabel>{row.label}</ShareBarListLabel>
-								<ShareBarListValue>{row.share}%</ShareBarListValue>
-							</ShareBarListContent>
-							<ShareBarListFill />
-						</ShareBarListItem>
-					))}
-				</ShareBarList>
+				{browserShares.length > 0 ? (
+					<ShareBarList aria-label="Sessions by browser">
+						{browserShares.map((row) => (
+							<ShareBarListItem key={row.label} value={row.share}>
+								<ShareBarListContent>
+									<ShareBarListLabel>{row.label}</ShareBarListLabel>
+									<ShareBarListValue>{row.share}%</ShareBarListValue>
+								</ShareBarListContent>
+								<ShareBarListFill />
+							</ShareBarListItem>
+						))}
+					</ShareBarList>
+				) : (
+					<div className="text-center py-8 text-muted-foreground font-mono text-xs">
+						No browser data.
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);

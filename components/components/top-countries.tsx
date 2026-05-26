@@ -21,14 +21,7 @@ import { ArrowRightIcon } from "lucide-react";
 
 const FLAGPACK_BASE = "https://flag.vercel.app";
 
-const rows = [
-	{ code: "US", visits: 6120, delta: 5.2 },
-	{ code: "DE", visits: 2840, delta: 8.1 },
-	{ code: "GB", visits: 1960, delta: -1.4 },
-	{ code: "FR", visits: 1420, delta: 3.6 },
-	{ code: "CA", visits: 1180, delta: 0.9 },
-	{ code: "NL", visits: 890, delta: 12.2 },
-] as const;
+
 
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
@@ -61,12 +54,7 @@ export function TopCountries({ data }: TopCountriesProps) {
 					delta: 0
 				};
 			})
-		: rows.map(r => ({
-				code: r.code,
-				name: regionNames.of(r.code) || r.code,
-				visits: r.visits,
-				delta: r.delta
-			}));
+		: [];
 
 	return (
 		<Card className="relative md:col-span-2 dark:bg-transparent">
@@ -95,34 +83,42 @@ export function TopCountries({ data }: TopCountriesProps) {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{mappedRows.map((row) => (
-							<TableRow className="hover:bg-transparent" key={row.code}>
-								<TableCell className="max-w-[220px] truncate pl-6 font-medium">
-									<span className="inline-flex max-w-full items-center gap-2">
-										<NextImage
-											alt={`Flag of ${row.code}`}
-											className="h-3.5 w-5 shrink-0 rounded object-cover"
-											height={14}
-											src={flagUrl(row.code)}
-											width={20}
-											unoptimized
-										/>
-										<span className="min-w-0 truncate text-xs">
-											{row.name}
+						{mappedRows.length > 0 ? (
+							mappedRows.map((row) => (
+								<TableRow className="hover:bg-transparent" key={row.code}>
+									<TableCell className="max-w-[220px] truncate pl-6 font-medium">
+										<span className="inline-flex max-w-full items-center gap-2">
+											<NextImage
+												alt={`Flag of ${row.code}`}
+												className="h-3.5 w-5 shrink-0 rounded object-cover"
+												height={14}
+												src={flagUrl(row.code)}
+												width={20}
+												unoptimized
+											/>
+											<span className="min-w-0 truncate text-xs">
+												{row.name}
+											</span>
 										</span>
-									</span>
-								</TableCell>
-								<TableCell className="text-end text-muted-foreground text-xs tabular-nums">
-									{formatInteger(row.visits)}
-								</TableCell>
-								<TableCell className="pr-6 text-end text-muted-foreground text-xs">
-									<span className="tabular-nums">
-										{row.delta > 0 ? "+" : ""}
-										{row.delta}%
-									</span>
+									</TableCell>
+									<TableCell className="text-end text-muted-foreground text-xs tabular-nums">
+										{formatInteger(row.visits)}
+									</TableCell>
+									<TableCell className="pr-6 text-end text-muted-foreground text-xs">
+										<span className="tabular-nums">
+											{row.delta > 0 ? "+" : ""}
+											{row.delta}%
+										</span>
+									</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={3} className="text-center py-8 text-muted-foreground font-mono text-xs">
+									No country data.
 								</TableCell>
 							</TableRow>
-						))}
+						)}
 					</TableBody>
 				</Table>
 			</CardContent>

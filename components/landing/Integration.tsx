@@ -6,7 +6,7 @@ import { HeroScript } from './HeroVisuals';
 
 export function Integration() {
   return (
-    <section id="code" className="mx-auto max-w-5xl px-4 sm:px-6 py-4 pb-20">
+    <section id="code" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
       <motion.div 
         initial="hidden"
         whileInView="visible"

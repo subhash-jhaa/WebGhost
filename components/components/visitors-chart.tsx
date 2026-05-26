@@ -18,20 +18,7 @@ import {
 } from "@/components/components/ui/chart";
 import { Delta, DeltaIcon, DeltaValue } from "@/components/components/delta";
 
-const chartData = [
-	{ month: "January", visitors: 555 },
-	{ month: "February", visitors: 904 },
-	{ month: "March", visitors: 727 },
-	{ month: "April", visitors: 801 },
-	{ month: "May", visitors: 942 },
-	{ month: "June", visitors: 1048 },
-	{ month: "July", visitors: 702 },
-	{ month: "August", visitors: 1103 },
-	{ month: "September", visitors: 879 },
-	{ month: "October", visitors: 1046 },
-	{ month: "November", visitors: 1407 },
-	{ month: "December", visitors: 548 },
-];
+
 
 const chartConfig = {
 	visitors: {
@@ -47,14 +34,27 @@ export interface VisitorsChartProps {
 export function VisitorsChart({ data }: VisitorsChartProps) {
 	const gradientId = `visitors-area-${useId().replace(/:/g, "")}`;
 
-	const chartDataFormatted = data && data.length > 0
-		? data.map(d => ({
-				month: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }),
-				visitors: d.visitors
-			}))
-		: chartData;
+  const getLast7Days = () => {
+    const result = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      result.push({
+        month: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        visitors: 0
+      });
+    }
+    return result;
+  };
 
-	const total = chartDataFormatted.reduce((sum, row) => sum + row.visitors, 0);
+  const chartDataFormatted = data && data.length > 0
+    ? data.map(d => ({
+        month: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }),
+        visitors: d.visitors
+      }))
+    : getLast7Days();
+
+  const total = chartDataFormatted.reduce((sum, row) => sum + row.visitors, 0);
 
 	return (
 		<Card className="md:col-span-2 lg:col-span-3 dark:bg-transparent">

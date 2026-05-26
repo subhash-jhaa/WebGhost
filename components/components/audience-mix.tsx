@@ -16,13 +16,19 @@ import {
 	ShareBarListValue,
 } from "@/components/components/share-bar-list";
 
-const segments = [
-	{ label: "Returning visitors", share: 54 },
-	{ label: "New visitors", share: 41 },
-	{ label: "Logged-in users", share: 5 },
-] as const;
 
-export function AudienceMix() {
+
+export interface AudienceMixProps {
+	visitors?: { id: string }[];
+}
+
+export function AudienceMix({ visitors = [] }: AudienceMixProps) {
+	const total = visitors.length;
+	const segments = total > 0 ? [
+		{ label: "New visitors", share: 100 },
+		{ label: "Returning visitors", share: 0 },
+	] : [];
+
 	return (
 		<Card className="dark:bg-transparent">
 			<CardHeader className="border-b">
@@ -32,17 +38,23 @@ export function AudienceMix() {
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="p-0 py-1">
-				<ShareBarList aria-label="Audience segments by share of sessions">
-					{segments.map((row) => (
-						<ShareBarListItem key={row.label} value={row.share}>
-							<ShareBarListContent>
-								<ShareBarListLabel>{row.label}</ShareBarListLabel>
-								<ShareBarListValue>{row.share}%</ShareBarListValue>
-							</ShareBarListContent>
-							<ShareBarListFill />
-						</ShareBarListItem>
-					))}
-				</ShareBarList>
+				{segments.length > 0 ? (
+					<ShareBarList aria-label="Audience segments by share of sessions">
+						{segments.map((row) => (
+							<ShareBarListItem key={row.label} value={row.share}>
+								<ShareBarListContent>
+									<ShareBarListLabel>{row.label}</ShareBarListLabel>
+									<ShareBarListValue>{row.share}%</ShareBarListValue>
+								</ShareBarListContent>
+								<ShareBarListFill />
+							</ShareBarListItem>
+						))}
+					</ShareBarList>
+				) : (
+					<div className="text-center py-8 text-muted-foreground font-mono text-xs">
+						No audience data.
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);

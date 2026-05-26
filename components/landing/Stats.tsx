@@ -5,7 +5,7 @@ import { STATS } from './Constants';
 
 export function Stats() {
   return (
-    <section className="mx-auto max-w-5xl px-4 sm:px-6 py-14">
+    <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -18,10 +18,10 @@ export function Stats() {
             key={i} 
             variants={fadeUp}
             custom={i}
-            className={cn(CARD, CARD_HOVER, "p-5 flex items-start gap-4")}
+            className={cn(CARD, CARD_HOVER, "p-5 flex items-start gap-4 group")}
           >
-            <div className="p-2 rounded-lg bg-black border border-zinc-800 shrink-0">
-              <Icon className="h-4 w-4 text-zinc-400" />
+            <div className="p-2 rounded-lg bg-zinc-950/80 border border-zinc-800/80 group-hover:border-[#DEDBC8]/50 group-hover:bg-zinc-900/80 shrink-0 transition-all duration-300">
+              <Icon className="h-4 w-4 text-zinc-400 group-hover:text-[#DEDBC8] transition-colors duration-300" />
             </div>
             <div>
               <div className={cn(MONO, "text-2xl font-bold text-zinc-100 leading-none mb-1")}>{value}</div>

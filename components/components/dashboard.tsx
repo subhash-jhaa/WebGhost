@@ -23,7 +23,7 @@ export function Dashboard({ dailyStats, realtimeStats, countryStats, referrerSta
 			<TopPages visitors={realtimeStats?.visitors} />
 			<TopCountries data={countryStats} />
 			<TrafficSourcesChart referrers={referrerStats} />
-			<AudienceMix />
+			<AudienceMix visitors={realtimeStats?.visitors} />
 			<BrowserShare visitors={realtimeStats?.visitors} />
 			<TopReferrers data={referrerStats} />
 			<WebVitals />

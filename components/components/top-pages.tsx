@@ -18,13 +18,7 @@ import {
 } from "@/components/components/ui/table";
 import { ArrowRightIcon } from "lucide-react";
 
-const rows = [
-	{ path: "/", visits: 18_420, delta: 4.1 },
-	{ path: "/pricing", visits: 6280, delta: 12.4 },
-	{ path: "/blog/product-updates", visits: 4110, delta: -2.0 },
-	{ path: "/docs/getting-started", visits: 3920, delta: 6.8 },
-	{ path: "/changelog", visits: 2150, delta: 0.4 },
-] as const;
+
 
 export interface TopPagesProps {
 	visitors?: { pageUrl: string }[];
@@ -51,7 +45,7 @@ export function TopPages({ visitors = [] }: TopPagesProps) {
 		delta: 0
 	})).sort((a, b) => b.visits - a.visits);
 
-	const displayRows = pageRows.length > 0 ? pageRows.slice(0, 5) : rows;
+	const displayRows = pageRows.slice(0, 5);
 
 	return (
 		<Card className="relative md:col-span-2 dark:bg-transparent">
@@ -80,24 +74,32 @@ export function TopPages({ visitors = [] }: TopPagesProps) {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{displayRows.map((row) => (
-							<TableRow className="hover:bg-transparent" key={row.path}>
-								<TableCell className="max-w-[200px] truncate pl-6 font-medium">
-									<span className="w-max rounded border border-border bg-muted/50 px-1 py-px text-xs">
-										{row.path}
-									</span>
-								</TableCell>
-								<TableCell className="text-end text-muted-foreground text-xs tabular-nums">
-									{formatInteger(row.visits)}
-								</TableCell>
-								<TableCell className="pr-6 text-end text-muted-foreground text-xs">
-									<span className="tabular-nums">
-										{row.delta > 0 ? "+" : ""}
-										{row.delta}%
-									</span>
+						{displayRows.length > 0 ? (
+							displayRows.map((row) => (
+								<TableRow className="hover:bg-transparent" key={row.path}>
+									<TableCell className="max-w-[200px] truncate pl-6 font-medium">
+										<span className="w-max rounded border border-border bg-muted/50 px-1 py-px text-xs">
+											{row.path}
+										</span>
+									</TableCell>
+									<TableCell className="text-end text-muted-foreground text-xs tabular-nums">
+										{formatInteger(row.visits)}
+									</TableCell>
+									<TableCell className="pr-6 text-end text-muted-foreground text-xs">
+										<span className="tabular-nums">
+											{row.delta > 0 ? "+" : ""}
+											{row.delta}%
+										</span>
+									</TableCell>
+								</TableRow>
+							))
+						) : (
+							<TableRow>
+								<TableCell colSpan={3} className="text-center py-8 text-muted-foreground font-mono text-xs">
+									No active sessions.
 								</TableCell>
 							</TableRow>
-						))}
+						)}
 					</TableBody>
 				</Table>
 			</CardContent>

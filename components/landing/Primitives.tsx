@@ -88,7 +88,7 @@ export const scaleIn = {
 };
 
 // ─── Design Tokens ────────────────────────────────────────────────────────────
-export const CARD = "rounded-xl border border-zinc-800 bg-black";
-export const CARD_HOVER = "hover:border-zinc-700 transition-colors duration-200";
+export const CARD = "rounded-xl border border-zinc-800/80 bg-zinc-950/50 backdrop-blur-md shadow-xl";
+export const CARD_HOVER = "hover:border-zinc-700/80 hover:bg-zinc-900/30 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[#DEDBC8]/[0.02] transition-all duration-300 ease-out";
 // Uses the JetBrains Mono variable injected by the root layout
 export const MONO = "font-[family-name:var(--font-mono)]";

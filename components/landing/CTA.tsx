@@ -7,13 +7,13 @@ import { ArrowRight } from 'lucide-react';
 
 export function CTA() {
   return (
-    <section className="bg-black w-full overflow-hidden relative border-t border-neutral-900">
+    <section className="bg-black w-full overflow-hidden relative border-t border-zinc-900">
       
-      <div className="max-w-7xl mx-auto min-h-[60vh] md:min-h-[80dvh] flex items-center justify-center px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-6xl mx-auto min-h-[60vh] md:min-h-[80dvh] flex items-center justify-center px-6 sm:px-10 lg:px-8 relative">
         
         {/* ─── Left Side Glowing Laser Line ───────────────────────────────────── */}
         <svg 
-          className="absolute hidden lg:block left-0 h-full w-24 pointer-events-none" 
+          className="absolute left-0 h-full w-8 sm:w-16 md:w-20 lg:w-24 pointer-events-none" 
           xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 89 568" 
           fill="none"
@@ -41,23 +41,20 @@ export function CTA() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-6"
           >
-            <h2 className="inline-block text-3xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-b from-[#4B4B4B] via-white to-[#4B4B4B] bg-clip-text text-transparent px-4 md:px-8 leading-tight tracking-tight">
+            <h2 className="inline-block text-3xl md:text-5xl lg:text-6xl font-bold bg-[radial-gradient(61.17%_178.53%_at_38.83%_-13.54%,#3B3B3B_0%,#888787_12.61%,#FFFFFF_50%,#888787_80%,#3B3B3B_100%)] bg-clip-text text-transparent px-4 md:px-8 leading-tight tracking-tight">
               Your All-in-One <br className="sm:hidden" /> Analytics Companion
             </h2>
-            <p className="max-w-lg text-xs sm:text-sm md:text-base text-neutral-400 mx-auto px-4 leading-relaxed">
+            <p className="max-w-lg text-xs sm:text-sm md:text-base text-zinc-400 mx-auto px-4 leading-relaxed">
               Simplify visitor tracking, event logs, and site analytics with cutting-edge tools designed to be lightweight, privacy-first, and built for developers.
             </p>
 
             <div className="pt-8">
               <a 
                 href="/auth" 
-                className="px-8 py-4 relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-flex items-center justify-center gap-2 border border-neutral-700 bg-black hover:bg-zinc-950 text-white shadow-2xl h-12 md:h-14 w-48 md:w-56 rounded-full font-bold text-sm tracking-wide"
-                style={{
-                  background: 'linear-gradient(0deg,#000000,#000000), linear-gradient(180deg,rgba(0,0,0,0)_66.3%,rgba(255,255,255,0.2)_100%)'
-                }}
+                className="px-8 py-4 relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-flex items-center justify-center gap-2 bg-white hover:bg-zinc-100 text-zinc-950 shadow-[0_4px_12px_rgba(255,255,255,0.1)] h-12 md:h-14 w-48 md:w-56 rounded-full font-semibold text-sm tracking-wide"
               >
                 <span>Get Started Now</span>
-                <ArrowRight className="h-4 w-4 text-white" />
+                <ArrowRight className="h-4 w-4 text-zinc-950" />
               </a>
             </div>
           </motion.div>
@@ -65,7 +62,7 @@ export function CTA() {
 
         {/* ─── Right Side Glowing Laser Line ──────────────────────────────────── */}
         <svg 
-          className="absolute hidden lg:block right-0 h-full w-24 pointer-events-none" 
+          className="absolute right-0 h-full w-8 sm:w-16 md:w-20 lg:w-24 pointer-events-none" 
           xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 89 568" 
           fill="none"

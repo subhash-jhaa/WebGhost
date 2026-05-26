@@ -3,7 +3,7 @@
 import React from 'react';
 import NextImage from 'next/image';
 import { Quote } from 'lucide-react';
-import { cn } from './Primitives';
+import { cn, CARD, CARD_HOVER } from './Primitives';
 
 // ─── Constants & Data ────────────────────────────────────────────────────────
 const MAIN_TESTIMONIALS = [
@@ -35,10 +35,10 @@ const MAIN_TESTIMONIALS = [
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="mx-auto max-w-7xl px-4 sm:px-6 py-24 overflow-hidden bg-black text-zinc-100">
+    <section id="testimonials" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 overflow-hidden bg-black text-zinc-100">
       
-      {/* ─── Part 2: What they say about us (Staggered Grid) ───────────────── */}
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 pt-10 border-t border-neutral-900">
+      {/* ─── Staggered Grid ───────────────── */}
+      <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 pt-10 border-t border-zinc-900">
         
         {/* Left-hand text column */}
         <div className="w-full lg:w-[40%] flex flex-col justify-start">
@@ -46,7 +46,7 @@ export function Testimonials() {
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold bg-[radial-gradient(61.17%_178.53%_at_38.83%_-13.54%,#3B3B3B_0%,#888787_12.61%,#FFFFFF_50%,#888787_80%,#3B3B3B_100%)] bg-clip-text text-transparent tracking-tight leading-tight">
               What they <br /> say about us
             </h2>
-            <p className="text-sm text-neutral-400 mt-6 max-w-sm leading-relaxed">
+            <p className="text-sm text-zinc-400 mt-6 max-w-sm leading-relaxed">
               Simplify site analytics, event tracking, and user flows with cutting-edge tools built to be lightweight, developer-friendly, and privacy-respecting.
             </p>
           </div>
@@ -56,33 +56,33 @@ export function Testimonials() {
         <div className="w-full lg:w-[60%] grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           
           {MAIN_TESTIMONIALS.map((t, idx) => {
-            // Apply staggering offset classes: columns are odd/even in layout
             const staggeredClass = idx % 2 === 1 ? "lg:mt-[40px]" : "lg:mt-0";
 
             return (
               <div 
                 key={t.name}
                 className={cn(
-                  "flex flex-col min-h-[220px] p-8 rounded-[17px] border border-neutral-800 bg-black hover:bg-neutral-950/80 transition-colors duration-300 relative isolate overflow-hidden shadow-xl",
+                  CARD, CARD_HOVER,
+                  "flex flex-col min-h-[220px] p-8 relative isolate overflow-hidden",
                   staggeredClass
                 )}
               >
                 {/* Background Gradient Effect */}
-                <div className="absolute inset-px rounded-[16px] bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none -z-10" />
+                <div className="absolute inset-px rounded-[11px] bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none -z-10" />
                 
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border border-neutral-700">
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden border border-zinc-700">
                     <NextImage src={t.avatar} alt={t.name} fill className="object-cover" unoptimized />
                   </div>
                   <div>
                     <h3 className="text-base font-semibold text-white">{t.name}</h3>
-                    <p className="text-xs text-neutral-400">{t.role}</p>
+                    <p className="text-xs text-zinc-400">{t.role}</p>
                   </div>
                 </div>
 
                 <div className="relative flex-1">
-                  <Quote className="absolute -top-2 -left-2 h-6 w-6 text-neutral-800 opacity-30 rotate-180" />
-                  <p className="relative z-10 text-sm text-neutral-300 leading-relaxed font-normal italic">
+                  <Quote className="absolute -top-2 -left-2 h-6 w-6 text-zinc-800 opacity-30 rotate-180" />
+                  <p className="relative z-10 text-sm text-zinc-300 leading-relaxed font-normal italic">
                     &quot;{t.content}&quot;
                   </p>
                 </div>
