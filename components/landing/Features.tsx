@@ -145,7 +145,7 @@ function ScriptFeature({ feature: { icon: Icon, title, desc } }: { feature: Feat
           </div>
         </div>
       </div>
-      <div className="relative bg-zinc-950/10 border-l border-zinc-800/80 overflow-hidden min-h-[140px]">
+      <div className="relative bg-zinc-950/10 border-t border-zinc-800/80 sm:border-t-0 sm:border-l overflow-hidden min-h-[140px]">
         <div className="absolute inset-0 flex items-center justify-center">
           <svg className="w-full h-24 text-zinc-800/40 group-hover:text-[#DEDBC8]/20 transition-all duration-300" viewBox="0 0 200 100" preserveAspectRatio="none">
             <path d="M0,50 Q25,10 50,50 T100,50 T150,50 T200,50" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5 5" className="animate-[pulse_3s_infinite]" />
