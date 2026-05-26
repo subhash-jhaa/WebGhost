@@ -106,8 +106,8 @@ export function HeroScript() {
             : <><Copy className="h-3 w-3" /><span>Copy</span></>}
         </button>
       </div>
-      <div className="px-5 py-4 bg-black">
-        <pre className={cn(MONO, "text-sm leading-relaxed")}>
+      <div className="px-5 py-4 bg-black overflow-x-auto">
+        <pre className={cn(MONO, "text-sm leading-relaxed whitespace-pre")}>
           {lines.map((line, i) => (
             <motion.div 
               key={i}

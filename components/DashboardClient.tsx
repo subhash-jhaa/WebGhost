@@ -10,13 +10,12 @@ import {
   CogIcon,
   PlusIcon,
   ArrowRightOnRectangleIcon,
-  GlobeAltIcon,
-  LinkIcon,
   UserGroupIcon,
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { LogoMark } from './landing/Logo'
+import { Dashboard } from '@/components/components/dashboard'
 
 interface DashboardClientProps {
   session: Session
@@ -586,150 +585,12 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
           )}
 
           {activeTab === 'overview' && (
-            <div className="space-y-6">
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-black p-6 rounded-xl border border-zinc-900">
-                  <div className="flex items-center gap-3 mb-2">
-                    <EyeIcon className={`h-6 w-6 text-zinc-100 ${realtimeStats.count > 0 ? 'animate-pulse' : ''}`} />
-                    <h3 className="text-zinc-100 font-semibold font-mono">Live Visitors</h3>
-                  </div>
-                  {loading ? (
-                    <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-                    </div>
-                  ) : (
-                    <p className="text-3xl font-bold text-white">{realtimeStats.count}</p>
-                  )}
-                </div>
-                <div className="bg-black p-6 rounded-xl border border-zinc-900">
-                  <div className="flex items-center gap-3 mb-2">
-                    <ChartBarIcon className="h-6 w-6 text-cyan-400" />
-                    <h3 className="text-cyan-400 font-semibold font-mono">7-Day Total</h3>
-                  </div>
-                  {loading ? (
-                    <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-                    </div>
-                  ) : (
-                    <p className="text-3xl font-bold text-white">
-                      {dailyStats.reduce((sum, day) => sum + day.visitors, 0)}
-                    </p>
-                  )}
-                </div>
-                <div className="bg-black p-6 rounded-xl border border-zinc-900">
-                  <div className="flex items-center gap-3 mb-2">
-                    <GlobeAltIcon className="h-6 w-6 text-blue-400" />
-                    <h3 className="text-blue-400 font-semibold font-mono">Countries</h3>
-                  </div>
-                  {loading ? (
-                    <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-                    </div>
-                  ) : (
-                    <p className="text-3xl font-bold text-white">{countryStats.length}</p>
-                  )}
-                </div>
-                <div className="bg-black p-6 rounded-xl border border-zinc-900">
-                  <div className="flex items-center gap-3 mb-2">
-                    <LinkIcon className="h-6 w-6 text-purple-400" />
-                    <h3 className="text-purple-400 font-semibold font-mono">Referrers</h3>
-                  </div>
-                  {loading ? (
-                    <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-                    </div>
-                  ) : (
-                    <p className="text-3xl font-bold text-white">{referrerStats.length}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Charts */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* 7-Day Chart */}
-                <div className="bg-black p-6 rounded-xl border border-zinc-900">
-                  <h3 className="text-zinc-100 font-semibold mb-4 font-mono">7-Day Traffic</h3>
-                  <div className="space-y-2">
-                    {loading ? (
-                      <div className="flex items-center justify-center min-h-[200px]">
-                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-                      </div>
-                    ) : (
-                      dailyStats.map((day) => {
-                        const maxViews = Math.max(...dailyStats.map(d => d.visitors), 1);
-                        const percentage = (day.visitors / maxViews) * 100;
-
-                        return (
-                          <div key={day.date} className="flex items-center gap-3">
-                            <span className="text-xs text-zinc-400 font-mono w-16">
-                              {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                            </span>
-                            <div className="flex-1 bg-zinc-900 rounded-full h-2 overflow-hidden">
-                              <div
-                                className="bg-white h-2 rounded-full transition-all"
-                                style={{ width: `${percentage}%` }}
-                              />
-                            </div>
-                            <span className="text-xs text-white font-mono w-8 text-right">
-                              {day.visitors}
-                            </span>
-                          </div>
-                        )
-                      })
-                    )}
-                  </div>
-                </div>
-
-                {/* Countries Chart */}
-                <div className="bg-black p-6 rounded-xl border border-zinc-900">
-                  <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Top Countries</h3>
-                  <div className="space-y-2">
-                    {loading ? (
-                      <div className="flex items-center justify-center min-h-[200px]">
-                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-                      </div>
-                    ) : (
-                      countryStats.slice(0, 5).map((country) => (
-                        <div key={country.country} className="flex items-center gap-3">
-                          <span className="text-xs text-zinc-400 font-mono flex-1">
-                            {country.country}
-                          </span>
-                          <div className="flex-1 bg-zinc-900 rounded-full h-2">
-                            <div
-                              className="bg-blue-400 h-2 rounded-full transition-all"
-                              style={{ width: `${(country.visitors / Math.max(...countryStats.map(c => c.visitors))) * 100}%` }}
-                            />
-                          </div>
-                          <span className="text-xs text-blue-400 font-mono w-8 text-right">
-                            {country.visitors}
-                          </span>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Referrers Table */}
-              <div className="bg-black p-6 rounded-xl border border-zinc-900">
-                <h3 className="text-zinc-100 font-semibold mb-4 font-mono">Top Referrers</h3>
-                <div className="space-y-2">
-                  {loading ? (
-                    <div className="flex items-center justify-center min-h-[200px]">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-                    </div>
-                  ) : (
-                    referrerStats.slice(0, 10).map((referrer) => (
-                      <div key={referrer.referrer} className="flex items-center justify-between py-2 border-b border-zinc-900 last:border-b-0">
-                        <span className="text-sm text-zinc-300 font-mono">{referrer.referrer}</span>
-                        <span className="text-sm text-purple-400 font-mono">{referrer.visitors} visitors</span>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
+            <Dashboard 
+              dailyStats={dailyStats} 
+              realtimeStats={realtimeStats} 
+              countryStats={countryStats} 
+              referrerStats={referrerStats} 
+            />
           )}
 
           {activeTab === 'live' && (

@@ -4,9 +4,9 @@ import React from 'react';
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <svg
-      width="140"
-      height="48"
-      viewBox="0 0 160 56"
+      width="180"
+      height="56"
+      viewBox="0 0 180 56"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
@@ -22,12 +22,12 @@ export function Logo({ className = "" }: { className?: string }) {
       {/* Wordmark - monochrome variant */}
       <text
         x="56"
-        y="36"
+        y="38"
         fontFamily="system-ui,-apple-system,sans-serif"
-        fontSize="24"
-        fontWeight="600"
+        fontSize="30"
+        fontWeight="700"
         fill={className.includes("text-zinc-950") ? "#09090b" : "white"}
-        letterSpacing="-0.05em"
+        letterSpacing="-0.04em"
       >
         spectr
       </text>

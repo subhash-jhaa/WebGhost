@@ -1,11 +1,8 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Code2 } from "lucide-react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { Logo } from "./Logo";
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -32,29 +29,8 @@ const fadeUp = {
 };
 
 export function Hero() {
-  const { data: session, status } = useSession();
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const navItems = [
-    { name: "Features", href: "#features" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Integration", href: "#code" },
-  ];
-
-  // Hide the default global header safely on the client-side
-  useEffect(() => {
-    const header = document.querySelector("header");
-    if (header) {
-      header.style.setProperty("display", "none", "important");
-    }
-    return () => {
-      if (header) {
-        header.style.display = "";
-      }
-    };
-  }, []);
-
   return (
-    <section className="relative w-full h-screen bg-black overflow-hidden">
+    <section className="relative w-full h-[100dvh] min-h-[600px] bg-black overflow-hidden">
       {/* Full-screen Container */}
       <div className="relative w-full h-full overflow-hidden bg-[#0a0a0a]">
         
@@ -75,55 +51,7 @@ export function Hero() {
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 z-10" />
 
-        {/* Navbar */}
-        <nav className="absolute top-4 left-1/2 -translate-x-1/2 z-30 w-[95%] max-w-4xl">
-          <div className="bg-black/80 backdrop-blur-md rounded-full px-4 py-2 sm:px-6 md:px-8 flex items-center justify-between shadow-2xl border border-white/[0.05]">
-            
-            {/* Logo */}
-            <Link href="/" className="flex items-center shrink-0">
-              <Logo className="h-5 sm:h-6 w-auto" />
-            </Link>
 
-            {/* Nav Items */}
-            <div className="flex items-center gap-3 sm:gap-6 md:gap-8 lg:gap-10">
-              {navItems.map((item, idx) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onMouseEnter={() => setHoveredIdx(idx)}
-                  onMouseLeave={() => setHoveredIdx(null)}
-                  style={{
-                    color: hoveredIdx === idx ? "#E1E0CC" : "rgba(225, 224, 204, 0.8)",
-                    transition: "color 0.25s ease",
-                  }}
-                  className="text-[10px] sm:text-xs md:text-sm font-medium tracking-wide whitespace-nowrap"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-
-            {/* Auth Action */}
-            <div className="flex items-center shrink-0">
-              {status !== "loading" && (
-                session?.user ? (
-                  <Link href="/dashboard">
-                    <button className="h-8 px-4 rounded-full bg-[#DEDBC8] text-zinc-950 font-semibold text-[10px] sm:text-xs hover:bg-[#E1E0CC] transition-all cursor-pointer whitespace-nowrap">
-                      Dashboard
-                    </button>
-                  </Link>
-                ) : (
-                  <Link href="/auth">
-                    <button className="h-8 px-4 rounded-full bg-white text-zinc-950 font-semibold text-[10px] sm:text-xs hover:bg-zinc-200 transition-all cursor-pointer whitespace-nowrap">
-                      Sign In
-                    </button>
-                  </Link>
-                )
-              )}
-            </div>
-
-          </div>
-        </nav>
 
         {/* Bottom-left Aligned Hero Content */}
         <motion.div

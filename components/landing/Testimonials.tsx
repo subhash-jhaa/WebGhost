@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import NextImage from 'next/image';
 import { Quote } from 'lucide-react';
 import { cn } from './Primitives';
 
@@ -71,7 +72,7 @@ export function Testimonials() {
                 
                 <div className="flex items-center gap-4 mb-6">
                   <div className="relative w-12 h-12 rounded-full overflow-hidden border border-neutral-700">
-                    <img src={t.avatar} alt={t.name} className="object-cover w-full h-full" />
+                    <NextImage src={t.avatar} alt={t.name} fill className="object-cover" unoptimized />
                   </div>
                   <div>
                     <h3 className="text-base font-semibold text-white">{t.name}</h3>
