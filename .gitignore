@@ -8,7 +8,7 @@ build
 *.log
 prisma/*.db
 prisma/*.db-journal
-
+.vscode
 # Next.js
 .next/
 out/

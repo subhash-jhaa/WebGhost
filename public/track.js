@@ -2,22 +2,63 @@
   'use strict';
   
   // Get the script tag to determine site ID and the API base URL
-  const script = document.currentScript || document.querySelector('script[data-site]');
+  // document.currentScript is null when loaded asynchronously (e.g., Next.js <Script>)
+  let script = document.currentScript;
+  
+  // Fallback 1: find script with data-site attribute
   if (!script) {
-    console.warn("Who's Viewing Me: Tracking script not found.");
-    return;
+    script = document.querySelector('script[data-site]');
   }
   
-  const siteId = script.getAttribute('data-site');
+  // Fallback 2: find script by src pattern (handles frameworks that strip custom attributes)
+  if (!script) {
+    const allScripts = document.querySelectorAll('script[src*="track.js"]');
+    for (const s of allScripts) {
+      if (s.getAttribute('data-site')) {
+        script = s;
+        break;
+      }
+    }
+  }
+
+  // Fallback 3: find any script with src containing our tracking path
+  if (!script) {
+    script = document.querySelector('script[src*="track.js"][data-site]') || 
+             document.querySelector('script[src*="/track.js"]');
+  }
+
+  // Extract site ID - check the script tag first, then check for global override
+  let siteId = null;
+  if (script) {
+    siteId = script.getAttribute('data-site');
+  }
+  
+  // Fallback: check if Next.js or another framework set data attributes on the script differently
   if (!siteId) {
-    console.warn("Who's Viewing Me: No 'data-site' attribute provided.");
+    // Search ALL script tags for data-site (some frameworks re-create script elements)
+    const allScripts = document.querySelectorAll('script[data-site]');
+    if (allScripts.length > 0) {
+      siteId = allScripts[0].getAttribute('data-site');
+      script = allScripts[0];
+    }
+  }
+
+  if (!siteId) {
+    console.warn("Spectr: No 'data-site' attribute found on any script tag. Make sure to add data-site to your tracking script.");
     return;
   }
   
   // Determine the base URL from the script's own src to ensure correct API endpoint
-  const scriptSrc = new URL(script.src);
-  const baseUrl = scriptSrc.origin;
-  const apiUrl = `${baseUrl}/api/track`;
+  let apiUrl;
+  try {
+    const scriptSrc = new URL(script.src);
+    const baseUrl = scriptSrc.origin;
+    apiUrl = `${baseUrl}/api/track`;
+  } catch (e) {
+    // If we can't parse the script src (e.g., inline script), try to infer from known domains
+    apiUrl = 'https://tryspectr.vercel.app/api/track';
+    console.debug('Spectr: Could not determine API URL from script src, using default:', apiUrl);
+  }
   
   // Session management to prevent duplicate tracking
   const sessionKey = `wvm_session_${siteId}`;

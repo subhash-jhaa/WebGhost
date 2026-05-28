@@ -43,13 +43,13 @@ export function Hero() {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="/bg-video.mp4"
+            src="/bgv3.mp4"
             type="video/mp4"
           />
         </video>
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 z-10" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 z-10" /> */}
 
 
 

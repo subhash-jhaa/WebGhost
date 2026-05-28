@@ -5,34 +5,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/components/ui/card";
-import { Delta, DeltaIcon, DeltaValue } from "@/components/components/delta";
-
-const vitals = [
-	{
-		label: "LCP",
-		name: "Largest Contentful Paint",
-		value: "1.9s",
-		delta: 120,
-		deltaLabel: "faster vs prior month",
-		suffix: "ms",
-	},
-	{
-		label: "INP",
-		name: "Interaction to Next Paint",
-		value: "142ms",
-		delta: 18,
-		deltaLabel: "faster vs prior month",
-		suffix: "ms",
-	},
-	{
-		label: "CLS",
-		name: "Cumulative Layout Shift",
-		value: "0.04",
-		delta: 0.07,
-		deltaLabel: "lower vs prior month",
-		suffix: "",
-	},
-] as const;
 
 export function WebVitals() {
 	return (
