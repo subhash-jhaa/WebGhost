@@ -56,7 +56,7 @@
     apiUrl = `${baseUrl}/api/track`;
   } catch (e) {
     // If we can't parse the script src (e.g., inline script), try to infer from known domains
-    apiUrl = 'https://tryspectr.vercel.app/api/track';
+    apiUrl = 'https://spectr.subhashjha.me/api/track';
     console.debug('Spectr: Could not determine API URL from script src, using default:', apiUrl);
   }
   

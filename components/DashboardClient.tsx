@@ -300,7 +300,7 @@ const DashboardClient = ({ session }: DashboardClientProps) => {
   }
 
   const getTrackingScript = (projectId: string) => {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://tryspectr.vercel.app';
+    const baseUrl = 'https://spectr.subhashjha.me';
     return `<script src="${baseUrl}/track.js" data-site="${projectId}"></script>`
   }
 

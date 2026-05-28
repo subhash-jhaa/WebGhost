@@ -140,7 +140,7 @@ function ScriptFeature({ feature: { icon: Icon, title, desc } }: { feature: Feat
           <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
             <span className="text-zinc-600">&lt;script</span>
             <span className="text-amber-500/80">src</span>
-            <span className="text-emerald-500/80 break-all">{`"https://tryspectr.vercel.app/track.js"`}</span>
+            <span className="text-emerald-500/80 break-all">{`"https://spectr.subhashjha.me/track.js"`}</span>
             <span className="text-zinc-600">&gt;&lt;/script&gt;</span>
           </div>
         </div>
